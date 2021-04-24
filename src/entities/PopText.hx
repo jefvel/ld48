@@ -12,7 +12,7 @@ class PopText extends Object {
     public function new(text: String, ?p) {
         super(p);
         if (font == null) {
-            font = hxd.Res.fonts.small.toFont();
+            font = hxd.Res.fonts.futilepro_medium_12.toFont();
         }
 
         var t = new Text(font, this);

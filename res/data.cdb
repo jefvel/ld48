@@ -72,10 +72,10 @@
 					"ID": "Basic2",
 					"Name": "Big Normal",
 					"Armor": 0,
-					"Weight": 0.5,
-					"SellPrice": 12,
+					"Weight": 0.4,
+					"SellPrice": 14,
 					"Amount": 40,
-					"FromDepth": 1500,
+					"FromDepth": 800,
 					"ToDepth": 3500,
 					"OriginX": 31,
 					"OriginY": 18
@@ -84,13 +84,37 @@
 					"ID": "Eel",
 					"Name": "Eel",
 					"Armor": 0,
-					"Weight": 2.5,
-					"SellPrice": 30,
+					"Weight": 1.1,
+					"SellPrice": 40,
 					"Amount": 30,
-					"FromDepth": 1200,
+					"FromDepth": 2400,
 					"ToDepth": 6000,
 					"OriginX": 29,
 					"OriginY": 14
+				},
+				{
+					"ID": "Jelly",
+					"Name": "Jellyfish",
+					"Armor": 0,
+					"Weight": 3,
+					"SellPrice": 90,
+					"Amount": 30,
+					"FromDepth": 5000,
+					"ToDepth": 9000,
+					"OriginX": 13,
+					"OriginY": 5
+				},
+				{
+					"ID": "Biggo",
+					"Name": "Big Evil",
+					"Armor": 0,
+					"Weight": 6,
+					"SellPrice": 120,
+					"Amount": 20,
+					"FromDepth": 8000,
+					"ToDepth": 1100,
+					"OriginX": 123,
+					"OriginY": 20
 				}
 			],
 			"separators": [],
@@ -154,7 +178,7 @@
 					"ID": "Reel2",
 					"Name": "Longer Line",
 					"Description": "Longer line, for the cool fisher",
-					"Price": 30,
+					"Price": 100,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -168,7 +192,7 @@
 					"ID": "Reel3",
 					"Name": "Even Longer Line",
 					"Description": "Now you can get very far down",
-					"Price": 90,
+					"Price": 200,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -182,7 +206,7 @@
 					"ID": "Reel4",
 					"Name": "Scientist Line",
 					"Description": "This is used by the scientists to find weird fish in the depths",
-					"Price": 140,
+					"Price": 444,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -196,7 +220,7 @@
 					"ID": "Reel5",
 					"Name": "Line of Kings",
 					"Description": "This line was found in Atlantis. It's pretty good and extremely long.",
-					"Price": 400,
+					"Price": 900,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -345,12 +369,83 @@
 						"x": 4,
 						"y": 2
 					}
+				},
+				{
+					"ID": "Hook1",
+					"Name": "Bronze Hook",
+					"Description": "Better quality hooks will give you better quality catch. You will get more money per fish.",
+					"Price": 50,
+					"Type": 2,
+					"UpgradeIndex": 1,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 0,
+						"y": 3
+					}
+				},
+				{
+					"ID": "Hook2",
+					"Name": "Iron Hook",
+					"Description": "An even better quality hook. You don't want to miss up on getting this.",
+					"Price": 150,
+					"Type": 2,
+					"UpgradeIndex": 2,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 1,
+						"y": 3
+					}
+				},
+				{
+					"ID": "Hook3",
+					"Name": "Silver Pointy Hook",
+					"Description": "The way this glimmers makes me want to eat it myself. Fish love this. So will you.",
+					"Price": 500,
+					"Type": 2,
+					"UpgradeIndex": 3,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 2,
+						"y": 3
+					}
+				},
+				{
+					"ID": "Hook4",
+					"Name": "Golden Hook",
+					"Description": "This could belong in an art museum. I'm selling it to you because I like you.",
+					"Price": 900,
+					"Type": 2,
+					"UpgradeIndex": 4,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 3,
+						"y": 3
+					}
+				},
+				{
+					"ID": "Hook5",
+					"Name": "One of a Kind Turbo Hook",
+					"Description": "I think this is made of diamond. It is probably the best hook on earth. ",
+					"Price": 1900,
+					"Type": 2,
+					"UpgradeIndex": 5,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 4,
+						"y": 3
+					}
 				}
 			],
 			"props": {},
 			"separatorIds": [
 				"Pole1",
-				"Weight1"
+				"Weight1",
+				"Hook1"
 			]
 		}
 	],

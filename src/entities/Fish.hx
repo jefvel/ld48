@@ -18,7 +18,9 @@ class Fish extends Entity2D {
     static public var fishPatterns = {
         Basic: [Up, Left, Down, Right],
         Basic2: [Left, Right, Left, Right, Left, Right, Left, Right],
-        Eel: [Up, Down, Up, Down, Up, Down, Up, Down, Left, Right]
+        Eel: [Up, Down, Up, Down, Up, Down, Up, Down, Left, Right],
+        Jelly: [Left, Left, Left, Right, Right, Right, Up, Up, Up, Down, Down, Down],
+        Biggo: [Right, Left, Up, Down, Right, Left, Up, Down, Left, Right, Left, Right],
     }
 
     var vx = 0.0;
@@ -32,6 +34,8 @@ class Fish extends Entity2D {
             case Basic: hxd.Res.img.fish0_tilesheet.toSprite2D(this);
             case Basic2: hxd.Res.img.fish1_tilesheet.toSprite2D(this);
             case Eel: hxd.Res.img.fish2_tilesheet.toSprite2D(this);
+            case Jelly: hxd.Res.img.fish3_tilesheet.toSprite2D(this);
+            case Biggo: hxd.Res.img.fish4_tilesheet.toSprite2D(this);
         }
 
         sprite.originX = data.OriginX;
@@ -41,6 +45,8 @@ class Fish extends Entity2D {
             case Basic: fishPatterns.Basic;
             case Basic2: fishPatterns.Basic2;
             case Eel: fishPatterns.Eel;
+            case Jelly: fishPatterns.Jelly;
+            case Biggo: fishPatterns.Biggo;
         }
 
         x = Math.round(Math.random() * Const.SEA_WIDTH);

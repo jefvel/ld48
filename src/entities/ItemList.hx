@@ -12,7 +12,7 @@ class Item extends Object {
     var text : Text;
     var costText : Text;
 
-    public var width = 220;
+    public var width = 240;
     public var height = 40;
 
     public function new(i: Data.Items, ?p) {

@@ -24,6 +24,8 @@ class Shop extends Entity2D {
     var state : PlayState;
 
     var goldText: Text;
+    var coin: Bitmap;
+
 
     public function new(state: PlayState, ?p) {
         super(p);
@@ -39,7 +41,7 @@ class Shop extends Entity2D {
 
         alpha = 0;
         itemList = new ItemList(state, container);
-        itemList.y = sign.y + 8;
+        itemList.y = sign.y + 48;
         itemList.x = sign.x + sign.tile.width + 32;
         cursor = new ScaleGrid(hxd.Res.img.frame.toTile(), 4, 4, 4, 4, this);
 
@@ -48,7 +50,10 @@ class Shop extends Entity2D {
 
         goldText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), container);
         goldText.textAlign = Right;
-        goldText.y = 30;
+        goldText.y = sign.y;
+        coin = new Bitmap(hxd.Res.img.coin.toTile(), goldText);
+        coin.y = -0;
+        coin.x = -goldText.textWidth - 4;
         
         this.state = state;
     }
@@ -147,8 +152,9 @@ class Shop extends Entity2D {
             alpha += (1.0 - alpha) * 0.2;
             bg.alpha += (1.0 - alpha) * 0.1;
 
-            goldText.x = s.width - 30;
+            goldText.x = itemList.x + 240;
             goldText.text = '${state.gold}';
+            coin.x = -49;
 
             updateCursor();
         } else {
