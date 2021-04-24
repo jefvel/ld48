@@ -1,0 +1,43 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="::twitterSite::" />
+	<meta name="twitter:creator" content="::twitterCreator::" />
+
+	<meta property="og:title" content="::windowTitle::" />
+	<meta property="og:url" content="::ogUrl::" />
+	<meta property="og:description" content="::ogDescription::" />
+	<meta property="og:image" content="::ogImage::" />
+
+	<meta name="msapplication-tap-highlight" content="no" />
+	<title>::windowTitle::</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+<body>
+	<canvas globalevents="1" propagatekeyevents="false" id="webgl"></canvas>
+	<script type="text/javascript" src="::gameFile::"></script>
+	<script>
+		window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
+		if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
+			var meta = document.getElementById ("viewport");
+			meta.setAttribute ('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
+		}
+	</script>
+	<style>
+        html,body { 
+			margin: 0; 	
+			padding: 0; 
+			height: 100%; 
+			overflow: hidden;
+		}
+
+		canvas#webgl {
+			width: 100% !important;
+			height: 100% !important;
+		}
+	</style>
+	::additionalCss::
+</body>
+</html>

@@ -1,0 +1,11 @@
+common.hxml
+
+# For optimising JS
+-lib closure
+-D closure_warning_level=QUIET
+-D closure_overwrite
+
+-D no_traces
+
+-js build/web/game.js
+--macro elke.buildutil.WebGenerator.generate()

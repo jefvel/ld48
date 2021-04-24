@@ -1,0 +1,16 @@
+--macro elke.buildutil.Config.initConfig()
+
+-cp src
+
+-lib heaps
+
+-lib hscript
+-lib castle
+-lib stb_ogg_sound
+
+# -lib hide
+# -lib hxbit
+
+-main Main
+
+config.hxml
