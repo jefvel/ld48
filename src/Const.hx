@@ -10,4 +10,5 @@ class Const {
 
 	public static inline final TICK_RATE = 60;
     public static inline final SEA_WIDTH = 400;
+    public static inline final SCREEN_HEIGHT = 310;
 }

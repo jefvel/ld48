@@ -39,10 +39,12 @@ class Hook extends Entity2D {
 	public function start() {
 		sinking = true;
 		px = x;
+        py = y;
 	}
 
     override function sync(ctx:RenderContext) {
         super.sync(ctx);
+
 		state.rope.toX = x;
 		state.rope.toY = y;
     }
@@ -89,10 +91,16 @@ class Hook extends Entity2D {
 		px += vx;
 		py += vy;
 
+        py += Math.min(0, (state.reelLength - state.currentDepth) - py) * 0.08;
+
 		y = state.currentDepth + py;
 		x = px;
+
         px = Math.max(10, px);
         px = Math.min(Const.SEA_WIDTH - 10, px);
+
+        py = Math.max(-Const.SCREEN_HEIGHT * 0.5, py);
+        py = Math.min(Const.SCREEN_HEIGHT * 0.5, py);
 
         sprite.rotation = 0.6 * ax;
 	}

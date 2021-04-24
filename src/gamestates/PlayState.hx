@@ -40,6 +40,14 @@ class PlayState extends elke.gamestate.GameState {
 
 	var maxFish = 1000;
 
+	public var reelLength = 450;
+
+	public var catchRadius = 32.0;
+	public var maxWeight = 1.0;
+	
+	public var caughtFish: Array<Fish>;
+	public var caughtWeight = 0.0;
+
 	public var currentDepth = 0.0;
 
 	public var sinkSpeed = 2.0;
@@ -74,12 +82,17 @@ class PlayState extends elke.gamestate.GameState {
 		reset();
 	}
 
+	var rodX = 34;
+	var rodY = -37;
+
 	public function reset() {
 		currentDepth = 0.0;
-		hook.x = fisher.x;
-		hook.y = fisher.y;
+		hook.x = fisher.x + rodX;
+		hook.y = fisher.y + rodY;
 
 		allFish = [];
+		caughtFish = [];
+		caughtWeight = 0.0;
 		fishContainer.removeChildren();
 
 		boat.tile.dx = -32;
@@ -189,8 +202,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	override function update(dt:Float) {
 		super.update(dt);
-		rope.fromX = fisher.x;
-		rope.fromY = fisher.y;
+		rope.fromX = fisher.x + rodX;
+		rope.fromY = fisher.y + rodY;
 
 		world.x = (-Const.SEA_WIDTH * 0.5 + game.s2d.width * 0.5);
 		world.y = (-currentDepth + game.s2d.height * 0.5);
@@ -208,6 +221,8 @@ class PlayState extends elke.gamestate.GameState {
 			boostTime = 0.0;
 		}
 
+		var dy = (reelLength - currentDepth) * 0.02;
+
 		vy = sinkSpeed;
 		sinkMultiplier += (1.0 - sinkMultiplier) * 0.2;
 		if (boosting) {
@@ -216,8 +231,34 @@ class PlayState extends elke.gamestate.GameState {
 
 		vy *= sinkMultiplier;
 
-		currentDepth += vy;
+		dy = Math.min(dy, vy);
 
+		currentDepth += dy;
+
+		var rr = catchRadius * catchRadius;
+		if (caughtWeight < maxWeight) {
+			for (f in allFish) {
+				var dx = hook.x - f.x;
+				var dy = hook.y - f.y;
+
+				if (dx * dx + dy * dy < rr) {
+					caughtFish.push(f);
+					allFish.remove(f);
+					caughtWeight += f.data.Weight;
+				}
+			}
+		}
+
+
+		for (f in caughtFish) {
+			var dx = hook.x - f.x; 
+			var dy = hook.y + 7 - f.y; 
+
+			f.rotation = Math.atan2(dy, dx) + (Math.random() * 0.1 - 0.05);
+
+			f.x += dx * 0.9;
+			f.y += dy * 0.9;
+		}
 	}
 
 	override function onLeave() {

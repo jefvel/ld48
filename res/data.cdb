@@ -57,8 +57,8 @@
 					"ArrowCount": 2,
 					"Weight": 0.2,
 					"SellPrice": 5,
-					"Amount": 20,
-					"FromDepth": 200,
+					"Amount": 60,
+					"FromDepth": 240,
 					"ToDepth": 2000,
 					"Armor": 0
 				}
