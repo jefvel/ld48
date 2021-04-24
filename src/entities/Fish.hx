@@ -17,7 +17,8 @@ class Fish extends Entity2D {
 
     static public var fishPatterns = {
         Basic: [Up, Left, Down, Right],
-        Basic2: [Left, Right, Left, Right, Up, Left, Down, Right],
+        Basic2: [Left, Right, Left, Right, Left, Right, Left, Right],
+        Eel: [Up, Down, Up, Down, Up, Down, Up, Down, Left, Right]
     }
 
     var vx = 0.0;
@@ -30,6 +31,7 @@ class Fish extends Entity2D {
         sprite = switch(type.ID) {
             case Basic: hxd.Res.img.fish0_tilesheet.toSprite2D(this);
             case Basic2: hxd.Res.img.fish1_tilesheet.toSprite2D(this);
+            case Eel: hxd.Res.img.fish2_tilesheet.toSprite2D(this);
         }
 
         sprite.originX = data.OriginX;
@@ -38,6 +40,7 @@ class Fish extends Entity2D {
         pattern = switch(type.ID) {
             case Basic: fishPatterns.Basic;
             case Basic2: fishPatterns.Basic2;
+            case Eel: fishPatterns.Eel;
         }
 
         x = Math.round(Math.random() * Const.SEA_WIDTH);
@@ -81,6 +84,7 @@ class Fish extends Entity2D {
 
     public function kill() {
         sprite.animation.play("dead");
+        dead = true;
     }
 
     public function catchFish() {

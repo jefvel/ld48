@@ -11,8 +11,10 @@ class Item extends Object {
     public var icon: Bitmap;
     var text : Text;
     var costText : Text;
-    public var width = 200;
+
+    public var width = 220;
     public var height = 40;
+
     public function new(i: Data.Items, ?p) {
         super(p);
         this.info = i;
@@ -48,6 +50,7 @@ class ItemList extends Entity2D {
 
         this.state = state;
         container = new Object(this);
+
     }
 
     public function getSelectedItem() {
@@ -66,6 +69,14 @@ class ItemList extends Entity2D {
 
         if (selectedIndex >= items.length) {
             selectedIndex = 0;
+        }
+    }
+
+    override function update(dt:Float) {
+        super.update(dt);
+        for (i in items) {
+            var canAfford = state.gold >= i.info.Price;
+            i.alpha = canAfford ? 1.0 : 0.5;
         }
     }
 

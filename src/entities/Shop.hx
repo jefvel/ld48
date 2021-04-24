@@ -1,5 +1,8 @@
 package entities;
 
+import h2d.Text;
+import elke.Game;
+import elke.sound.Sounds;
 import h2d.ScaleGrid;
 import h2d.Tile;
 import h2d.Bitmap;
@@ -16,14 +19,24 @@ class Shop extends Entity2D {
     var cursor: ScaleGrid;
 
     var itemListSelected = true;
+    var keeper: ShopKeeper;
+
+    var state : PlayState;
+
+    var goldText: Text;
 
     public function new(state: PlayState, ?p) {
         super(p);
-        bg = new Bitmap(Tile.fromColor(0xFFFFFF, 1,1, 0.2), this);
+        bg = new Bitmap(Tile.fromColor(0xf3e181, 1,1, 0.2), this);
         container = new Object(this);
         sign = new Bitmap(hxd.Res.img.shopsign.toTile(), container);
         sign.x = 30;
         sign.y = 30;
+
+        keeper = new ShopKeeper(sign);
+        keeper.x = 4;
+        keeper.y = sign.tile.height + 80;
+
         alpha = 0;
         itemList = new ItemList(state, container);
         itemList.y = sign.y + 8;
@@ -32,13 +45,19 @@ class Shop extends Entity2D {
 
         cursor.width = 200;
         cursor.height = 43;
+
+        goldText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), container);
+        goldText.textAlign = Right;
+        goldText.y = 30;
+        
+        this.state = state;
     }
 
     public var showing = false;
     public function show() {
         alpha = -2.5;
         bg.alpha = 0.0;
-        container.x = -20;
+        container.x = -50;
         showing = true;
         itemList.refreshItems();
     }
@@ -48,6 +67,8 @@ class Shop extends Entity2D {
     }
 
     public function directionPressed(d: Direction) {
+        Game.instance.sound.playWobble(hxd.Res.sound.cursor, 0.5);
+        keeper.resetSay();
         if (d == Left || d == Right) {
             itemListSelected = !itemListSelected;
         }
@@ -63,8 +84,37 @@ class Shop extends Entity2D {
     }
 
     public function usePressed() {
-
+        keeper.resetSay();
+        if (itemListSelected) {
+            var item = itemList.getSelectedItem();
+            if (item != null) {
+                if (item.info.Price <= state.gold) {
+                    purchaseItem(item.info);
+                }
+            }
+        }
     }
+
+    public function purchaseItem(item: Data.Items) {
+        var msgs = [
+            "Thank you",
+            "Good purchase dude",
+            "Wise choice!",
+            "This will help you a lot.",
+            "You wont regret this!",
+            "Happy fishing!",
+            "Thanks for the purchase",
+            "Everyone loves this item, you will too",
+            "You're my favourite customer",
+        ];
+
+        state.gold -= item.Price;
+        state.unlocked[item.Type] ++;
+        itemList.refreshItems();
+        keeper.say(msgs[Std.int(Math.random() * msgs.length)], 2.0);
+        Game.instance.sound.playWobble(hxd.Res.sound.purchase, 0.6);
+    }
+
 
     public function updateCursor() {
         if (itemListSelected) {
@@ -77,9 +127,11 @@ class Shop extends Entity2D {
             var b = item.localToGlobal();
             cursor.x = b.x;
             cursor.y = b.y;
-            var bounds = item.getBounds();
+
             cursor.width = item.width;
             cursor.height = item.height;
+
+            keeper.say(item.info.Description);
         }
     }
 
@@ -88,11 +140,16 @@ class Shop extends Entity2D {
         var s = getScene();
         bg.tile.setSize(s.width, s.height);
 
+
         if (showing) {
             visible = true;
-            container.x *= 0.4;
+            container.x *= 0.8;
             alpha += (1.0 - alpha) * 0.2;
             bg.alpha += (1.0 - alpha) * 0.1;
+
+            goldText.x = s.width - 30;
+            goldText.text = '${state.gold}';
+
             updateCursor();
         } else {
             container.x += (20 - container.x) * 0.1;

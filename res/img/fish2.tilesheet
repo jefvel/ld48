@@ -1,0 +1,33 @@
+{ "frames": [
+   {
+    "filename": "fish2 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 18 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 6, "w": 32, "h": 18 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "fish2 1.aseprite",
+    "frame": { "x": 33, "y": 0, "w": 32, "h": 18 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 6, "w": 32, "h": 18 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "fish2.png",
+  "format": "RGBA8888",
+  "size": { "w": 65, "h": 18 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "dead", "from": 1, "to": 1, "direction": "forward" }
+  ]
+ }
+}

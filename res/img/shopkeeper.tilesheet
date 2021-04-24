@@ -1,0 +1,32 @@
+{ "frames": [
+   {
+    "filename": "shopkeeper 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 58, "h": 56 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 6, "w": 58, "h": 56 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 500
+   },
+   {
+    "filename": "shopkeeper 1.aseprite",
+    "frame": { "x": 59, "y": 0, "w": 58, "h": 56 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 6, "w": 58, "h": 56 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 500
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "shopkeeper.png",
+  "format": "RGBA8888",
+  "size": { "w": 117, "h": 56 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 1, "direction": "forward" }
+  ]
+ }
+}

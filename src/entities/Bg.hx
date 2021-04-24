@@ -6,7 +6,7 @@ import h2d.Bitmap;
 
 class Bg extends Bitmap {
 	public function new(?p) {
-		var t = Tile.fromColor(0x4b80ca);
+		var t = Tile.fromColor(0x4970a6);
 		super(t, p);
 	}
 

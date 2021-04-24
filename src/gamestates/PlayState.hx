@@ -57,10 +57,16 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var currentRound = 0;
 
+	public var maxBoostTime = 2.0;
+
 	public var maxCatchTime = 10.0;
 	public var catchTime = 10.0;
 
 	public var reelLength = 450;
+
+	var strengths = [1.0, 3.0, 10.0, 30.0, 100.0, 300.0];
+	var lengths =   [450, 1200, 2500, 4000, 8000, 13000];
+	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.0];
 
 	public var catchRadius = 32.0;
 	public var maxWeight = 1.0;
@@ -80,6 +86,7 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var started = false;
 	public var currentPhase = Throwing;
+	public var waves: Bitmap;
 
 	public var arrows:ArrowQueue;
 
@@ -109,6 +116,13 @@ class PlayState extends elke.gamestate.GameState {
 		arrows.onMiss = onMiss;
 
 		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
+		var t = hxd.Res.img.waves.toTile();
+		t.getTexture().wrap = Repeat;
+		waves = new Bitmap(t, world);
+		waves.y = - 16;
+		waves.tileWrap = true;
+		waves.tile.setSize(1324, 512);
+		waves.x = -555;
 		boat.tile.dx = -32;
 		boat.tile.dy = -18;
 
@@ -136,9 +150,8 @@ class PlayState extends elke.gamestate.GameState {
 	}
 
 	function onCatch(f:Fish) {
-		caughtFish.remove(f);
-		putFishOnPile(f);
 		f.kill();
+		putFishOnPile(f);
 	}
 
 	function onMiss(f:Fish) {
@@ -160,10 +173,15 @@ class PlayState extends elke.gamestate.GameState {
 		killedFish = [];
 		caughtWeight = 0.0;
 		fishContainer.removeChildren();
+		killedFishContainer.removeChildren();
 
 		boat.x = fisher.x;
 
 		arrows.reset();
+
+		maxWeight = strengths[unlocked.get(Strength)];
+		reelLength = lengths[unlocked.get(Line)];
+		sinkSpeed = speeds[unlocked.get(Speed)];
 
 		spawnFish();
 	}
@@ -188,18 +206,21 @@ class PlayState extends elke.gamestate.GameState {
 
 		catchTime = maxCatchTime;
 		currentPhase = Sinking;
+		game.sound.playWobble(hxd.Res.sound.throwline, 0.5);
 	}
 
 	function reelIn() {
 		catchTime = 0.0;
 		currentPhase = ReelingIn;
 		timeUntilCatching = totalTimeUntilCatching;
+		game.sound.playWobble(hxd.Res.sound.reelin, 0.4);
 	}
 
 	function startCatch() {
 		currentPhase = Catching;
 		arrows.reset();
 		timeUntilDone = totalTimeUntilDone;
+
 		for (f in caughtFish) {
 			if (f.dead) {
 				onCatch(f);
@@ -212,17 +233,24 @@ class PlayState extends elke.gamestate.GameState {
 	function finishRound() {
 		currentPhase = Shopping;
 		currentRound ++;
+
+		for (f in killedFish) {
+			gold += f.data.SellPrice;
+		}
+
 		openShop();
 	}
 
 	function openShop() {
 		shop.show();
 		hxd.Res.sound.openshop.play(false, 0.6);
+		world.filter = new h2d.filter.Blur(5, 0.9, 1.0);
 	}
 
 	function closeShop() {
 		shop.close();
 		hxd.Res.sound.closeshop.play(false, 0.6);
+		world.filter = null;
 		reset();
 	}
 
@@ -236,7 +264,7 @@ class PlayState extends elke.gamestate.GameState {
 	function directionPressed(dir:Direction, repeat = false) {
 		if (!started && currentPhase == Throwing && !repeat) {
 			if (dir == Down) {
-				launchHook(2.0);
+				launchHook(maxBoostTime);
 				return;
 			}
 		}
@@ -344,6 +372,10 @@ class PlayState extends elke.gamestate.GameState {
 			if (e.keyCode == Key.P) {
 				closeShop();
 			}
+
+			if (e.keyCode == Key.M) {
+				gold += 10;
+			}
 		}
 		#end
 	}
@@ -385,6 +417,9 @@ class PlayState extends elke.gamestate.GameState {
 		} else {
 			world.x += ((-Const.SEA_WIDTH * 0.5 + game.s2d.width * 0.5) - world.x) * 0.2;
 		}
+		
+		waves.tile.dx = Math.sin(time * 0.5) * 32;
+		waves.tile.dy = Math.cos(time * 0.6) * 4;
 
 		rope.fromX = fisher.x + fisher.rodX;
 		rope.fromY = fisher.y + fisher.rodY;
@@ -461,6 +496,9 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		for (f in caughtFish) {
+
+			if (f.dead && currentPhase == Catching) continue;
+
 			var dx = hook.x - f.x;
 			var dy = hook.y + 7 - f.y;
 

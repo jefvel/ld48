@@ -79,6 +79,18 @@
 					"ToDepth": 3500,
 					"OriginX": 31,
 					"OriginY": 18
+				},
+				{
+					"ID": "Eel",
+					"Name": "Eel",
+					"Armor": 0,
+					"Weight": 2.5,
+					"SellPrice": 30,
+					"Amount": 30,
+					"FromDepth": 1200,
+					"ToDepth": 6000,
+					"OriginX": 29,
+					"OriginY": 14
 				}
 			],
 			"separators": [],
@@ -114,9 +126,8 @@
 					"kind": null
 				},
 				{
-					"typeStr": "5:Line,Strength,MoneyMultiplier",
-					"name": "Type",
-					"kind": null
+					"typeStr": "5:Line,Strength,MoneyMultiplier,Speed",
+					"name": "Type"
 				},
 				{
 					"typeStr": "3",
@@ -253,8 +264,8 @@
 				},
 				{
 					"ID": "Pole5",
-					"Name": "Master Baiters Pole",
-					"Description": "The strongest fishing pole ever made. Engineered by NASA and designed by Jonny Fish, winner of fisher of the year 2005.",
+					"Name": "Master Baiter's Pole",
+					"Description": "The strongest fishing pole ever made. Engineered by NASA and designed by Jonny Fish, winner of Fisher of The Year 2005.",
 					"Price": 1000,
 					"Type": 1,
 					"UpgradeIndex": 5,
@@ -264,11 +275,82 @@
 						"x": 4,
 						"y": 1
 					}
+				},
+				{
+					"ID": "Weight1",
+					"Name": "1kg Sinker",
+					"Description": "This will make your hook sink quicker",
+					"Price": 33,
+					"Type": 3,
+					"UpgradeIndex": 1,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 0,
+						"y": 2
+					}
+				},
+				{
+					"ID": "Weight2",
+					"Name": "10kg Sinker",
+					"Description": "Heavier things sink quicker",
+					"Price": 120,
+					"Type": 3,
+					"UpgradeIndex": 2,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 1,
+						"y": 2
+					}
+				},
+				{
+					"ID": "Weight3",
+					"Name": "60kg Bronze Weight",
+					"Description": "The bronze weight is very heavy. Fast sinking guaranteed",
+					"Price": 300,
+					"Type": 3,
+					"UpgradeIndex": 3,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 2,
+						"y": 2
+					}
+				},
+				{
+					"ID": "Weight4",
+					"Name": "Bigger Bronze Weight ",
+					"Description": "Just like the other bronze weight, but faster",
+					"Price": 400,
+					"Type": 3,
+					"UpgradeIndex": 4,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 3,
+						"y": 2
+					}
+				},
+				{
+					"ID": "Weight5",
+					"Name": "Extremely Heavy Golden Weight",
+					"Description": "It's made of the heaviest metal ever",
+					"Price": 1200,
+					"Type": 3,
+					"UpgradeIndex": 5,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 4,
+						"y": 2
+					}
 				}
 			],
 			"props": {},
 			"separatorIds": [
-				"Pole1"
+				"Pole1",
+				"Weight1"
 			]
 		}
 	],

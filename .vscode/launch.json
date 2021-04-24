@@ -10,7 +10,7 @@
 			"request": "launch",
 			"url": "${workspaceFolder}/build/web/index.html",
 			"webRoot": "${workspaceFolder}/build/web",
-			"preLaunchTask": "HaxeActiveConf"
+			"preLaunchTask": "HeapsJS"
 		},
 		{
 			"name": "HashLink(SDL)",
