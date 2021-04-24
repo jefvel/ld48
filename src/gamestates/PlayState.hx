@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.DepthMeter;
 import entities.Timer;
 import entities.BoosterThing;
 import entities.PopText;
@@ -66,8 +67,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var reelLength = 450;
 
-	var strengths = [1.0, 3.0, 10.0, 30.0, 100.0, 300.0];
-	var lengths = [450, 1200, 2500, 4000, 8000, 13100];
+	var strengths = [1.0, 3.0, 6.0, 12.0, 18.0, 30.0];
+	var lengths = [450, 1200, 2500, 6000, 10000, 13100];
 	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.0];
 
 	var goldMultiplier = 1.0;
@@ -102,6 +103,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var boosterThing:BoosterThing;
 	public var timer:Timer;
+
+	var depthIndicator: DepthMeter;
 
 	public function new() {}
 
@@ -142,6 +145,8 @@ class PlayState extends elke.gamestate.GameState {
 
 		boosterThing = new BoosterThing(container);
 		timer = new Timer(container);
+		depthIndicator = new DepthMeter(container);
+		depthIndicator.alpha = 0;
 
 		newGame();
 	}
@@ -486,8 +491,18 @@ class PlayState extends elke.gamestate.GameState {
 		timer.x = Math.round((game.s2d.width - 256) * 0.5);
 		timer.y = 8;
 
+		depthIndicator.x = game.s2d.width - 16;
+		depthIndicator.y = 16;
+		depthIndicator.depth = currentDepth;
+
 		if (!started) {
 			return;
+		}
+
+		if (currentPhase == Sinking || currentPhase == ReelingIn || currentPhase == PreparingReel) {
+			depthIndicator.alpha += (1.0 - depthIndicator.alpha) * 0.2;
+		} else {
+			depthIndicator.alpha *= 0.8;
 		}
 
 		if (currentPhase == Sinking) {
@@ -545,11 +560,24 @@ class PlayState extends elke.gamestate.GameState {
 					var dy = hook.y - f.y;
 
 					if (dx * dx + dy * dy < rr) {
-						caughtFish.push(f);
-						allFish.remove(f);
-						caughtWeight += f.data.Weight;
 						if (boosting) {
+							var g = calcGold(f.data.SellPrice);
+							g = Math.ceil(0.3 * g);
+							var t = new PopText('+${g}', world);
+							gold += g;
+
+							t.text.textColor = 0xf3bd00;
+
 							f.kill();
+
+							t.x = hook.x;
+							t.y = hook.y;
+							allFish.remove(f);
+
+						} else {
+							caughtFish.push(f);
+							allFish.remove(f);
+							caughtWeight += f.data.Weight;
 						}
 					}
 				}

@@ -112,7 +112,7 @@
 					"SellPrice": 120,
 					"Amount": 20,
 					"FromDepth": 8000,
-					"ToDepth": 1100,
+					"ToDepth": 11000,
 					"OriginX": 123,
 					"OriginY": 20
 				}

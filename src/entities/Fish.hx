@@ -20,7 +20,7 @@ class Fish extends Entity2D {
         Basic2: [Left, Right, Left, Right, Left, Right, Left, Right],
         Eel: [Up, Down, Up, Down, Up, Down, Up, Down, Left, Right],
         Jelly: [Left, Left, Left, Right, Right, Right, Up, Up, Up, Down, Down, Down],
-        Biggo: [Right, Left, Up, Down, Right, Left, Up, Down, Left, Right, Left, Right],
+        Biggo: [Left, Right, Up, Down, Left, Right, Up, Down, Left, Right, Left, Right],
     }
 
     var vx = 0.0;
