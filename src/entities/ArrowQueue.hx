@@ -1,5 +1,6 @@
 package entities;
 
+import hxd.res.Sound;
 import h2d.RenderContext;
 import h2d.Object;
 import entities.Fish;
@@ -87,9 +88,19 @@ class ArrowQueue extends Entity2D {
 	public var onCatch:Fish->Void;
 	public var onMiss:Fish->Void;
 
+    var punchSounds: Array<Sound>;
+
 	public function new(?p) {
 		super(p);
 		queue = [];
+        punchSounds = [
+            hxd.Res.sound.punch1,
+            hxd.Res.sound.punch2,
+            hxd.Res.sound.punch3,
+            hxd.Res.sound.punch4,
+            hxd.Res.sound.punch5,
+            hxd.Res.sound.punch6,
+        ];
 	}
 
     public function isFinished() {
@@ -117,6 +128,8 @@ class ArrowQueue extends Entity2D {
 		var current = arrowCollections[0];
 		if (dir == current.arrows[0].dir) {
 			current.popArrow();
+            var s = punchSounds[Std.int(Math.random() * punchSounds.length)].play(false, 0.5);
+
 			if (current.arrows.length == 0) {
 				onCatch(current.fish);
                 popCollection();

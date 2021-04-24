@@ -86,10 +86,190 @@
 		},
 		{
 			"name": "items",
-			"columns": [],
-			"lines": [],
-			"separators": [],
-			"props": {}
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "ID",
+					"kind": null,
+					"scope": null
+				},
+				{
+					"typeStr": "14",
+					"name": "Icon",
+					"kind": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Name",
+					"kind": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Description",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "Price",
+					"kind": null
+				},
+				{
+					"typeStr": "5:Line,Strength,MoneyMultiplier",
+					"name": "Type",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "UpgradeIndex",
+					"kind": null
+				}
+			],
+			"lines": [
+				{
+					"ID": "Reel1",
+					"Name": "Long Line",
+					"Description": "More line means you can get further down into the depths",
+					"Price": 10,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 0,
+						"y": 0
+					},
+					"Type": 0,
+					"UpgradeIndex": 1
+				},
+				{
+					"ID": "Reel2",
+					"Name": "Longer Line",
+					"Description": "Longer line, for the cool fisher",
+					"Price": 30,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 1,
+						"y": 0
+					},
+					"Type": 0,
+					"UpgradeIndex": 2
+				},
+				{
+					"ID": "Reel3",
+					"Name": "Even Longer Line",
+					"Description": "Now you can get very far down",
+					"Price": 90,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 2,
+						"y": 0
+					},
+					"Type": 0,
+					"UpgradeIndex": 3
+				},
+				{
+					"ID": "Reel4",
+					"Name": "Scientist Line",
+					"Description": "This is used by the scientists to find weird fish in the depths",
+					"Price": 140,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 3,
+						"y": 0
+					},
+					"Type": 0,
+					"UpgradeIndex": 4
+				},
+				{
+					"ID": "Reel5",
+					"Name": "Line of Kings",
+					"Description": "This line was found in Atlantis. It's pretty good and extremely long.",
+					"Price": 400,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 4,
+						"y": 0
+					},
+					"Type": 0,
+					"UpgradeIndex": 5
+				},
+				{
+					"ID": "Pole1",
+					"Name": "Wooden Fishing Pole",
+					"Description": "A stronger pole will let you catch more and heavier fish.",
+					"Price": 20,
+					"Type": 1,
+					"UpgradeIndex": 1,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 0,
+						"y": 1
+					}
+				},
+				{
+					"ID": "Pole2",
+					"Name": "Woodener Fishing Pole",
+					"Description": "This pole can withstand heavier weights, I promise",
+					"Price": 40,
+					"Type": 1,
+					"UpgradeIndex": 2,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 1,
+						"y": 1
+					}
+				},
+				{
+					"ID": "Pole3",
+					"Name": "Aluminium Fishing Pole",
+					"Description": "A fishing pole made of metal. Can hold more fish",
+					"Price": 99,
+					"Type": 1,
+					"UpgradeIndex": 3,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 2,
+						"y": 1
+					}
+				},
+				{
+					"ID": "Pole4",
+					"Name": "Featherweight Steel Pole",
+					"Description": "An even stronger pole. It's super strong.",
+					"Price": 250,
+					"Type": 1,
+					"UpgradeIndex": 4,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 3,
+						"y": 1
+					}
+				},
+				{
+					"ID": "Pole5",
+					"Name": "Master Baiters Pole",
+					"Description": "The strongest fishing pole ever made. Engineered by NASA and designed by Jonny Fish, winner of fisher of the year 2005.",
+					"Price": 1000,
+					"Type": 1,
+					"UpgradeIndex": 5,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 4,
+						"y": 1
+					}
+				}
+			],
+			"props": {},
+			"separatorIds": [
+				"Pole1"
+			]
 		}
 	],
 	"customTypes": [],

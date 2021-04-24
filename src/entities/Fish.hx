@@ -1,12 +1,13 @@
 package entities;
 
+import elke.T;
 import gamestates.PlayState;
 import elke.graphics.Sprite;
 import elke.entity.Entity2D;
 
 class Fish extends Entity2D {
     public var data : Data.Fish;
-    var sprite : Sprite;
+    public var sprite : Sprite;
 
     public var fleeing = false;
     public var caught = false;
@@ -52,13 +53,29 @@ class Fish extends Entity2D {
         vy = Math.random() * -10.0 - 5.0;
     }
 
+    var bTime = 0.0;
+    public function bounce() {
+        bTime = 0.4;
+    }
+
     override function update(dt:Float) {
         super.update(dt);
         if (fleeing) {
             x += vx;
             y += vy;
             vy += gravity;
+
+            if (y > 0) {
+                vy *= 0.9;
+            }
+
             rotation = Math.atan2(vy, vx);
+        }
+
+        if (bTime > 0) {
+            bTime -= dt;
+            bTime = Math.max(0, bTime);
+            sprite.y = -5 + T.bounceOut(1.0 - (bTime / 0.4)) * 5;
         }
     }
 
