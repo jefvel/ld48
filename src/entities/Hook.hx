@@ -36,6 +36,11 @@ class Hook extends Entity2D {
 		sprite.animation.currentFrame = 0;
 	}
 
+    public function reset() {
+        sinking = false;
+        ax = ay = vx = vy = 0;
+    }
+
 	public function start() {
 		sinking = true;
 		px = x;
@@ -105,13 +110,11 @@ class Hook extends Entity2D {
             sprite.rotation = 0.6 * ax;
         }
 
-
         if (state.currentPhase == ReelingIn) {
             var dx = state.fisher.x + state.fisher.rodX - x;
             var dy = state.fisher.y + state.fisher.rodY - y;
             x += dx * 0.1;
             y += dy * 0.1;
         }
-
 	}
 }
