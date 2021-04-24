@@ -4,19 +4,19 @@
 
 
 ## Window
--D windowTitle=✔ Game
+-D windowTitle=Fishing Game
 -D windowSize=1280x720
 # Uncomment if you want a static sized window
-#-D windowFixed
+-D windowFixed
 
 
 ## HTML/Js Specific values
 # Twitter card
--D twitterSite=https://yourwebsite.com
--D twitterCreator=@yourusername
+-D twitterSite=https://twitter.com/jefvel
+-D twitterCreator=@jefvel
 # OpenGraph
--D ogUrl=https://yourwebsite.com
--D ogDescription=Your game Description
+-D ogUrl=https://twitter.com/jefvel
+-D ogDescription=Cool Fishing Game
 -D ogImage=https://link.to.your.img/photo.png
 
 

@@ -9,4 +9,5 @@ class Const {
     public static inline final PPU = 1.0 / PIXEL_SIZE_WORLD;
 
 	public static inline final TICK_RATE = 60;
+    public static inline final SEA_WIDTH = 400;
 }

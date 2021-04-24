@@ -195,5 +195,7 @@ class Game extends hxd.App {
 #else
         hxd.Res.initEmbed();
 #end
+        // Load CastleDB data.
+        Data.load(hxd.Res.data.entry.getText());
     }
 }

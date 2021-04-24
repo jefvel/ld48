@@ -10,21 +10,21 @@
 			"request": "launch",
 			"url": "${workspaceFolder}/build/web/index.html",
 			"webRoot": "${workspaceFolder}/build/web",
-			"preLaunchTask": "HeapsJS"
+			"preLaunchTask": "HaxeActiveConf"
 		},
 		{
 			"name": "HashLink(SDL)",
 			"request": "launch",
 			"type": "hl",
 			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "HeapsHL.SDL"
+			"preLaunchTask": "HaxeActiveConf"
 		},
 		{
 			"name": "HashLink(DirectX)",
 			"request": "launch",
 			"type": "hl",
 			"cwd": "${workspaceRoot}",
-			"preLaunchTask": "HeapsHL.DX"
+			"preLaunchTask": "HaxeActiveConf"
 		}
     ]
 }

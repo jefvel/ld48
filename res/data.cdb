@@ -1,5 +1,78 @@
 {
 	"sheets": [
+		{
+			"name": "fish",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "ID",
+					"kind": null,
+					"scope": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Name",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "Armor",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "ArrowCount",
+					"kind": null
+				},
+				{
+					"typeStr": "4",
+					"name": "Weight",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "SellPrice",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "Amount",
+					"kind": null
+				},
+				{
+					"typeStr": "4",
+					"name": "FromDepth",
+					"kind": null
+				},
+				{
+					"typeStr": "4",
+					"name": "ToDepth",
+					"kind": null
+				}
+			],
+			"lines": [
+				{
+					"ID": "Basic",
+					"Name": "Normal Fish",
+					"ArrowCount": 2,
+					"Weight": 0.2,
+					"SellPrice": 5,
+					"Amount": 20,
+					"FromDepth": 200,
+					"ToDepth": 2000,
+					"Armor": 0
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "items",
+			"columns": [],
+			"lines": [],
+			"separators": [],
+			"props": {}
+		}
 	],
 	"customTypes": [],
 	"compress": false

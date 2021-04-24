@@ -1,0 +1,31 @@
+{ "frames": [
+   {
+    "filename": "fisher 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 50, "h": 53 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 8, "y": 11, "w": 50, "h": 53 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "fisher 1.aseprite",
+    "frame": { "x": 51, "y": 0, "w": 50, "h": 53 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 8, "y": 11, "w": 50, "h": 53 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "fisher.png",
+  "format": "RGBA8888",
+  "size": { "w": 101, "h": 53 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

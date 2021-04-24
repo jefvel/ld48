@@ -1,0 +1,42 @@
+{ "frames": [
+   {
+    "filename": "fish1 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 23 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 5, "w": 32, "h": 23 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 1000
+   },
+   {
+    "filename": "fish1 1.aseprite",
+    "frame": { "x": 33, "y": 0, "w": 32, "h": 23 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 6, "w": 32, "h": 23 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 1000
+   },
+   {
+    "filename": "fish1 2.aseprite",
+    "frame": { "x": 0, "y": 24, "w": 32, "h": 23 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 5, "w": 32, "h": 23 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 1000
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "fish1.png",
+  "format": "RGBA8888",
+  "size": { "w": 65, "h": 47 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "dead", "from": 2, "to": 2, "direction": "forward" }
+  ]
+ }
+}

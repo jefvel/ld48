@@ -1,0 +1,31 @@
+{ "frames": [
+   {
+    "filename": "hook 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 11, "h": 14 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 0, "w": 11, "h": 14 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "hook 1.aseprite",
+    "frame": { "x": 12, "y": 0, "w": 1, "h": 1 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 1 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "hook.png",
+  "format": "RGBA8888",
+  "size": { "w": 13, "h": 14 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}
