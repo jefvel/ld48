@@ -20,11 +20,6 @@
 					"kind": null
 				},
 				{
-					"typeStr": "3",
-					"name": "ArrowCount",
-					"kind": null
-				},
-				{
 					"typeStr": "4",
 					"name": "Weight",
 					"kind": null
@@ -48,19 +43,42 @@
 					"typeStr": "4",
 					"name": "ToDepth",
 					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "OriginX",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "OriginY",
+					"kind": null
 				}
 			],
 			"lines": [
 				{
 					"ID": "Basic",
 					"Name": "Normal Fish",
-					"ArrowCount": 2,
 					"Weight": 0.2,
 					"SellPrice": 5,
 					"Amount": 60,
 					"FromDepth": 240,
 					"ToDepth": 2000,
-					"Armor": 0
+					"Armor": 0,
+					"OriginX": 15,
+					"OriginY": 8
+				},
+				{
+					"ID": "Basic2",
+					"Name": "Big Normal",
+					"Armor": 0,
+					"Weight": 0.5,
+					"SellPrice": 12,
+					"Amount": 40,
+					"FromDepth": 1500,
+					"ToDepth": 3500,
+					"OriginX": 31,
+					"OriginY": 18
 				}
 			],
 			"separators": [],

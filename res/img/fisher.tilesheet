@@ -1,19 +1,46 @@
 { "frames": [
    {
     "filename": "fisher 0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 50, "h": 53 },
+    "frame": { "x": 56, "y": 0, "w": 50, "h": 39 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 8, "y": 11, "w": 50, "h": 53 },
+    "spriteSourceSize": { "x": 8, "y": 25, "w": 50, "h": 39 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 1000
+   },
+   {
+    "filename": "fisher 1.aseprite",
+    "frame": { "x": 56, "y": 40, "w": 50, "h": 39 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 8, "y": 25, "w": 50, "h": 39 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 1000
+   },
+   {
+    "filename": "fisher 2.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 55, "h": 56 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 8, "w": 55, "h": 56 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 100
    },
    {
-    "filename": "fisher 1.aseprite",
-    "frame": { "x": 51, "y": 0, "w": 50, "h": 53 },
+    "filename": "fisher 3.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 55, "h": 56 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 8, "y": 11, "w": 50, "h": 53 },
+    "spriteSourceSize": { "x": 3, "y": 8, "w": 55, "h": 56 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 40
+   },
+   {
+    "filename": "fisher 4.aseprite",
+    "frame": { "x": 0, "y": 57, "w": 55, "h": 50 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 13, "w": 55, "h": 50 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 100
    }
@@ -23,9 +50,12 @@
   "version": "1.2.27-x64",
   "image": "fisher.png",
   "format": "RGBA8888",
-  "size": { "w": 101, "h": 53 },
+  "size": { "w": 106, "h": 107 },
   "scale": "1",
   "frameTags": [
+   { "name": "idle", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "waitpunch", "from": 2, "to": 2, "direction": "forward" },
+   { "name": "punch", "from": 3, "to": 4, "direction": "forward" }
   ]
  }
 }

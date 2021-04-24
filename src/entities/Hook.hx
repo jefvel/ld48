@@ -62,46 +62,56 @@ class Hook extends Entity2D {
 			return;
 		} 
 
-		if (state.leftPressed) {
-			ax -= moveSpeed;
-		}
-		if (state.rightPressed) {
-			ax += moveSpeed;
-		}
+        if (state.currentPhase == Sinking) {
+            if (state.leftPressed) {
+                ax -= moveSpeed;
+            }
+            if (state.rightPressed) {
+                ax += moveSpeed;
+            }
 
-		if (state.upPressed) {
-			ay -= moveSpeed;
-		}
-		if (state.downPressed) {
-			ay += moveSpeed;
-		}
+            if (state.upPressed) {
+                ay -= moveSpeed;
+            }
+            if (state.downPressed) {
+                ay += moveSpeed;
+            }
 
-        ax *= 0.9;
-        ay *= 0.9;
+            ax *= 0.9;
+            ay *= 0.9;
 
-        ax = Math.min(Math.max(ax, -maxAx), maxAx);
-        ay = Math.min(Math.max(ay, -maxAx), maxAx);
+            ax = Math.min(Math.max(ax, -maxAx), maxAx);
+            ay = Math.min(Math.max(ay, -maxAx), maxAx);
 
-		vx += ax;
-		vy += ay;
+            vx += ax;
+            vy += ay;
 
-		vx *= 0.9;
-		vy *= 0.9;
+            vx *= 0.9;
+            vy *= 0.9;
 
-		px += vx;
-		py += vy;
+            px += vx;
+            py += vy;
 
-        py += Math.min(0, (state.reelLength - state.currentDepth) - py) * 0.08;
+            py += Math.min(0, (state.reelLength - state.currentDepth) - py) * 0.08;
 
-		y = state.currentDepth + py;
-		x = px;
+            y = state.currentDepth + py;
+            x = px;
 
-        px = Math.max(10, px);
-        px = Math.min(Const.SEA_WIDTH - 10, px);
+            px = Math.max(10, px);
+            px = Math.min(Const.SEA_WIDTH - 10, px);
 
-        py = Math.max(-Const.SCREEN_HEIGHT * 0.5, py);
-        py = Math.min(Const.SCREEN_HEIGHT * 0.5, py);
+            py = Math.max(-Const.SCREEN_HEIGHT * 0.5, py);
+            py = Math.min(Const.SCREEN_HEIGHT * 0.5, py);
+            sprite.rotation = 0.6 * ax;
+        }
 
-        sprite.rotation = 0.6 * ax;
+
+        if (state.currentPhase == ReelingIn) {
+            var dx = state.fisher.x + state.fisher.rodX - x;
+            var dy = state.fisher.y + state.fisher.rodY - y;
+            x += dx * 0.1;
+            y += dy * 0.1;
+        }
+
 	}
 }

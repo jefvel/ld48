@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.ArrowQueue;
 import entities.Rope;
 import hxd.Key;
 import entities.Sky;
@@ -22,14 +23,23 @@ enum Direction {
 	Left;
 }
 
+enum FishingPhase {
+	Throwing;
+	Sinking;
+	ReelingIn;
+	Catching;
+}
+
 class PlayState extends elke.gamestate.GameState {
 	var container:Object;
 	var world:Object;
 
 	var fishContainer:Object;
 
-	var fisher:Fisher;
-	public var rope: Rope;
+	public var fisher:Fisher;
+
+	public var rope:Rope;
+
 	var hook:Hook;
 	var boat:Bitmap;
 
@@ -40,13 +50,18 @@ class PlayState extends elke.gamestate.GameState {
 
 	var maxFish = 1000;
 
+	public var maxCatchTime = 10.0;
+	public var catchTime = 10.0;
+
 	public var reelLength = 450;
 
 	public var catchRadius = 32.0;
 	public var maxWeight = 1.0;
-	
-	public var caughtFish: Array<Fish>;
+
+	public var caughtFish:Array<Fish>;
 	public var caughtWeight = 0.0;
+
+	public var killedFish: Array<Fish>;
 
 	public var currentDepth = 0.0;
 
@@ -57,6 +72,9 @@ class PlayState extends elke.gamestate.GameState {
 	public var boostTime = 0.0;
 
 	public var started = false;
+	public var currentPhase = Throwing;
+
+	public var arrows: ArrowQueue;
 
 	public function new() {}
 
@@ -74,7 +92,13 @@ class PlayState extends elke.gamestate.GameState {
 		hook = new Hook(this, world);
 		fishContainer = new Object(world);
 
+		arrows = new ArrowQueue(container);
+		arrows.onCatch = onCatch;
+		arrows.onMiss = onMiss;
+
 		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
+		boat.tile.dx = -32;
+		boat.tile.dy = -18;
 
 		fisher.y = 0;
 		fisher.x = Const.SEA_WIDTH >> 1;
@@ -82,23 +106,33 @@ class PlayState extends elke.gamestate.GameState {
 		reset();
 	}
 
-	var rodX = 34;
-	var rodY = -37;
+	function onCatch(f: Fish) {
+		caughtFish.remove(f);
+		f.remove();
+	}
+
+	function onMiss(f: Fish) {
+		caughtFish.remove(f);
+		f.flee();
+	}
 
 	public function reset() {
 		currentDepth = 0.0;
-		hook.x = fisher.x + rodX;
-		hook.y = fisher.y + rodY;
+		currentPhase = Throwing;
+		started = false;
+
+		hook.x = fisher.x + fisher.rodX;
+		hook.y = fisher.y + fisher.rodY;
 
 		allFish = [];
 		caughtFish = [];
+		killedFish = [];
 		caughtWeight = 0.0;
 		fishContainer.removeChildren();
 
-		boat.tile.dx = -32;
-		boat.tile.dy = -18;
 		boat.x = fisher.x;
-		boat.y = fisher.y;
+
+		arrows.reset();
 
 		spawnFish();
 	}
@@ -116,6 +150,32 @@ class PlayState extends elke.gamestate.GameState {
 		started = true;
 		this.boostTime = boostTime;
 		hook.start();
+
+		catchTime = maxCatchTime;
+		currentPhase = Sinking;
+	}
+
+	function reelIn() {
+		catchTime = 0.0;
+		currentPhase = ReelingIn;
+		timeUntilCatching = totalTimeUntilCatching;
+	}
+
+	function startCatch() {
+		currentPhase = Catching;
+		arrows.reset();
+		timeUntilDone = totalTimeUntilDone;
+		for (f in caughtFish) {
+			if (f.dead) {
+				onCatch(f);
+				continue;
+			}
+			arrows.addArrow(f, f.pattern);
+		}
+	}
+
+	function finishRound() {
+		reset();
 	}
 
 	public var downPressed = false;
@@ -126,8 +186,16 @@ class PlayState extends elke.gamestate.GameState {
 	function directionPressed(dir:Direction) {
 		if (!started) {
 			if (dir == Down) {
-				launchHook(1.9);
+				launchHook(2.0);
 				return;
+			}
+		}
+
+		if (currentPhase == Catching) {
+			if (!arrows.isFinished()) {
+				if(arrows.onDirPress(dir)) {
+					fisher.punch();
+				}
 			}
 		}
 	}
@@ -200,64 +268,118 @@ class PlayState extends elke.gamestate.GameState {
 
 	var vy = 0.0;
 
+	var totalTimeUntilCatching = 1.0;
+	var timeUntilCatching = 0.4;
+
+	var timeUntilDone = 0.6;
+	var totalTimeUntilDone = 1.6;
+
 	override function update(dt:Float) {
 		super.update(dt);
-		rope.fromX = fisher.x + rodX;
-		rope.fromY = fisher.y + rodY;
+		rope.fromX = fisher.x + fisher.rodX;
+		rope.fromY = fisher.y + fisher.rodY;
 
 		world.x = (-Const.SEA_WIDTH * 0.5 + game.s2d.width * 0.5);
 		world.y = (-currentDepth + game.s2d.height * 0.5);
+		time += dt;
+
+		boat.y = Math.round(fisher.y + Math.sin(time) * 2);
 
 		if (!started) {
 			return;
 		}
 
-		boostTime -= dt;
-		var boosting = false;
+		if (currentPhase == Sinking) {
+			catchTime -= dt;
+			boostTime -= dt;
 
-		if (boostTime > 0) {
-			boosting = true;
-		} else {
-			boostTime = 0.0;
+			var boosting = false;
+
+			if (boostTime > 0) {
+				boosting = true;
+			} else {
+				boostTime = 0.0;
+			}
+
+			var dy = (reelLength - currentDepth) * 0.02;
+
+			vy = sinkSpeed;
+			sinkMultiplier += (1.0 - sinkMultiplier) * 0.2;
+
+			if (boosting) {
+				sinkMultiplier = boostMultiplier;
+			}
+
+			vy *= sinkMultiplier;
+
+			if (Math.abs(reelLength - currentDepth) < 10.0) {
+				catchTime *= 0.99;
+			}
+
+			if (caughtWeight >= maxWeight) {
+				catchTime *= 0.5;
+			}
+
+			dy = Math.min(dy, vy);
+
+			currentDepth += dy;
+
+			var rr = catchRadius * catchRadius;
+			if (caughtWeight < maxWeight) {
+				for (f in allFish) {
+					var dx = hook.x - f.x;
+					var dy = hook.y - f.y;
+
+					if (dx * dx + dy * dy < rr) {
+						caughtFish.push(f);
+						allFish.remove(f);
+						caughtWeight += f.data.Weight;
+						if (boosting) {
+							f.kill();
+						}
+					}
+				}
+			}
+
+			if (catchTime <= 0.0) {
+				reelIn();
+				return;
+			}
 		}
 
-		var dy = (reelLength - currentDepth) * 0.02;
+		for (f in caughtFish) {
+			var dx = hook.x - f.x;
+			var dy = hook.y + 7 - f.y;
 
-		vy = sinkSpeed;
-		sinkMultiplier += (1.0 - sinkMultiplier) * 0.2;
-		if (boosting) {
-			sinkMultiplier = boostMultiplier;
+			if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
+				f.rot = Math.atan2(dy, dx);
+			}
+
+			f.rotation = f.rot + (Math.random() * 0.1 - 0.05);
+
+			f.x += dx * 0.9;
+			f.y += dy * 0.9;
 		}
 
-		vy *= sinkMultiplier;
-
-		dy = Math.min(dy, vy);
-
-		currentDepth += dy;
-
-		var rr = catchRadius * catchRadius;
-		if (caughtWeight < maxWeight) {
-			for (f in allFish) {
-				var dx = hook.x - f.x;
-				var dy = hook.y - f.y;
-
-				if (dx * dx + dy * dy < rr) {
-					caughtFish.push(f);
-					allFish.remove(f);
-					caughtWeight += f.data.Weight;
+		if (currentPhase == ReelingIn) {
+			var vy = -currentDepth * 0.1;
+			vy = Math.max(-10, vy);
+			currentDepth = Math.max(0.0, hook.y);
+			if (currentDepth <= 10) {
+				timeUntilCatching -= dt;
+				if (timeUntilCatching <= 0) {
+					startCatch();
 				}
 			}
 		}
 
-
-		for (f in caughtFish) {
-			var dx = hook.x - f.x; 
-			var dy = hook.y + 7 - f.y; 
-
-			f.rotation = Math.atan2(dy, dx) + (Math.random() * 0.1 - 0.05);
-
-			f.x += dx * 0.9;
-			f.y += dy * 0.9;
+		if (currentPhase == Catching) {
+			if (arrows.isFinished()) {
+				timeUntilDone -= dt;
+				if (timeUntilDone <= 0) {
+					finishRound();
+				}
+			}
 		}
 	}
 
