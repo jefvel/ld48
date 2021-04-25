@@ -1,5 +1,6 @@
 package entities;
 
+import elke.Game;
 import elke.T;
 import gamestates.PlayState;
 import elke.graphics.Sprite;
@@ -21,6 +22,7 @@ class Fish extends Entity2D {
         Eel: [Up, Down, Up, Down, Up, Down, Up, Down, Left, Right],
         Jelly: [Left, Left, Left, Right, Right, Right, Up, Up, Up, Down, Down, Down],
         Biggo: [Left, Right, Up, Down, Left, Right, Up, Down, Left, Right, Left, Right],
+        Cthulhu: [Up, Left, Down, Right, Up, Left, Down, Right, Up, Left, Right, Left, Up, Left, Right, Left, Down, Right, Up, Left],
     }
 
     var vx = 0.0;
@@ -36,6 +38,7 @@ class Fish extends Entity2D {
             case Eel: hxd.Res.img.fish2_tilesheet.toSprite2D(this);
             case Jelly: hxd.Res.img.fish3_tilesheet.toSprite2D(this);
             case Biggo: hxd.Res.img.fish4_tilesheet.toSprite2D(this);
+            case Cthulhu: hxd.Res.img.crumbo_tilesheet.toSprite2D(this);
         }
 
         sprite.originX = data.OriginX;
@@ -47,6 +50,7 @@ class Fish extends Entity2D {
             case Eel: fishPatterns.Eel;
             case Jelly: fishPatterns.Jelly;
             case Biggo: fishPatterns.Biggo;
+            case Cthulhu: fishPatterns.Cthulhu;
         }
 
         x = Math.round(Math.random() * Const.SEA_WIDTH);
@@ -67,8 +71,26 @@ class Fish extends Entity2D {
         bTime = 0.4;
     }
 
+    var rotting = false;
+    var rotTime = 3.0;
+    public function rotAway() {
+        rotting = true;
+    }
+
+    var plumsed = false;
+
     override function update(dt:Float) {
         super.update(dt);
+        if (rotting) {
+            rotTime -= dt;
+            if (rotTime < 0) {
+                alpha -= dt;
+                if (alpha < 0) {
+                    remove();
+                }
+            }
+        }
+
         if (fleeing) {
             x += vx;
             y += vy;
@@ -76,6 +98,10 @@ class Fish extends Entity2D {
 
             if (y > 0) {
                 vy *= 0.9;
+                if (!plumsed) {
+                    plumsed = true;
+                    Game.instance.sound.playWobble(hxd.Res.sound.splash, 0.2);
+                }
             }
 
             rotation = Math.atan2(vy, vx);
