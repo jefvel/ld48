@@ -109,12 +109,24 @@
 					"Name": "Big Evil",
 					"Armor": 0,
 					"Weight": 6,
-					"SellPrice": 120,
+					"SellPrice": 170,
 					"Amount": 20,
 					"FromDepth": 8000,
 					"ToDepth": 11000,
 					"OriginX": 123,
 					"OriginY": 20
+				},
+				{
+					"ID": "Cthulhu",
+					"Name": "He's The Lord",
+					"Armor": 0,
+					"Weight": 30,
+					"SellPrice": 3000,
+					"Amount": 1,
+					"FromDepth": 13000,
+					"ToDepth": 13000,
+					"OriginX": 64,
+					"OriginY": 64
 				}
 			],
 			"separators": [],
@@ -191,8 +203,8 @@
 				{
 					"ID": "Reel3",
 					"Name": "Even Longer Line",
-					"Description": "Now you can get very far down",
-					"Price": 200,
+					"Description": "With this you can get very far down",
+					"Price": 300,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -206,7 +218,7 @@
 					"ID": "Reel4",
 					"Name": "Scientist Line",
 					"Description": "This is used by the scientists to find weird fish in the depths",
-					"Price": 444,
+					"Price": 640,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -219,8 +231,8 @@
 				{
 					"ID": "Reel5",
 					"Name": "Line of Kings",
-					"Description": "This line was found in Atlantis. It's pretty good and extremely long.",
-					"Price": 900,
+					"Description": "This line was found in Atlantis. It's pretty good and can reach any sea floor.",
+					"Price": 950,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,

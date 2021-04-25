@@ -27,6 +27,10 @@ class Shop extends Entity2D {
     var coin: Bitmap;
 
 
+    var buttons: ShopButtons;
+
+    public var onClose : Void -> Void;
+
     public function new(state: PlayState, ?p) {
         super(p);
         bg = new Bitmap(Tile.fromColor(0xf3e181, 1,1, 0.2), this);
@@ -43,6 +47,11 @@ class Shop extends Entity2D {
         itemList = new ItemList(state, container);
         itemList.y = sign.y + 48;
         itemList.x = sign.x + sign.tile.width + 32;
+
+        buttons = new ShopButtons(container);
+        buttons.y = itemList.y + 4;
+        buttons.x = itemList.x + 248;
+
         cursor = new ScaleGrid(hxd.Res.img.frame.toTile(), 4, 4, 4, 4, this);
 
         cursor.width = 200;
@@ -53,7 +62,11 @@ class Shop extends Entity2D {
         goldText.y = sign.y;
         coin = new Bitmap(hxd.Res.img.coin.toTile(), goldText);
         coin.y = -0;
-        coin.x = -goldText.textWidth - 4;
+        coin.x = -goldText.textWidth - 16;
+
+        buttons.goFishBtn.onClick = e -> {
+            onClose();
+        }
         
         this.state = state;
     }
@@ -65,6 +78,8 @@ class Shop extends Entity2D {
         container.x = -50;
         showing = true;
         itemList.refreshItems();
+        itemListSelected = true;
+        itemList.selectedIndex = 0;
     }
 
     public function close() {
@@ -76,6 +91,12 @@ class Shop extends Entity2D {
         keeper.resetSay();
         if (d == Left || d == Right) {
             itemListSelected = !itemListSelected;
+            if (!itemListSelected) {
+                buttons.selectedIndex = itemList.selectedIndex;
+                if (buttons.selectedIndex >= buttons.buttonsList.length) {
+                    buttons.selectedIndex = buttons.buttonsList.length - 1;
+                }
+            }
         }
 
         if (itemListSelected) {
@@ -84,6 +105,13 @@ class Shop extends Entity2D {
             }
             if (d == Down) {
                 itemList.selectNext();
+            }
+        } else {
+            if (d == Up) {
+                buttons.selectPrevious();
+            }
+            if (d == Down) {
+                buttons.selectNext();
             }
         }
     }
@@ -96,6 +124,11 @@ class Shop extends Entity2D {
                 if (item.info.Price <= state.gold) {
                     purchaseItem(item.info);
                 }
+            }
+        } else {
+            var btn = buttons.getSelectedItem();
+            if (btn.name == "exit") {
+                onClose();
             }
         }
     }
@@ -137,6 +170,19 @@ class Shop extends Entity2D {
             cursor.height = item.height;
 
             keeper.say(item.info.Description);
+        } else {
+            var item = buttons.getSelectedItem();
+            if (item == null) {
+                return;
+            }
+
+            var b = item.localToGlobal();
+            cursor.x = b.x;
+            cursor.y = b.y;
+
+            cursor.width = item.width;
+            cursor.height = item.height;
+            keeper.say(item.description);
         }
     }
 
@@ -152,7 +198,7 @@ class Shop extends Entity2D {
             alpha += (1.0 - alpha) * 0.2;
             bg.alpha += (1.0 - alpha) * 0.1;
 
-            goldText.x = itemList.x + 240;
+            goldText.x = itemList.x + 232;
             goldText.text = '${state.gold}';
             coin.x = -49;
 

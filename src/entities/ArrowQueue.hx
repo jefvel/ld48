@@ -142,12 +142,19 @@ class ArrowQueue extends Entity2D {
 		}
 	}
 
+    public function failAll() {
+        for(c in arrowCollections) {
+            onMiss(c.fish);
+        }
+        arrowCollections = [];
+    }
+
 	override function update(dt:Float) {
 		super.update(dt);
 		var sx = 0.0;
 
 		x = getScene().width >> 1;
-        y = 64;
+        y = 78;
 
 		for (c in arrowCollections) {
 			c.x += (sx - c.x) * 0.3;

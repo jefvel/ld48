@@ -6,7 +6,7 @@ import elke.graphics.Sprite;
 import elke.entity.Entity2D;
 
 class Hook extends Entity2D {
-	var sprite:Sprite;
+	public var sprite:Sprite;
 
 	var sinking = false;
 
@@ -18,9 +18,9 @@ class Hook extends Entity2D {
 	var sinkSpeed = 2.0;
 	var boostMultiplier = 7.0;
 	var state:PlayState;
-	var moveSpeed = 0.1;
+	var moveSpeed = 0.5;
 
-    var maxAx = 0.5;
+    var maxAx = 0.8;
 
 	var px = 0.0;
 	var py = 0.0;
@@ -32,8 +32,7 @@ class Hook extends Entity2D {
 		sprite = hxd.Res.img.hook_tilesheet.toSprite2D(this);
 		sprite.originX = 8;
         sprite.originY = 1;
-		sprite.animation.stop();
-		sprite.animation.currentFrame = 0;
+        sprite.animation.play("idle");
 	}
 
     public function reset() {
