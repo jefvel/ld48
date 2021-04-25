@@ -33,7 +33,7 @@ class WonGameState extends GameState {
 
         var accTxt = new Text(fnt, diploma);
         accTxt.textColor = 0x4b314e;
-        var accuracy = playState.missed == 0 || playState.caught == 0 ? 'Perfect' : '${Math.round((playState.missed / playState.caught) * 100)}%';
+        var accuracy = playState.missed == 0 || playState.caught == 0 ? 'Perfect' : '${Math.round((playState.caught / (playState.missed + playState.caught)) * 100)}%';
         accTxt.text = accuracy;
         accTxt.x = 284;
         accTxt.y = 125;
@@ -57,6 +57,12 @@ class WonGameState extends GameState {
         timeTxt.text = '${m}:${s}';
         timeTxt.x = 211;
         timeTxt.y = 164;
+
+        var goldTxt = new Text(fnt, diploma);
+        goldTxt.textColor = 0x4b314e;
+        goldTxt.text = '${playState.totalGold}';
+        goldTxt.x = 214;
+        goldTxt.y = 180;
 
         positionStuff();
 

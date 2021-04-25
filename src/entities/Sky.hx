@@ -6,7 +6,7 @@ import h2d.Bitmap;
 
 class Sky extends Bitmap {
 	public function new(?p) {
-		var t = Tile.fromColor(0x68c2d3);
+		var t = Tile.fromColor(0x68a5d3);
 		super(t, p);
 	}
 

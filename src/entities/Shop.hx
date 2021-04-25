@@ -78,7 +78,6 @@ class Shop extends Entity2D {
         debtText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), buttons);
         debtText.textAlign = Center;
         debtText.x = Math.round(buttons.payDebtBtn.width * 0.5);
-        debtText.y = -debtText.textHeight - 8;
 
         this.state = state;
     }
@@ -246,7 +245,13 @@ class Shop extends Entity2D {
             goldText.text = '${state.gold}';
             coin.x = -55;
 
-            debtText.text = 'Debt: ${state.currentDebt}';
+            if (state.gameMode == Normal) {
+                debtText.text = 'Day ${state.currentRound - 1}/${state.totalRounds}\nDebt: ${state.currentDebt}';
+            } else {
+                debtText.text = 'Debt: ${state.currentDebt}';
+            }
+
+            debtText.y = -debtText.textHeight - 8;
 
             buttons.payDebtBtn.alpha = (state.gold >= state.currentDebt) ? 1.0 : 0.6;
 

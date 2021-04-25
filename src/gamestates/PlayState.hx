@@ -67,6 +67,7 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var currentDebt = 15000;
 
+	public var totalGold = 0;
 	public var gold = 0;
 	public var missed = 0;
 	public var caught = 0;
@@ -209,6 +210,7 @@ class PlayState extends elke.gamestate.GameState {
 
 	public function newGame() {
 		currentRound = 1;
+		totalGold = 0;
 		gold = 0;
 		missed = 0;
 		caught = 0;
@@ -367,6 +369,8 @@ class PlayState extends elke.gamestate.GameState {
 			waveNoise = null;
 		}
 
+		depthIndicator.full = false;
+
 		fishingMusic = hxd.Res.sound.fishingsong.play(true, 0.5);
 	}
 
@@ -425,12 +429,17 @@ class PlayState extends elke.gamestate.GameState {
 		}
 	}
 
+	function giveGold(amount: Int) {
+		totalGold += amount;
+		gold += amount;
+	}
+
 	function finishRound() {
 		currentPhase = Shopping;
 		currentRound++;
 
 		for (f in killedFish) {
-			gold += Math.ceil(f.data.SellPrice * goldMultiplier);
+			giveGold(Math.ceil(f.data.SellPrice * goldMultiplier));
 		}
 
 		if (currentRound > totalRounds) {
@@ -624,7 +633,7 @@ class PlayState extends elke.gamestate.GameState {
 			}
 
 			if (e.keyCode == Key.M) {
-				gold += 100;
+				giveGold(100);
 			}
 			if (e.keyCode == Key.U) {
 				shake();
@@ -880,7 +889,7 @@ class PlayState extends elke.gamestate.GameState {
 
 							var g = calcGold(f.data.SellPrice);
 							g = Math.ceil(0.3 * g);
-							gold += g;
+							giveGold(g);
 							var t = new PopText('+${g}', world);
 							t.text.textColor = 0xf3bd00;
 							t.x = hook.x;
@@ -903,6 +912,8 @@ class PlayState extends elke.gamestate.GameState {
 						}
 					}
 				}
+			} else {
+				depthIndicator.full = true;
 			}
 
 			var mineR2 = 26 * 26;
@@ -929,7 +940,7 @@ class PlayState extends elke.gamestate.GameState {
 					} else {
 						var g = 50;
 						var p = new PopText('*GUNSHOTS* +${g}', world);
-						gold += g;
+						giveGold(g);
 						p.text.textColor = 0xf3bd00;
 						p.x = hook.x;
 						p.y = hook.y;
