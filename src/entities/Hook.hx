@@ -1,5 +1,6 @@
 package entities;
 
+import elke.Game;
 import h2d.RenderContext;
 import gamestates.PlayState;
 import elke.graphics.Sprite;
@@ -25,9 +26,17 @@ class Hook extends Entity2D {
 	var px = 0.0;
 	var py = 0.0;
 
+    public var aura : Sprite;
+
 	public function new(state:PlayState, ?p) {
 		super(p);
 		this.state = state;
+
+        aura = hxd.Res.img.magnetaura_tilesheet.toSprite2D(this);
+        aura.visible = false;
+        aura.originX = aura.originY = 32;
+        aura.animation.play();
+        aura.y = 6;
 
 		sprite = hxd.Res.img.hook_tilesheet.toSprite2D(this);
 		sprite.originX = 8;
@@ -53,6 +62,8 @@ class Hook extends Entity2D {
 		state.rope.toY = y;
     }
 
+    var inWater = false;
+
     var ax = 0.0;
     var ay = 0.0;
     var t = 0.0;
@@ -65,6 +76,17 @@ class Hook extends Entity2D {
             sprite.rotation = Math.sin(t * 1.6) * 0.4;
 			return;
 		} 
+
+        if (!inWater) {
+            if (y > 0) {
+                Game.instance.sound.playWobble(hxd.Res.sound.splash);
+                inWater = true;
+            }
+        } else {
+            if (y < 0) {
+                inWater = false;
+            }
+        }
 
         if (state.currentPhase == Sinking) {
             if (state.leftPressed) {

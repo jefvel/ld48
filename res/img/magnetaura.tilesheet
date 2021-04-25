@@ -1,0 +1,76 @@
+{ "frames": [
+   {
+    "filename": "magnetaura 0.aseprite",
+    "frame": { "x": 0, "y": 38, "w": 56, "h": 24 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 4, "y": 19, "w": 56, "h": 24 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "magnetaura 1.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 55, "h": 37 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 8, "w": 55, "h": 37 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "magnetaura 2.aseprite",
+    "frame": { "x": 56, "y": 0, "w": 33, "h": 48 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 7, "y": 4, "w": 33, "h": 48 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "magnetaura 3.aseprite",
+    "frame": { "x": 138, "y": 0, "w": 24, "h": 46 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 7, "y": 8, "w": 24, "h": 46 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "magnetaura 4.aseprite",
+    "frame": { "x": 90, "y": 34, "w": 40, "h": 37 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 4, "y": 18, "w": 40, "h": 37 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "magnetaura 5.aseprite",
+    "frame": { "x": 90, "y": 0, "w": 47, "h": 33 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 5, "y": 23, "w": 47, "h": 33 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "magnetaura 6.aseprite",
+    "frame": { "x": 0, "y": 63, "w": 51, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 28, "w": 51, "h": 16 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "magnetaura.png",
+  "format": "RGBA8888",
+  "size": { "w": 162, "h": 79 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

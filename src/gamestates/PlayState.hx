@@ -1,5 +1,10 @@
 package gamestates;
 
+import hxd.snd.Channel;
+import elke.graphics.Transition;
+import hxd.Perlin;
+import h2d.Text;
+import entities.DayText;
 import entities.DepthMeter;
 import entities.Timer;
 import entities.BoosterThing;
@@ -16,6 +21,11 @@ import entities.Fish;
 import entities.Fisher;
 import h2d.Object;
 import hxd.Event;
+
+enum GameMode {
+	Normal;
+	Chill;
+}
 
 enum Direction {
 	Up;
@@ -52,9 +62,19 @@ class PlayState extends elke.gamestate.GameState {
 
 	var allFish:Array<Fish>;
 
+	public var gameMode = Normal;
+
+	public var currentDebt = 15000;
+
 	public var gold = 0;
+	public var missed = 0;
+	public var caught = 0;
+	public var maxCombo = 0;
+
+	public var currentCombo = 0;
 
 	public var currentRound = 0;
+	public var totalRounds = 30;
 
 	public var maxBoostTime = 2.0;
 
@@ -71,6 +91,13 @@ class PlayState extends elke.gamestate.GameState {
 	var multipliers = [1.0, 1.2, 1.5, 1.9, 2.3, 3];
 
 	public var catchRadius = 50.0;
+	var catchRadiuses = [50, 100.0];
+
+	public var mineProtection = false;
+	var protections = [false, true];
+
+	public var playTime = 0.0;
+
 	public var maxWeight = 1.0;
 
 	public var punchTime = 5.0;
@@ -105,7 +132,18 @@ class PlayState extends elke.gamestate.GameState {
 
 	var depthIndicator: DepthMeter;
 
-	public function new() {}
+	var noise : Perlin;
+
+	var waveNoise: Channel;
+
+	var fishingMusic: Channel;
+	var fightingMusic: Channel;
+	var shoppingMusic: Channel;
+
+	public function new(mode: GameMode) {
+		this.gameMode = mode;
+		noise = new Perlin();
+	}
 
 	override function onEnter() {
 		super.onEnter();
@@ -151,6 +189,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		shop = new Shop(this, container);
 		shop.onClose = closeShop;
+		shop.onWin = winGame;
 
 		boosterThing = new BoosterThing(container);
 		timer = new Timer(container);
@@ -161,7 +200,18 @@ class PlayState extends elke.gamestate.GameState {
 	}
 
 	public function newGame() {
-		currentRound = 0;
+		currentRound = 1;
+		gold = 0;
+		missed = 0;
+		caught = 0;
+		maxCombo = 0;
+		playTime = 0.0;
+
+		if (gameMode == Normal) {
+			maxPunchTime = 8.4;
+		} else {
+			maxPunchTime = 10.0;
+		}
 
 		resetPurchases();
 		reset();
@@ -174,6 +224,8 @@ class PlayState extends elke.gamestate.GameState {
 		unlocked.set(Strength, 0);
 		unlocked.set(MoneyMultiplier, 0);
 		unlocked.set(Speed, 0);
+		unlocked.set(Magnet, 0);
+		unlocked.set(Protection, 0);
 	}
 
 	function onCatch(f:Fish) {
@@ -181,17 +233,36 @@ class PlayState extends elke.gamestate.GameState {
 
 		punchTime = maxPunchTime;
 		game.sound.playWobble(hxd.Res.sound._catch, 0.3);
+		caught ++;
+
+		currentCombo ++;
 
 		putFishOnPile(f);
 	}
 
 	function onMiss(f:Fish) {
 		caughtFish.remove(f);
+		missed ++;
+		if (currentCombo > maxCombo) {
+			maxCombo = currentCombo;
+		}
+
+		currentCombo = 0;
+		if (gameMode == Normal) {
+			punchTime *= 0.8;
+		} else {
+			punchTime *= 0.96;
+		}
+
+		game.sound.playWobble(hxd.Res.sound.ouch, 0.3);
+
 		f.flee();
 	}
 
 	public function reset() {
 		currentDepth = 0.0;
+		currentCombo = 0;
+
 		currentPhase = Throwing;
 		started = false;
 
@@ -214,11 +285,28 @@ class PlayState extends elke.gamestate.GameState {
 		reelLength = lengths[unlocked.get(Line)];
 		sinkSpeed = speeds[unlocked.get(Speed)];
 		goldMultiplier = multipliers[unlocked.get(MoneyMultiplier)];
+		catchRadius = catchRadiuses[unlocked.get(Magnet)];
+		mineProtection = protections[unlocked.get(Protection)];
+
+		if (unlocked.get(Magnet) > 0) {
+			hook.aura.visible = true;
+		} else {
+			hook.aura.visible = false;
+		}
 
 		boosterThing.reset();
 		boosterThing.fadeIn();
 
 		spawnFish();
+		var t = gameMode == Chill ? 'Day ${currentRound}' : 'Day ${currentRound} out of ${totalRounds}';
+		var dayText = new DayText(t, currentDebt, game.s2d);
+		dayText.x = Math.round(game.s2d.width * 0.5);
+		dayText.y = Math.round(game.s2d.height * 0.18);
+
+		if (waveNoise != null) {
+			waveNoise.stop();
+		}
+		waveNoise = hxd.Res.sound.waves.play(true, 0.1);
 	}
 
 	public function spawnFish() {
@@ -246,6 +334,11 @@ class PlayState extends elke.gamestate.GameState {
 		catchTime = maxCatchTime;
 		currentPhase = Sinking;
 		game.sound.playWobble(hxd.Res.sound.throwline, 0.5);
+
+		if (waveNoise != null) {
+			waveNoise.stop();
+			waveNoise = null;
+		}
 	}
 
 	function reelIn() {
@@ -261,6 +354,10 @@ class PlayState extends elke.gamestate.GameState {
 
 		arrows.reset();
 		timeUntilDone = totalTimeUntilDone;
+		if (fightingMusic != null) {
+			fightingMusic.stop();
+		}
+
 
 		for (f in caughtFish) {
 			//if (f.dead) {
@@ -269,11 +366,33 @@ class PlayState extends elke.gamestate.GameState {
 			//}
 			arrows.addArrow(f, f.pattern);
 		}
+
+		if (!arrows.isFinished()) {
+			fightingMusic = hxd.Res.sound.fightingmusic.play(true, 0.5);
+		}
+	}
+
+	function stopFightMusic() {
+		if (fightingMusic != null) {
+			var f = fightingMusic;
+			fightingMusic.fadeTo(0.0, 0.6, () -> {
+				f.stop();
+			});
+			fightingMusic = null;
+
+			var snds = [
+				hxd.Res.sound.yeah1,
+				hxd.Res.sound.yeah2,
+			];
+
+			snds[Std.int(Math.random() * snds.length)].play(false, 0.4);
+		}
 	}
 
 	function finishRound() {
 		currentPhase = Shopping;
 		currentRound++;
+
 
 		for (f in killedFish) {
 			gold += Math.ceil(f.data.SellPrice * goldMultiplier);
@@ -282,14 +401,27 @@ class PlayState extends elke.gamestate.GameState {
 		openShop();
 	}
 
+	function stopShopMusic() {
+		if (shoppingMusic != null) {
+			var f = shoppingMusic;
+			shoppingMusic.fadeTo(0.0, 0.3, () -> {
+				f.stop();
+			});
+			shoppingMusic = null;
+		}
+	}
+
 	function openShop() {
 		shop.show();
+
+		shoppingMusic = hxd.Res.sound.shopmusic.play(true, 0.34);
 		hxd.Res.sound.openshop.play(false, 0.6);
 		world.filter = new h2d.filter.Blur(5, 0.9, 1.0);
 	}
 
 	function closeShop() {
 		shop.close();
+		stopShopMusic();
 		hxd.Res.sound.closeshop.play(false, 0.6);
 		world.filter = null;
 		reset();
@@ -319,10 +451,11 @@ class PlayState extends elke.gamestate.GameState {
 			if (!arrows.isFinished()) {
 				if (arrows.onDirPress(dir)) {
 					fisher.punch();
+					shake();
 					var splatter = hxd.Res.img.splatters_tilesheet.toSprite2D(world);
-					splatter.x = hook.x + Math.random() * 4 - 2;
+					splatter.x = hook.x + Math.random() * 4 + 5;
 					splatter.y = hook.y + 10 + Math.random() * 4 - 2;
-					splatter.originX = splatter.originY = 16;
+					splatter.originX = splatter.originY = 32;
 
 					var animations = ["hit1", "hit2", "hit3", "hit4", "hit5",];
 
@@ -432,6 +565,13 @@ class PlayState extends elke.gamestate.GameState {
 			if (e.keyCode == Key.M) {
 				gold += 100;
 			}
+			if (e.keyCode == Key.U) {
+				shake();
+			}
+
+			if (e.keyCode == Key.NUMPAD_ENTER) {
+				winGame();
+			}
 		}
 		#end
 	}
@@ -474,8 +614,58 @@ class PlayState extends elke.gamestate.GameState {
 		return Math.ceil(price * goldMultiplier);
 	}
 
+	function fadeOutAllMusic() {
+		if (waveNoise != null) {
+			waveNoise.fadeTo(0, 0.6, () -> {
+				waveNoise.stop();
+				waveNoise = null;
+			});
+		}
+
+		if (fightingMusic != null) {
+			fightingMusic.fadeTo(0, 0.6, () -> {
+				fightingMusic.stop();
+				fightingMusic = null;
+			});
+		}
+
+		if (shoppingMusic != null) {
+			shoppingMusic.fadeTo(0, 0.6, () -> {
+				shoppingMusic.stop();
+				shoppingMusic = null;
+			});
+		}
+	}
+
+	public var wonGame = false;
+	public function winGame() {
+		if (wonGame) {
+			return;
+		}
+		wonGame = true;
+		fadeOutAllMusic();
+		Transition.to(() -> {
+			game.states.setState(new WonGameState(this));
+		}, 2.0, 2.0);
+	}
+
+	var shakeTime = 0.0;
+	var totalShakeTime = 0.2;
+	var shakeIntensity = 2.0;
+	var shakeStart = 0.0;
+
+	public function shake(intensity = 2.0, time = 0.1) {
+		shakeTime = 0.0;
+		totalShakeTime = time;
+		shakeIntensity = intensity;
+		shakeStart = Math.random() * 100.0;
+	}
+
 	override function update(dt:Float) {
 		super.update(dt);
+
+		playTime += dt;
+
 		if (shop.showing) {
 			world.x += (500 - world.x) * 0.1;
 		} else {
@@ -494,6 +684,21 @@ class PlayState extends elke.gamestate.GameState {
 
 		world.y = (-currentDepth + game.s2d.height * 0.5);
 		time += dt;
+
+		if (totalShakeTime > 0) {
+			shakeTime += dt;
+			var st = (shakeTime / totalShakeTime);
+			st = Math.max(0, Math.min(1, st));
+
+			var sit = (1.0 - st);
+			var shakeX = noise.perlin1D(4000, shakeStart + st * 30, 4, 0.5);
+			var shakeY = noise.perlin1D(2000, shakeStart + st * 30, 4, 0.5);
+			shakeX = (shakeX * 2 - 1.0) * sit * shakeIntensity;
+			shakeY = (shakeY * 2 - 1.0) * sit * shakeIntensity;
+
+			world.x += shakeX;
+			world.y += shakeY;
+		}
 
 		boat.y = Math.round(fisher.y + Math.sin(time) * 2);
 		killedFishContainer.x = boat.x;
@@ -552,7 +757,7 @@ class PlayState extends elke.gamestate.GameState {
             		timer.color.set(0.3, 0.6, 0.2);
         		}
 			} else {
-				timer.value = (boostTime / initialBoostTime);
+				timer.value = (boostTime / maxBoostTime);
 				
 				timer.color.set(0.39, 0.2, 0.9);
 			}
@@ -579,6 +784,8 @@ class PlayState extends elke.gamestate.GameState {
 			dy = Math.min(dy, vy);
 
 			currentDepth += dy;
+
+			var didCatch = false;
 
 			var rr = catchRadius * catchRadius;
 			if (caughtWeight < maxWeight) {
@@ -612,9 +819,14 @@ class PlayState extends elke.gamestate.GameState {
 							caughtFish.push(f);
 							allFish.remove(f);
 							caughtWeight += f.data.Weight;
+							didCatch = true;
 						}
 					}
 				}
+			}
+
+			if (didCatch) {
+				game.sound.playWobble(hxd.Res.sound.eat, 0.2);
 			}
 
 			if (catchTime <= 0.0) {
@@ -638,8 +850,13 @@ class PlayState extends elke.gamestate.GameState {
 
 			f.rotation = f.rot + (Math.random() * 0.1 - 0.05) + fishRotOffset;
 
-			f.x += dx * 0.9;
-			f.y += dy * 0.9;
+			f.x += dx * f.attractSpeed;
+			f.y += dy * f.attractSpeed;
+			if (f.attractSpeed < 0.5) {
+				if (dx * dx + dy * dy < 10 * 10) {
+					f.attractSpeed = 0.9;
+				}
+			}
 		}
 
 		if (currentPhase == PreparingReel) {
@@ -677,6 +894,7 @@ class PlayState extends elke.gamestate.GameState {
 
 			if (arrows.isFinished()) {
 				timeUntilDone -= dt;
+				stopFightMusic();
 				if (timeUntilDone <= 0) {
 					finishRound();
 				}

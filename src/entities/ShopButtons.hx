@@ -56,7 +56,7 @@ class ShopButtons extends Object {
 
         var b = new Button("Pay Back Your Debt", this);
         b.name = "purchase";
-        b.description = "So you want to quit your job as a fisher? That will cost you 10,000 Gold";
+        b.description = "So you want to quit your job as a fisher? That will cost you 15,000 Gold";
         b.y = 2;
         buttonsList.push(b);
         payDebtBtn = b;

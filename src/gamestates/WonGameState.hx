@@ -1,14 +1,76 @@
 package gamestates;
 
+import h2d.Text;
+import h2d.Object;
+import h2d.Bitmap;
 import elke.gamestate.GameState;
 
 class WonGameState extends GameState {
     var playState : PlayState;
+    var container : Object;
+    var diploma: Bitmap;
+
+    var daysTxt : Text;
+
     public function new(playState: PlayState) {
         this.playState = playState;
     }
 
     override function onEnter() {
         super.onEnter();
+        container = new Object(game.s2d);
+        diploma = new Bitmap(hxd.Res.img.diploma.toTile(), container);
+        var fnt = hxd.Res.fonts.equipmentpro_medium_12.toFont();
+        daysTxt = new Text(fnt, diploma);
+        daysTxt.textColor = 0x4b314e;
+        daysTxt.text = '${playState.currentRound}';
+        daysTxt.x = 239;
+        daysTxt.y = 104;
+
+        var accTxt = new Text(fnt, diploma);
+        accTxt.textColor = 0x4b314e;
+        var accuracy = playState.missed == 0 || playState.caught == 0 ? 'Perfect' : '${Math.round((playState.missed / playState.caught) * 100)}%';
+        accTxt.text = accuracy;
+        accTxt.x = 284;
+        accTxt.y = 125;
+
+        var comboTxt = new Text(fnt, diploma);
+        comboTxt.textColor = 0x4b314e;
+        comboTxt.text = '${playState.maxCombo}';
+        comboTxt.x = 247;
+        comboTxt.y = 145;
+
+        var time = playState.playTime;
+
+        var minutes = Math.floor(time / 60);
+        var seconds = Math.floor(time - minutes * 60);
+
+        var s = seconds < 10 ? '0${seconds}': '${seconds}';
+        var m = minutes < 10 ? '0${minutes}': '${minutes}';
+
+        var timeTxt = new Text(fnt, diploma);
+        timeTxt.textColor = 0x4b314e;
+        timeTxt.text = '${m}:${s}';
+        timeTxt.x = 211;
+        timeTxt.y = 164;
+
+        positionStuff();
+
+        if (playState.gameMode == Chill) {
+            var chill = new Bitmap(hxd.Res.img.chillstamp.toTile(), diploma);
+            chill.x = 333;
+            chill.y = 96;
+        }
+    }
+
+    function positionStuff() {
+        diploma.x = Math.round((game.s2d.width - diploma.tile.width) * 0.5);
+        diploma.y = Math.round((game.s2d.height - diploma.tile.height) * 0.5);
+
+    }
+
+    override function update(dt:Float) {
+        super.update(dt);
+        positionStuff();
     }
 }
