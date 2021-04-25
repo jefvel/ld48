@@ -86,9 +86,9 @@
 					"Armor": 0,
 					"Weight": 1.1,
 					"SellPrice": 40,
-					"Amount": 30,
+					"Amount": 35,
 					"FromDepth": 2400,
-					"ToDepth": 6000,
+					"ToDepth": 8000,
 					"OriginX": 29,
 					"OriginY": 14
 				},
@@ -98,8 +98,8 @@
 					"Armor": 0,
 					"Weight": 3,
 					"SellPrice": 90,
-					"Amount": 30,
-					"FromDepth": 5000,
+					"Amount": 35,
+					"FromDepth": 4000,
 					"ToDepth": 9000,
 					"OriginX": 13,
 					"OriginY": 5
@@ -109,10 +109,10 @@
 					"Name": "Big Evil",
 					"Armor": 0,
 					"Weight": 6,
-					"SellPrice": 170,
+					"SellPrice": 130,
 					"Amount": 20,
 					"FromDepth": 8000,
-					"ToDepth": 11000,
+					"ToDepth": 12000,
 					"OriginX": 123,
 					"OriginY": 20
 				},
@@ -121,7 +121,7 @@
 					"Name": "He's The Lord",
 					"Armor": 0,
 					"Weight": 30,
-					"SellPrice": 3000,
+					"SellPrice": 9000,
 					"Amount": 1,
 					"FromDepth": 13000,
 					"ToDepth": 13000,
@@ -162,7 +162,7 @@
 					"kind": null
 				},
 				{
-					"typeStr": "5:Line,Strength,MoneyMultiplier,Speed",
+					"typeStr": "5:Line,Strength,MoneyMultiplier,Speed,Magnet,Protection",
 					"name": "Type"
 				},
 				{
@@ -217,7 +217,7 @@
 				{
 					"ID": "Reel4",
 					"Name": "Scientist Line",
-					"Description": "This is used by the scientists to find weird fish in the depths",
+					"Description": "This is used by the scientists to find weird things in the deep oceans",
 					"Price": 640,
 					"Icon": {
 						"file": "img/items.png",
@@ -288,7 +288,7 @@
 					"ID": "Pole4",
 					"Name": "Featherweight Steel Pole",
 					"Description": "An even stronger pole. It's super strong.",
-					"Price": 250,
+					"Price": 450,
 					"Type": 1,
 					"UpgradeIndex": 4,
 					"Icon": {
@@ -358,7 +358,7 @@
 					"ID": "Weight4",
 					"Name": "Bigger Bronze Weight ",
 					"Description": "Just like the other bronze weight, but faster",
-					"Price": 400,
+					"Price": 500,
 					"Type": 3,
 					"UpgradeIndex": 4,
 					"Icon": {
@@ -372,7 +372,7 @@
 					"ID": "Weight5",
 					"Name": "Extremely Heavy Golden Weight",
 					"Description": "It's made of the heaviest metal ever",
-					"Price": 1200,
+					"Price": 1500,
 					"Type": 3,
 					"UpgradeIndex": 5,
 					"Icon": {
@@ -442,7 +442,7 @@
 					"ID": "Hook5",
 					"Name": "One of a Kind Turbo Hook",
 					"Description": "I think this is made of diamond. It is probably the best hook on earth. ",
-					"Price": 1900,
+					"Price": 1600,
 					"Type": 2,
 					"UpgradeIndex": 5,
 					"Icon": {
@@ -451,13 +451,42 @@
 						"x": 4,
 						"y": 3
 					}
+				},
+				{
+					"ID": "Magnet1",
+					"Name": "Fish Magnet 2000",
+					"Description": "Fish will flock to your hook with this machine. It's made in Germany",
+					"Price": 2700,
+					"Type": 4,
+					"UpgradeIndex": 1,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 0,
+						"y": 4
+					}
+				},
+				{
+					"ID": "HookGun",
+					"Name": "Hook Gun",
+					"Description": "This attaches to your hook, and will protect it against sea mines",
+					"Price": 3000,
+					"Type": 5,
+					"UpgradeIndex": 1,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 0,
+						"y": 5
+					}
 				}
 			],
 			"props": {},
 			"separatorIds": [
 				"Pole1",
 				"Weight1",
-				"Hook1"
+				"Hook1",
+				"Magnet1"
 			]
 		}
 	],

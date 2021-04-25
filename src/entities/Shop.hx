@@ -26,10 +26,12 @@ class Shop extends Entity2D {
     var goldText: Text;
     var coin: Bitmap;
 
+    var debtText: Text;
 
     var buttons: ShopButtons;
 
     public var onClose : Void -> Void;
+    public var onWin : Void -> Void;
 
     public function new(state: PlayState, ?p) {
         super(p);
@@ -60,14 +62,24 @@ class Shop extends Entity2D {
         goldText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), container);
         goldText.textAlign = Right;
         goldText.y = sign.y;
+
         coin = new Bitmap(hxd.Res.img.coin.toTile(), goldText);
         coin.y = -0;
-        coin.x = -goldText.textWidth - 16;
+        coin.x = -goldText.textWidth - 19;
 
         buttons.goFishBtn.onClick = e -> {
-            onClose();
+            doClose();
         }
-        
+
+        buttons.payDebtBtn.onClick = e -> {
+            tryWin();
+        }
+
+        debtText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), buttons);
+        debtText.textAlign = Center;
+        debtText.x = Math.round(buttons.payDebtBtn.width * 0.5);
+        debtText.y = -debtText.textHeight - 8;
+
         this.state = state;
     }
 
@@ -80,10 +92,12 @@ class Shop extends Entity2D {
         itemList.refreshItems();
         itemListSelected = true;
         itemList.selectedIndex = 0;
+        container.addChild(buttons);
     }
 
     public function close() {
         showing = false;
+        buttons.remove();
     }
 
     public function directionPressed(d: Direction) {
@@ -116,6 +130,31 @@ class Shop extends Entity2D {
         }
     }
 
+    var won = false;
+    function tryWin() {
+        if (won) {
+            return;
+        }
+
+        if (state.gold >= state.currentDebt) {
+            state.gold -= state.currentDebt;
+            Game.instance.sound.playWobble(hxd.Res.sound.purchase, 0.6);
+            onWin();
+            won = true;
+        } else {
+            Game.instance.sound.playWobble(hxd.Res.sound.forbidden);
+        }
+    }
+
+    function doClose() {
+        if (won) {
+            return;
+        }
+
+        onClose();
+    }
+
+
     public function usePressed() {
         keeper.resetSay();
         if (itemListSelected) {
@@ -123,12 +162,18 @@ class Shop extends Entity2D {
             if (item != null) {
                 if (item.info.Price <= state.gold) {
                     purchaseItem(item.info);
+                } else {
+                    Game.instance.sound.playWobble(hxd.Res.sound.forbidden);
                 }
             }
         } else {
             var btn = buttons.getSelectedItem();
             if (btn.name == "exit") {
-                onClose();
+                doClose();
+            }
+
+            if (btn.name == "purchase") {
+                tryWin();
             }
         }
     }
@@ -200,7 +245,11 @@ class Shop extends Entity2D {
 
             goldText.x = itemList.x + 232;
             goldText.text = '${state.gold}';
-            coin.x = -49;
+            coin.x = -55;
+
+            debtText.text = 'Debt: ${state.currentDebt}';
+
+            buttons.payDebtBtn.alpha = (state.gold >= state.currentDebt) ? 1.0 : 0.6;
 
             updateCursor();
         } else {
@@ -210,6 +259,7 @@ class Shop extends Entity2D {
 
             if (alpha <= 0) {
                 visible = false;
+                buttons.remove();
             }
         }
     }

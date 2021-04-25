@@ -1,5 +1,6 @@
 package entities;
 
+import elke.graphics.Sprite;
 import elke.Game;
 import h3d.Vector;
 import h2d.Bitmap;
@@ -14,6 +15,8 @@ class BoosterThing extends Entity2D {
     public var boosts = 0;
     public var maxBoosts = 5;
 
+    var boostKey: Sprite;
+
     public function new(?p) {
         super(p);
         bg = new Bitmap(hxd.Res.img.boosterbg.toTile(), this);
@@ -24,6 +27,13 @@ class BoosterThing extends Entity2D {
         arrow.tile.dx = -2;
         arrow.tile.dy = -3;
         arrow.color = new Vector(1, 1, 1);
+
+        boostKey = hxd.Res.img.boostkey_tilesheet.toSprite2D(this);
+        boostKey.originX = 16;
+        boostKey.originY = 16;
+        boostKey.y = 64;
+        boostKey.x = 1;
+        boostKey.animation.play();
     }
 
     public function reset() {

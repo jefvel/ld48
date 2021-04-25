@@ -16,6 +16,8 @@ class Fish extends Entity2D {
     public var pattern: Array<Direction>;
     public var dead = false;
 
+    public var attractSpeed = 0.2;
+
     static public var fishPatterns = {
         Basic: [Up, Left, Down, Right],
         Basic2: [Left, Right, Left, Right, Left, Right, Left, Right],

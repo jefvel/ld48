@@ -1,0 +1,31 @@
+{ "frames": [
+   {
+    "filename": "boostkey 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 30, "h": 29 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 1, "w": 30, "h": 29 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 500
+   },
+   {
+    "filename": "boostkey 1.aseprite",
+    "frame": { "x": 0, "y": 30, "w": 30, "h": 23 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 7, "w": 30, "h": 23 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 500
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "boostkey.png",
+  "format": "RGBA8888",
+  "size": { "w": 30, "h": 53 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}
