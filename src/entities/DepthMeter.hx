@@ -10,6 +10,9 @@ class DepthMeter extends Object {
     public var maxDepth = 13000.0;
     public var depth(default, set) = 0.0;
 
+    public var weight = 0.0;
+    public var totalWeight = 0.0;
+
     public function new(?p) {
         super(p);
         bar = new Bitmap(hxd.Res.img.horizontalbar.toTile(), this);

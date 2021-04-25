@@ -42,7 +42,16 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 128 },
     "sourceSize": { "w": 128, "h": 128 },
-    "duration": 1750
+    "duration": 1950
+   },
+   {
+    "filename": "intro 5.aseprite",
+    "frame": { "x": 387, "y": 0, "w": 1, "h": 1 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 1 },
+    "sourceSize": { "w": 128, "h": 128 },
+    "duration": 600
    }
  ],
  "meta": {
@@ -50,7 +59,7 @@
   "version": "1.2.27-x64",
   "image": "intro.png",
   "format": "RGBA8888",
-  "size": { "w": 386, "h": 257 },
+  "size": { "w": 388, "h": 257 },
   "scale": "1",
   "frameTags": [
   ]

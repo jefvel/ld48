@@ -1,0 +1,96 @@
+{ "frames": [
+   {
+    "filename": "mine 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "mine 1.aseprite",
+    "frame": { "x": 66, "y": 32, "w": 28, "h": 26 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 3, "w": 28, "h": 26 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   },
+   {
+    "filename": "mine 2.aseprite",
+    "frame": { "x": 33, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   },
+   {
+    "filename": "mine 3.aseprite",
+    "frame": { "x": 66, "y": 0, "w": 30, "h": 31 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 2, "y": 0, "w": 30, "h": 31 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   },
+   {
+    "filename": "mine 4.aseprite",
+    "frame": { "x": 0, "y": 33, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   },
+   {
+    "filename": "mine 5.aseprite",
+    "frame": { "x": 33, "y": 33, "w": 28, "h": 26 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 2, "w": 28, "h": 26 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   },
+   {
+    "filename": "mine 6.aseprite",
+    "frame": { "x": 62, "y": 59, "w": 27, "h": 26 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 3, "y": 2, "w": 27, "h": 26 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   },
+   {
+    "filename": "mine 7.aseprite",
+    "frame": { "x": 33, "y": 60, "w": 25, "h": 26 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 5, "y": 2, "w": 25, "h": 26 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   },
+   {
+    "filename": "mine 8.aseprite",
+    "frame": { "x": 0, "y": 66, "w": 22, "h": 23 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 7, "y": 2, "w": 22, "h": 23 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 70
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27-x64",
+  "image": "mine.png",
+  "format": "RGBA8888",
+  "size": { "w": 96, "h": 89 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "explode", "from": 1, "to": 8, "direction": "forward" }
+  ]
+ }
+}

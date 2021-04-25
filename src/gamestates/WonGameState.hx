@@ -1,5 +1,7 @@
 package gamestates;
 
+import elke.process.Timeout;
+import hxd.snd.Channel;
 import h2d.Text;
 import h2d.Object;
 import h2d.Bitmap;
@@ -11,6 +13,8 @@ class WonGameState extends GameState {
     var diploma: Bitmap;
 
     var daysTxt : Text;
+    var winSong : Channel;
+    var envelope : Bitmap;
 
     public function new(playState: PlayState) {
         this.playState = playState;
@@ -61,7 +65,22 @@ class WonGameState extends GameState {
             chill.x = 333;
             chill.y = 96;
         }
+
+        winSong = hxd.Res.sound.winsong.play(true, 0.);
+        new Timeout(0.6, () -> {
+            winSong.fadeTo(0.5, 1.8);
+        });
+
+        new Timeout(3.3, () -> {
+            envelopeSliding = true;
+        });
+
+        envelope = new Bitmap(hxd.Res.img.envelope.toTile(), diploma);
+        envelope.x = 73;
+        envelope.y = 30;
     }
+
+    var envelopeSliding = false;
 
     function positionStuff() {
         diploma.x = Math.round((game.s2d.width - diploma.tile.width) * 0.5);
@@ -72,5 +91,16 @@ class WonGameState extends GameState {
     override function update(dt:Float) {
         super.update(dt);
         positionStuff();
+        if (envelopeSliding) {
+            envelope.y += (350 - envelope.y) * 0.03;
+        }
+    }
+
+    override function onLeave() {
+        super.onLeave();
+        var f = winSong;
+        winSong.fadeTo(0, 0.3, () -> {
+            f.stop();
+        });
     }
 }

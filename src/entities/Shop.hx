@@ -138,7 +138,6 @@ class Shop extends Entity2D {
 
         if (state.gold >= state.currentDebt) {
             state.gold -= state.currentDebt;
-            Game.instance.sound.playWobble(hxd.Res.sound.purchase, 0.6);
             onWin();
             won = true;
         } else {

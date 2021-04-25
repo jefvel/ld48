@@ -68,6 +68,7 @@ class MainMenuState extends GameState {
     var introSprite : Sprite;
     var introSound: Channel;
     var selectedMode: GameMode = Normal;
+    var introText : Text;
 
     function select(mode : GameMode) {
         if (selected) {
@@ -90,6 +91,9 @@ class MainMenuState extends GameState {
                     introSprite.remove();
                     launch();
                 });
+                introText = new Text(hxd.Res.fonts.picory.toFont(), introSprite);
+                introText.y = 132;
+                introText.maxWidth = 128;
                 introSound = hxd.Res.sound.introspeech.play(false, 0.6);
                 showingIntro = true;
             });
@@ -130,6 +134,35 @@ class MainMenuState extends GameState {
         buttons.y = Math.round(game.s2d.height * 0.5);
         var bnds = buttons.getBounds();
         buttons.x = Math.round((game.s2d.width - bnds.width) * 0.5);
+
+        if (introSprite != null && introText != null) {
+            var right = [
+                false,
+                true,
+                false,
+                false,
+                true,
+            ];
+
+            var texts = [
+                "WHERES MY MONEY FISHER BOY",
+                "uuh i dunno ma",
+                "PAY ME WITHIN 30 DAYS OR I WILL KILL YOU",
+                "AND YOU WILL BE DEAD",
+                "aw man okay",
+                "",
+            ];
+
+            if (right[introSprite.animation.currentFrame]) {
+                introText.textAlign = Right;
+                //introText.x = ;
+            } else {
+                introText.x = 0;
+                introText.textAlign = Left;
+            }
+
+            introText.text = texts[introSprite.animation.currentFrame];
+        }
     }
 
     override function onLeave() {

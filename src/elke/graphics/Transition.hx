@@ -121,7 +121,9 @@ class Transition extends Interactive {
 
 	override function draw(ctx:RenderContext) {
 		super.draw(ctx);
-		//parent.addChild(this);
+		if (auto) {
+			parent.addChild(this);
+		}
 	}
 
 	public var inTime = .5;
