@@ -145,6 +145,10 @@ class Game extends hxd.App {
         // Image filtering set to nearest sharp pixel graphics
         hxd.res.Image.DEFAULT_FILTER = Nearest;
 
+		#if js
+		hxd.Window.getInstance().useScreenPixels = false;
+		#end
+
         engine.autoResize = true;
 
         onResize();
