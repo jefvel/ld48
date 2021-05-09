@@ -47,7 +47,7 @@
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27-x64",
+  "version": "1.2.25",
   "image": "fisher.png",
   "format": "RGBA8888",
   "size": { "w": 106, "h": 107 },

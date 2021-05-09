@@ -1,5 +1,6 @@
 package gamestates;
 
+import h2d.filter.Shader;
 import entities.Mine;
 import hxd.snd.Channel;
 import elke.graphics.Transition;

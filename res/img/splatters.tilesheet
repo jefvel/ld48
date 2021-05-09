@@ -227,7 +227,7 @@
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27-x64",
+  "version": "1.2.25",
   "image": "splatters.png",
   "format": "RGBA8888",
   "size": { "w": 187, "h": 208 },
