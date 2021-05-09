@@ -9,7 +9,11 @@ class Main {
 
 	static function main() {
 		game = new Game({
+			#if debug
+			initialState: new PlayState(Normal),
+			#else
 			initialState: new MainMenuState(),
+			#end
 			onInit: () -> {},
 			tickRate: Const.TICK_RATE,
 			pixelSize: Const.PIXEL_SIZE,
