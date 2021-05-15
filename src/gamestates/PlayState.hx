@@ -1,5 +1,6 @@
 package gamestates;
 
+import h2d.Particles;
 import h2d.filter.Shader;
 import entities.Mine;
 import hxd.snd.Channel;
@@ -159,7 +160,10 @@ class PlayState extends elke.gamestate.GameState {
 		bg = new Bg(container);
 
 		world = new Object(container);
-		sky = new Sky(world);
+
+		var particles = new Particles(world);
+		particles.load(haxe.Json.parse(hxd.Res.particles.bubble.entry.getText()), hxd.Res.particles.bubble.entry.path);
+		particles.y = 300;
 
 		killedFishContainer = new Object(world);
 		fisher = new Fisher(world);
@@ -167,18 +171,33 @@ class PlayState extends elke.gamestate.GameState {
 		hook = new Hook(this, world);
 		fishContainer = new Object(world);
 
+		var l = new Bitmap(hxd.Res.img.lightshaft.toTile(), world);
+		l.x = 138;
+
+		sky = new Sky(world);
+
 		arrows = new ArrowQueue(container);
 		arrows.onCatch = onCatch;
 		arrows.onMiss = onMiss;
 
 		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
+
 		var t = hxd.Res.img.waves.toTile();
 		t.getTexture().wrap = Repeat;
 		waves = new Bitmap(t, world);
 		waves.y = -16;
 		waves.tileWrap = true;
-		waves.tile.setSize(1324, 512);
+		waves.tile.setSize(1324, 64);
 		waves.x = -555;
+
+		var sdform = new graphics.SineDeformShader();
+		waves.addShader(sdform);
+		sdform.amplitude = 0.04;
+		sdform.frequency = 0.6;
+		sdform.speed = 0.5;
+		sdform.texture = t.getTexture();
+
+
 		boat.tile.dx = -32;
 		boat.tile.dy = -18;
 
@@ -765,6 +784,8 @@ class PlayState extends elke.gamestate.GameState {
 
 		world.y = (-currentDepth + game.s2d.height * 0.5);
 		time += dt;
+
+		bg.y = Math.max(0, world.y);
 
 		if (totalShakeTime > 0) {
 			shakeTime += dt;

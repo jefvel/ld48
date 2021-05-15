@@ -23,11 +23,17 @@ class Fisher extends Entity2D {
         head.animation.play("idle");
         head.x = 26 - sprite.originX;
         head.y = 29 - sprite.originY;
+        timeUntilBlink = 0.5 + Math.random() * 5.0;
     }
 
     var rx = 57;
     var ry = 26;
     var time = 0.0;
+    var timeUntilBlink = 3.0;
+
+    function resetHead(s) {
+        head.animation.play("idle");
+    }
 
     override function update(dt:Float) {
         super.update(dt);
@@ -36,6 +42,11 @@ class Fisher extends Entity2D {
         rodY = ry - sprite.originY;
         head.visible = sprite.animation.currentAnimationName == "idle";
         head.y = 29 - sprite.originY + Math.sin(time * 1.4);
+        timeUntilBlink -= dt;
+        if (timeUntilBlink < 0) {
+            timeUntilBlink = 0.5 + Math.random() * 5.0;
+            head.animation.play("blink", false, false, 0.0, resetHead);
+        }
     }
 
     public function punch() {

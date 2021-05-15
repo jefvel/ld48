@@ -1,29 +1,29 @@
 { "frames": [
    {
     "filename": "fisherhead 0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 21, "h": 19 },
+    "frame": { "x": 0, "y": 0, "w": 25, "h": 20 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 8, "y": 8, "w": 21, "h": 19 },
+    "spriteSourceSize": { "x": 6, "y": 8, "w": 25, "h": 20 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    },
    {
     "filename": "fisherhead 1.aseprite",
-    "frame": { "x": 22, "y": 0, "w": 21, "h": 19 },
+    "frame": { "x": 26, "y": 0, "w": 25, "h": 20 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 8, "y": 8, "w": 21, "h": 19 },
+    "spriteSourceSize": { "x": 6, "y": 8, "w": 25, "h": 20 },
     "sourceSize": { "w": 32, "h": 32 },
     "duration": 100
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.25",
+  "version": "1.2.27-x64",
   "image": "fisherhead.png",
   "format": "RGBA8888",
-  "size": { "w": 43, "h": 19 },
+  "size": { "w": 51, "h": 20 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
