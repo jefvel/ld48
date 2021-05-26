@@ -1,15 +1,6 @@
 { "frames": [
    {
     "filename": "hook 0.aseprite",
-    "frame": { "x": 32, "y": 0, "w": 11, "h": 14 },
-    "rotated": false,
-    "trimmed": true,
-    "spriteSourceSize": { "x": 3, "y": 0, "w": 11, "h": 14 },
-    "sourceSize": { "w": 16, "h": 16 },
-    "duration": 100
-   },
-   {
-    "filename": "hook 1.aseprite",
     "frame": { "x": 0, "y": 0, "w": 15, "h": 16 },
     "rotated": false,
     "trimmed": true,
@@ -18,7 +9,7 @@
     "duration": 100
    },
    {
-    "filename": "hook 2.aseprite",
+    "filename": "hook 1.aseprite",
     "frame": { "x": 16, "y": 0, "w": 15, "h": 16 },
     "rotated": false,
     "trimmed": true,
@@ -27,8 +18,17 @@
     "duration": 100
    },
    {
-    "filename": "hook 3.aseprite",
+    "filename": "hook 2.aseprite",
     "frame": { "x": 0, "y": 17, "w": 15, "h": 16 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 1, "y": 0, "w": 15, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "hook 3.aseprite",
+    "frame": { "x": 16, "y": 17, "w": 15, "h": 16 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 1, "y": 0, "w": 15, "h": 16 },
@@ -41,7 +41,7 @@
   "version": "1.2.27-x64",
   "image": "hook.png",
   "format": "RGBA8888",
-  "size": { "w": 43, "h": 33 },
+  "size": { "w": 31, "h": 33 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 0, "direction": "forward" },

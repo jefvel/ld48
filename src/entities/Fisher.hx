@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.RenderContext;
 import elke.graphics.Sprite;
 import elke.entity.Entity2D;
 
@@ -7,7 +8,7 @@ class Fisher extends Entity2D {
     var sprite : Sprite;
 
 	public var rodX = 34;
-	public var rodY = -37;
+	public var rodY = -34;
 
     var head: Sprite;
 
@@ -27,7 +28,7 @@ class Fisher extends Entity2D {
     }
 
     var rx = 57;
-    var ry = 26;
+    var ry = 29;
     var time = 0.0;
     var timeUntilBlink = 3.0;
 
@@ -40,13 +41,17 @@ class Fisher extends Entity2D {
         time += dt;
         rodX = rx - sprite.originX;
         rodY = ry - sprite.originY;
-        head.visible = sprite.animation.currentAnimationName == "idle";
         head.y = 29 - sprite.originY + Math.sin(time * 1.4);
         timeUntilBlink -= dt;
         if (timeUntilBlink < 0) {
             timeUntilBlink = 0.5 + Math.random() * 5.0;
             head.animation.play("blink", false, false, 0.0, resetHead);
         }
+    }
+
+    override function sync(ctx:RenderContext) {
+        super.sync(ctx);
+        head.visible = sprite.animation.currentFrame == 0;
     }
 
     public function punch() {

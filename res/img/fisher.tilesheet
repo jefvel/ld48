@@ -1,7 +1,7 @@
 { "frames": [
    {
     "filename": "fisher 0.aseprite",
-    "frame": { "x": 56, "y": 51, "w": 55, "h": 41 },
+    "frame": { "x": 122, "y": 52, "w": 55, "h": 41 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 6, "y": 23, "w": 55, "h": 41 },
@@ -10,28 +10,28 @@
    },
    {
     "filename": "fisher 1.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 55, "h": 56 },
+    "frame": { "x": 0, "y": 0, "w": 60, "h": 56 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 3, "y": 8, "w": 55, "h": 56 },
+    "spriteSourceSize": { "x": 0, "y": 8, "w": 60, "h": 56 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 100
    },
    {
     "filename": "fisher 2.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 55, "h": 56 },
+    "frame": { "x": 61, "y": 0, "w": 60, "h": 56 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 3, "y": 8, "w": 55, "h": 56 },
+    "spriteSourceSize": { "x": 0, "y": 8, "w": 60, "h": 56 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 40
    },
    {
     "filename": "fisher 3.aseprite",
-    "frame": { "x": 56, "y": 0, "w": 55, "h": 50 },
+    "frame": { "x": 122, "y": 0, "w": 58, "h": 51 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 3, "y": 13, "w": 55, "h": 50 },
+    "spriteSourceSize": { "x": 2, "y": 13, "w": 58, "h": 51 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 100
    }
@@ -41,7 +41,7 @@
   "version": "1.2.27-x64",
   "image": "fisher.png",
   "format": "RGBA8888",
-  "size": { "w": 111, "h": 92 },
+  "size": { "w": 180, "h": 93 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 0, "direction": "forward" },

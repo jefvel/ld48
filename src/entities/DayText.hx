@@ -35,6 +35,11 @@ class DayText extends Object {
     var fadingIn = true;
     override function sync(ctx:RenderContext) {
         super.sync(ctx);
+        var s2d = getScene();
+
+		x = Math.round(s2d.width * 0.5);
+		y = Math.round(s2d.height * 0.18);
+
         if (fadingIn) {
             alpha += ctx.elapsedTime / 0.9;
             if (alpha >= 1) {

@@ -9,6 +9,7 @@ import elke.entity.Entity2D;
 class BoosterThing extends Entity2D {
     var bg: Bitmap;
     var arrow : Bitmap;
+    var top : Bitmap;
     var v = 0.1;
 
     var inArea = false;
@@ -24,9 +25,12 @@ class BoosterThing extends Entity2D {
         bg.tile.dy = -33;
 
         arrow = new Bitmap(hxd.Res.img.boosterarrow.toTile(), this);
-        arrow.tile.dx = -2;
-        arrow.tile.dy = -3;
+        arrow.tile.dx = -3;
+        arrow.tile.dy = -3.5;
         arrow.color = new Vector(1, 1, 1);
+
+        top = new Bitmap(hxd.Res.img.boosterarrowtop.toTile(), this);
+        top.tile.dx = top.tile.dy = -3;
 
         boostKey = hxd.Res.img.boostkey_tilesheet.toSprite2D(this);
         boostKey.originX = 16;
@@ -55,7 +59,7 @@ class BoosterThing extends Entity2D {
 
             boostSounds[boosts].play(false, 0.4);
             boosts ++;
-            setScale(1.2 + boosts * 0.1);
+            bg.setScale(1.2 + boosts * 0.1);
             return true;
         }
 
@@ -80,9 +84,9 @@ class BoosterThing extends Entity2D {
         arrow.rotation += v;
 
         alpha += (targetAlpha - alpha) * 0.2;
-        var s = scaleX;
+        var s = bg.scaleX;
         s += (1.0 - s) * 0.1;
-        setScale(s);
+        bg.setScale(s);
 
         if (arrow.rotation > Math.PI * 2) {
             arrow.rotation -= Math.PI * 2.0;

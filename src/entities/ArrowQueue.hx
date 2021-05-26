@@ -1,5 +1,7 @@
 package entities;
 
+import elke.process.Timeout;
+import elke.Game;
 import hxd.res.Sound;
 import h2d.RenderContext;
 import h2d.Object;
@@ -48,7 +50,7 @@ class ArrowCollection extends Object {
 
 	public var width = 0.0;
 
-	static var arrowW = 28;
+	static var arrowW = 32;
 
 	public function new(fish:Fish, dirs:Array<Direction>, ?p) {
 		super(p);
@@ -82,6 +84,9 @@ class ArrowCollection extends Object {
 
 class ArrowQueue extends Entity2D {
 	public var queue:Array<Arrow>;
+	var bg: Bitmap;
+	var square: Bitmap;
+	var arrowStuff: Object;
 
 	var arrowCollections:Array<ArrowCollection>;
 
@@ -92,6 +97,19 @@ class ArrowQueue extends Entity2D {
 
 	public function new(?p) {
 		super(p);
+		bg = new Bitmap(hxd.Res.img.arrowqueuebg.toTile(), this);
+		bg.x = -4;
+		bg.y = -4;
+		bg.alpha = 0;
+
+		square = new Bitmap(hxd.Res.img.arrowqueuesquare.toTile(), this);
+		square.tile.dx = square.tile.dy = -20;
+		square.x = 16;
+		square.y = 16;
+		square.alpha = 0.0;
+
+		arrowStuff = new Object(this);
+
 		queue = [];
         punchSounds = [
             hxd.Res.sound.punch1,
@@ -108,7 +126,7 @@ class ArrowQueue extends Entity2D {
     }
 
 	public function reset() {
-		removeChildren();
+		arrowStuff.removeChildren();
 		queue = [];
 		arrowCollections = [];
 	}
@@ -120,6 +138,7 @@ class ArrowQueue extends Entity2D {
         }
     }
 
+	var squareScale = .0;
 	public function onDirPress(dir:Direction) {
         if (arrowCollections.length == 0) {
             return false;
@@ -128,12 +147,17 @@ class ArrowQueue extends Entity2D {
 		var current = arrowCollections[0];
 		if (dir == current.arrows[0].dir) {
 			current.popArrow();
-            var s = punchSounds[Std.int(Math.random() * punchSounds.length)].play(false, 0.5);
+            var s = punchSounds[Std.int(Math.random() * punchSounds.length)];
+			s.play(false, 0.5);
 
 			if (current.arrows.length == 0) {
 				onCatch(current.fish);
                 popCollection();
 			}
+
+			//Game.instance.freeze(0.05);
+
+			squareScale = .2;
             return true;
 		} else {
             popCollection();
@@ -161,10 +185,21 @@ class ArrowQueue extends Entity2D {
 			sx += c.width + 16;
             c.update(dt);
 		}
+
+		var targetAlpha = 0.0;
+		if (!isFinished()) {
+			targetAlpha = 1;
+		}
+
+		bg.alpha += (targetAlpha * 0.4 - bg.alpha) * 0.3;
+
+		square.alpha  += (targetAlpha * 0.7 - square.alpha) * 0.3;
+		squareScale *= 0.76;
+		square.setScale(squareScale + 1);
 	}
 
 	public function addArrow(f:Fish, dir:Array<Direction>) {
-		var c = new ArrowCollection(f, dir, this);
+		var c = new ArrowCollection(f, dir, arrowStuff);
 		arrowCollections.push(c);
 	}
 }

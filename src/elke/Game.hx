@@ -154,6 +154,11 @@ class Game extends hxd.App {
         onResize();
     }
 
+    var freezeTime = 0.0;
+    public function freeze(time = 0.04) {
+        freezeTime = time;
+    }
+
     var timeAccumulator = 0.0;
     override function update(dt:Float) {
         super.update(dt);
@@ -163,6 +168,14 @@ class Game extends hxd.App {
         }
 
         var maxTicksPerUpdate = 3;
+
+        if (freezeTime > 0) {
+            freezeTime -= dt;
+        }
+
+        if (freezeTime > 0) {
+            return;
+        }
 
         timeAccumulator += dt;
         while (timeAccumulator > tickTime && maxTicksPerUpdate > 0) {

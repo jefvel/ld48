@@ -103,6 +103,7 @@ class Fish extends Entity2D {
                 if (!plumsed) {
                     plumsed = true;
                     Game.instance.sound.playWobble(hxd.Res.sound.splash, 0.2);
+                    var s = new Splash(x, y, parent);
                 }
             }
 

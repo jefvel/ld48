@@ -80,6 +80,7 @@ class Hook extends Entity2D {
         if (!inWater) {
             if (y > 0) {
                 Game.instance.sound.playWobble(hxd.Res.sound.splash);
+                var s = new Splash(x, y, state.world);
                 inWater = true;
             }
         } else {
@@ -136,6 +137,8 @@ class Hook extends Entity2D {
             var dy = state.fisher.y + state.fisher.rodY - y;
             x += dx * 0.1;
             y += dy * 0.1;
+
+            sprite.rotation *= 0.8;
         }
 	}
 }

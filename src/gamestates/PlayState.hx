@@ -48,7 +48,7 @@ enum FishingPhase {
 
 class PlayState extends elke.gamestate.GameState {
 	var container:Object;
-	var world:Object;
+	public var world:Object;
 
 	var fishContainer:Object;
 	var killedFishContainer:Object;
@@ -165,22 +165,8 @@ class PlayState extends elke.gamestate.GameState {
 		particles.load(haxe.Json.parse(hxd.Res.particles.bubble.entry.getText()), hxd.Res.particles.bubble.entry.path);
 		particles.y = 300;
 
-		killedFishContainer = new Object(world);
-		fisher = new Fisher(world);
-		rope = new Rope(world);
-		hook = new Hook(this, world);
-		fishContainer = new Object(world);
-
 		var l = new Bitmap(hxd.Res.img.lightshaft.toTile(), world);
 		l.x = 138;
-
-		sky = new Sky(world);
-
-		arrows = new ArrowQueue(container);
-		arrows.onCatch = onCatch;
-		arrows.onMiss = onMiss;
-
-		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
 
 		var t = hxd.Res.img.waves.toTile();
 		t.getTexture().wrap = Repeat;
@@ -197,7 +183,19 @@ class PlayState extends elke.gamestate.GameState {
 		sdform.speed = 0.5;
 		sdform.texture = t.getTexture();
 
+		killedFishContainer = new Object(world);
+		fisher = new Fisher(world);
+		rope = new Rope(world);
+		hook = new Hook(this, world);
+		fishContainer = new Object(world);
 
+		sky = new Sky(world);
+
+		arrows = new ArrowQueue(container);
+		arrows.onCatch = onCatch;
+		arrows.onMiss = onMiss;
+
+		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
 		boat.tile.dx = -32;
 		boat.tile.dy = -18;
 
@@ -334,14 +332,14 @@ class PlayState extends elke.gamestate.GameState {
 		boosterThing.fadeIn();
 
 		spawnFish();
+
 		var t = gameMode == Chill ? 'Day ${currentRound}' : 'Day ${currentRound} out of ${totalRounds}';
 		var dayText = new DayText(t, currentDebt, game.s2d);
-		dayText.x = Math.round(game.s2d.width * 0.5);
-		dayText.y = Math.round(game.s2d.height * 0.18);
 
 		if (waveNoise != null) {
 			waveNoise.stop();
 		}
+
 		waveNoise = hxd.Res.sound.waves.play(true, 0.1);
 	}
 
