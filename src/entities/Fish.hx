@@ -16,13 +16,14 @@ class Fish extends Entity2D {
     public var pattern: Array<Direction>;
     public var dead = false;
 
-    public var attractSpeed = 0.2;
+    public var attractSpeed = 0.4;
+    public var caughtTime = 0.0;
 
     static public var fishPatterns = {
         Basic: [Up, Left, Down, Right],
-        Basic2: [Left, Right, Left, Right, Left, Right, Left, Right],
-        Eel: [Up, Down, Up, Down, Up, Down, Up, Down, Left, Right],
-        Jelly: [Left, Left, Left, Right, Right, Right, Up, Up, Up, Down, Down, Down],
+        Basic2: [Left, Right, Left, Right, Left, Right],
+        Eel: [Up, Down, Up, Down, Up, Down, Left, Right],
+        Jelly: [Left, Left, Right, Right, Up, Up, Down, Down],
         Biggo: [Left, Right, Up, Down, Left, Right, Up, Down, Left, Right, Left, Right],
         Cthulhu: [Up, Left, Down, Right, Up, Left, Down, Right, Up, Left, Right, Left, Up, Left, Right, Left, Down, Right, Up, Left],
     }

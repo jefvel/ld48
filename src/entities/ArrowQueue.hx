@@ -84,6 +84,7 @@ class ArrowCollection extends Object {
 
 class ArrowQueue extends Entity2D {
 	public var queue:Array<Arrow>;
+	var bgshine:Bitmap;
 	var bg: Bitmap;
 	var square: Bitmap;
 	var arrowStuff: Object;
@@ -97,10 +98,16 @@ class ArrowQueue extends Entity2D {
 
 	public function new(?p) {
 		super(p);
+		bgshine = new Bitmap(hxd.Res.img.arrowsbgshine.toTile(), this);
+		bgshine.tile.dx = bgshine.tile.dy = -4;
+		bgshine.x = bgshine.y = -4;
+		bgshine.alpha = 0.0;
+
 		bg = new Bitmap(hxd.Res.img.arrowqueuebg.toTile(), this);
 		bg.x = -4;
 		bg.y = -4;
 		bg.alpha = 0;
+
 
 		square = new Bitmap(hxd.Res.img.arrowqueuesquare.toTile(), this);
 		square.tile.dx = square.tile.dy = -20;
@@ -153,6 +160,7 @@ class ArrowQueue extends Entity2D {
 			if (current.arrows.length == 0) {
 				onCatch(current.fish);
                 popCollection();
+				bgshine.alpha = 0.9;
 			}
 
 			//Game.instance.freeze(0.05);
@@ -192,6 +200,7 @@ class ArrowQueue extends Entity2D {
 		}
 
 		bg.alpha += (targetAlpha * 0.4 - bg.alpha) * 0.3;
+		bgshine.alpha *= 0.88;
 
 		square.alpha  += (targetAlpha * 0.7 - square.alpha) * 0.3;
 		squareScale *= 0.76;

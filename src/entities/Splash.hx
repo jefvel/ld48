@@ -13,9 +13,10 @@ class Splash extends Object {
         alpha = 0.6;
         s = hxd.Res.img.splash_tilesheet.toSprite2D(this);
         s.originX = 32;
-        s.originY = 18;
+        s.originY = 16;
         s.animation.play(null, false);
     }
+
     override function sync(ctx:RenderContext) {
         super.sync(ctx);
         if (s.animation.finished) {

@@ -5,7 +5,7 @@ import h2d.Tile;
 import h2d.RenderContext;
 import h2d.Bitmap;
 
-class Sky extends Bitmap {
+class WaveBackground extends Bitmap {
 	var s : WaterShader;
 	public function new(?p) {
 		var t = Tile.fromColor(0x68a5d3);

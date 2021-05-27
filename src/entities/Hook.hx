@@ -26,6 +26,9 @@ class Hook extends Entity2D {
 	var px = 0.0;
 	var py = 0.0;
 
+    public var centerX = 3.;
+    public var centerY = 10.;
+
     public var aura : Sprite;
 
 	public function new(state:PlayState, ?p) {

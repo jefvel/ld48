@@ -16,7 +16,7 @@ import entities.Shop;
 import entities.ArrowQueue;
 import entities.Rope;
 import hxd.Key;
-import entities.Sky;
+import entities.WaveBackground;
 import entities.Bg;
 import entities.Hook;
 import h2d.Bitmap;
@@ -47,11 +47,13 @@ enum FishingPhase {
 }
 
 class PlayState extends elke.gamestate.GameState {
-	var container:Object;
+	public var container:Object;
+
 	public var world:Object;
 
-	var fishContainer:Object;
-	var killedFishContainer:Object;
+	public var backgroundLayer : Object;
+	public var fishContainer:Object;
+	public var killedFishContainer:Object;
 
 	public var fisher:Fisher;
 
@@ -61,7 +63,9 @@ class PlayState extends elke.gamestate.GameState {
 	var boat:Bitmap;
 
 	var bg:Bg;
-	var sky:Sky;
+	var sky:WaveBackground;
+
+	public var foregroundLayer: Object;
 
 	var allFish:Array<Fish>;
 
@@ -189,7 +193,7 @@ class PlayState extends elke.gamestate.GameState {
 		hook = new Hook(this, world);
 		fishContainer = new Object(world);
 
-		sky = new Sky(world);
+		sky = new WaveBackground(world);
 
 		arrows = new ArrowQueue(container);
 		arrows.onCatch = onCatch;
@@ -985,8 +989,8 @@ class PlayState extends elke.gamestate.GameState {
 			if (f.dead && currentPhase == Catching)
 				continue;
 
-			var dx = hook.x - f.x;
-			var dy = hook.y + 7 - f.y;
+			var dx = hook.x + hook.centerX - f.x;
+			var dy = hook.y + hook.centerY - f.y;
 
 			if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
 				f.rot = Math.atan2(dy, dx);
@@ -996,10 +1000,14 @@ class PlayState extends elke.gamestate.GameState {
 
 			f.x += dx * f.attractSpeed;
 			f.y += dy * f.attractSpeed;
-			if (f.attractSpeed < 0.5) {
-				if (dx * dx + dy * dy < 10 * 10) {
-					f.attractSpeed = 0.9;
+			if (f.attractSpeed < 0.999) {
+				f.caughtTime += dt;
+				f.attractSpeed += (1.0 - f.attractSpeed) * 0.1;
+				if (f.caughtTime > 0.4) {
+					f.attractSpeed += (1.0 - f.attractSpeed) * 0.3;
 				}
+			} else {
+				f.attractSpeed = 1.0;
 			}
 		}
 
