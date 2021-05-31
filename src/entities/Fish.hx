@@ -9,6 +9,7 @@ import elke.entity.Entity2D;
 class Fish extends Entity2D {
     public var data : Data.Fish;
     public var sprite : Sprite;
+    var state: PlayState;
 
     public var fleeing = false;
     public var caught = false;
@@ -31,8 +32,18 @@ class Fish extends Entity2D {
     var vx = 0.0;
     var vy = 0.0;
 
-    public function new(type: Data.Fish, ?p) {
+    public var pileX = 0.0;
+    public var pileY = 0.0;
+    public var bx = 0.0;
+    public var by = 0.0;
+    public var inPile = false;
+    public var vRot = 0.0;
+    var splatted = false;
+    var inPlace = false;
+
+    public function new(type: Data.Fish, ?p, state: PlayState) {
         super(p);
+        this.state = state;
 
         data = type;
         sprite = switch(type.ID) {
@@ -115,6 +126,33 @@ class Fish extends Entity2D {
             bTime -= dt;
             bTime = Math.max(0, bTime);
             sprite.y = -5 + T.bounceOut(1.0 - (bTime / 0.4)) * 5;
+        }
+
+        if (inPile && !inPlace) {
+            x += bx;
+            bx = (pileX - x) * 0.1;
+            y += by;
+
+            by += Math.min(0.7, -y);
+            sprite.rotation += vRot;
+
+            if (y > 0) {
+                by *= -0.5;
+                y = 0;
+                vRot *= 0.4;
+                if(!splatted) {
+                    hxd.Res.sound.splat.play(false, 0.3);
+                    state.boat.rotation = x * 0.01;
+                    splatted = true;
+                }
+            }
+
+            var eps = 0.4;
+            if(Math.abs(x - pileX) < eps && Math.abs(y - pileY) < eps && Math.abs(by) < 0.01) {
+                inPlace = true;
+                x = pileX;
+                y = pileY;
+            }
         }
     }
 

@@ -1,5 +1,7 @@
 package gamestates;
 
+import entities.Sunrays;
+import h2d.filter.Outline;
 import h2d.Particles;
 import h2d.filter.Shader;
 import entities.Mine;
@@ -55,7 +57,6 @@ class PlayState extends elke.gamestate.GameState {
 	public var fishLayer : Object;
 
 	public var fishContainer:Object;
-	public var killedFishContainer:Object;
 
 	public var fisher:Fisher;
 
@@ -63,7 +64,10 @@ class PlayState extends elke.gamestate.GameState {
 
 	var hook:Hook;
 	var boatBg: Bitmap;
-	var boat:Bitmap;
+	public var boat:Bitmap;
+
+	var fishPile: Object;
+	var rays: Sunrays;
 
 	var bg:Bg;
 	var sky:WaveBackground;
@@ -173,8 +177,7 @@ class PlayState extends elke.gamestate.GameState {
 		particles.load(haxe.Json.parse(hxd.Res.particles.bubble.entry.getText()), hxd.Res.particles.bubble.entry.path);
 		particles.y = 300;
 
-		var l = new Bitmap(hxd.Res.img.lightshaft.toTile(), world);
-		l.x = 138;
+		rays = new Sunrays(backgroundLayer, foregroundLayer);
 
 		var t = hxd.Res.img.waves.toTile();
 		t.getTexture().wrap = Repeat;
@@ -191,7 +194,6 @@ class PlayState extends elke.gamestate.GameState {
 		sdform.speed = 0.5;
 		sdform.texture = t.getTexture();
 
-		killedFishContainer = new Object(world);
 		fisher = new Fisher(world);
 		rope = new Rope(world);
 		hook = new Hook(this, world);
@@ -209,6 +211,8 @@ class PlayState extends elke.gamestate.GameState {
 		boatBg = new Bitmap(hxd.Res.img.boatback.toTile(), backgroundLayer);
 		boatBg.tile.dx = -32;
 		boatBg.tile.dy = -18;
+
+		fishPile = new Object(boatBg);
 
 		var t = hxd.Res.img.bottom.toTile();
 		t.getTexture().wrap = Repeat;
@@ -322,7 +326,7 @@ class PlayState extends elke.gamestate.GameState {
 		mines = [];
 		caughtWeight = 0.0;
 		fishContainer.removeChildren();
-		killedFishContainer.removeChildren();
+		fishPile.removeChildren();
 
 		boat.x = fisher.x;
 
@@ -366,7 +370,7 @@ class PlayState extends elke.gamestate.GameState {
 			amount = Std.int(Math.max(1, amount));
 
 			for (_ in 0...amount) {
-				var fish = new Fish(f, fishContainer);
+				var fish = new Fish(f, fishContainer, this);
 				allFish.push(fish);
 			}
 		}
@@ -699,17 +703,36 @@ class PlayState extends elke.gamestate.GameState {
 
 	public function putFishOnPile(f:Fish) {
 		killedFish.push(f);
+
 		f.rotation = 0;
-		f.sprite.rotation = Math.random() * Math.PI * 2;
-		f.sprite.originX = Std.int(f.sprite.tile.width * 0.5);
-		f.sprite.originY = Std.int(f.sprite.tile.height * 0.5);
-		killedFishContainer.addChild(f);
-		f.x = Math.random() * 50 - 25 - 4;
+		f.vRot = (Math.random() - 0.5) * 0.4;
+
+		var newOriginX = Std.int(f.sprite.tile.width * 0.5);
+		var newOriginY = Std.int(f.sprite.tile.height * 0.5);
+
+		var gPos = f.localToGlobal();
+
+		f.sprite.originX = newOriginX;
+		f.sprite.originY = newOriginY;
+
+		fishPile.addChild(f);
+
+		f.pileX = Math.random() * 50 - 25 - 4;
+		f.pileY = -Math.floor(killedFish.length * 0.2) * 8;
+
+		var pPos = fishPile.localToGlobal();
+		f.x = gPos.x - pPos.x;
+		f.y = gPos.y - pPos.y;
+
+		f.by = -8.0;
+		f.bx = (f.pileX - f.x) * 0.1;
+		f.inPile = true;
+
 		f.bounce();
-		f.y = -Math.floor(killedFish.length * 0.2) * 8;
 
 		var t = new PopText('+${calcGold(f.data.SellPrice)}', container);
-		t.text.textColor = 0xd29300;
+		t.text.textColor = 0xFFFFFF;
+		t.filter = new Outline(1);
 
 		var p = f.localToGlobal();
 		t.x = p.x;
@@ -814,10 +837,11 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		boat.y = Math.round(fisher.y + Math.sin(time) * 2);
-		killedFishContainer.x = boat.x;
-		killedFishContainer.y = boat.y - 8;
 		boatBg.x = boat.x;
 		boatBg.y = boat.y;
+
+		boat.rotation *= 0.6;
+		boatBg.rotation = boat.rotation;
 
 		if (currentPhase == Throwing) {
 			boosterThing.x = game.s2d.width >> 1;

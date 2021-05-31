@@ -160,7 +160,7 @@ class ArrowQueue extends Entity2D {
 			if (current.arrows.length == 0) {
 				onCatch(current.fish);
                 popCollection();
-				bgshine.alpha = 0.9;
+				bgshine.alpha = 1.0;
 			}
 
 			//Game.instance.freeze(0.05);
@@ -200,7 +200,7 @@ class ArrowQueue extends Entity2D {
 		}
 
 		bg.alpha += (targetAlpha * 0.4 - bg.alpha) * 0.3;
-		bgshine.alpha *= 0.88;
+		bgshine.alpha *= 0.82;
 
 		square.alpha  += (targetAlpha * 0.7 - square.alpha) * 0.3;
 		squareScale *= 0.76;
