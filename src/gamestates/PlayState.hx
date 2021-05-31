@@ -52,6 +52,8 @@ class PlayState extends elke.gamestate.GameState {
 	public var world:Object;
 
 	public var backgroundLayer : Object;
+	public var fishLayer : Object;
+
 	public var fishContainer:Object;
 	public var killedFishContainer:Object;
 
@@ -60,6 +62,7 @@ class PlayState extends elke.gamestate.GameState {
 	public var rope:Rope;
 
 	var hook:Hook;
+	var boatBg: Bitmap;
 	var boat:Bitmap;
 
 	var bg:Bg;
@@ -164,6 +167,7 @@ class PlayState extends elke.gamestate.GameState {
 		bg = new Bg(container);
 
 		world = new Object(container);
+		backgroundLayer = new Object(world);
 
 		var particles = new Particles(world);
 		particles.load(haxe.Json.parse(hxd.Res.particles.bubble.entry.getText()), hxd.Res.particles.bubble.entry.path);
@@ -174,7 +178,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		var t = hxd.Res.img.waves.toTile();
 		t.getTexture().wrap = Repeat;
-		waves = new Bitmap(t, world);
+		waves = new Bitmap(t, backgroundLayer);
 		waves.y = -16;
 		waves.tileWrap = true;
 		waves.tile.setSize(1324, 64);
@@ -202,6 +206,9 @@ class PlayState extends elke.gamestate.GameState {
 		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
 		boat.tile.dx = -32;
 		boat.tile.dy = -18;
+		boatBg = new Bitmap(hxd.Res.img.boatback.toTile(), backgroundLayer);
+		boatBg.tile.dx = -32;
+		boatBg.tile.dy = -18;
 
 		var t = hxd.Res.img.bottom.toTile();
 		t.getTexture().wrap = Repeat;
@@ -213,6 +220,8 @@ class PlayState extends elke.gamestate.GameState {
 
 		fisher.y = 0;
 		fisher.x = Const.SEA_WIDTH >> 1;
+
+		foregroundLayer = new Object(world);
 
 		shop = new Shop(this, container);
 		shop.onClose = closeShop;
@@ -807,6 +816,8 @@ class PlayState extends elke.gamestate.GameState {
 		boat.y = Math.round(fisher.y + Math.sin(time) * 2);
 		killedFishContainer.x = boat.x;
 		killedFishContainer.y = boat.y - 8;
+		boatBg.x = boat.x;
+		boatBg.y = boat.y;
 
 		if (currentPhase == Throwing) {
 			boosterThing.x = game.s2d.width >> 1;
