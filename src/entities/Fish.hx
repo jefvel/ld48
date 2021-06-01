@@ -76,8 +76,8 @@ class Fish extends Entity2D {
     var gravity = 0.4;
     public function flee() {
         fleeing = true;
-        vx = Math.random() * 10 - 5;
-        vy = Math.random() * -10.0 - 5.0;
+        vx = Math.random() * 8 - 4;
+        vy = Math.random() * -5.0 - 4.0;
     }
 
     var bTime = 0.0;
@@ -133,21 +133,24 @@ class Fish extends Entity2D {
             bx = (pileX - x) * 0.1;
             y += by;
 
-            by += Math.min(0.7, -y);
+            if (y < pileY) {
+                by += Math.min(0.7, -y + pileY);
+            }
+
             sprite.rotation += vRot;
 
-            if (y > 0) {
-                by *= -0.5;
-                y = 0;
+            if (y > pileY && by >= 0) {
+                by *= -0.4;
+                y = pileY;
                 vRot *= 0.4;
                 if(!splatted) {
                     hxd.Res.sound.splat.play(false, 0.3);
-                    state.boat.rotation = x * 0.01;
+                    state.boat.rotation = x * 0.006;
                     splatted = true;
                 }
             }
 
-            var eps = 0.4;
+            var eps = 1;
             if(Math.abs(x - pileX) < eps && Math.abs(y - pileY) < eps && Math.abs(by) < 0.01) {
                 inPlace = true;
                 x = pileX;

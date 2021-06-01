@@ -20,7 +20,7 @@
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27",
+  "version": "1.2.27-x64",
   "image": "shopkeeper.png",
   "format": "RGBA8888",
   "size": { "w": 117, "h": 56 },

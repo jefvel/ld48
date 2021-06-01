@@ -56,6 +56,8 @@ class Hook extends Entity2D {
 		sinking = true;
 		px = x;
         py = y;
+        vy = -Math.random() * 3 - 15;
+        vx = 5 + 8 * (Math.random() - 0.5);
 	}
 
     override function sync(ctx:RenderContext) {
@@ -93,18 +95,22 @@ class Hook extends Entity2D {
         }
 
         if (state.currentPhase == Sinking) {
-            if (state.leftPressed) {
-                ax -= moveSpeed;
-            }
-            if (state.rightPressed) {
-                ax += moveSpeed;
-            }
+            if (y > 0) {
+                if (state.leftPressed) {
+                    ax -= moveSpeed;
+                }
+                if (state.rightPressed) {
+                    ax += moveSpeed;
+                }
 
-            if (state.upPressed) {
-                ay -= moveSpeed;
-            }
-            if (state.downPressed) {
-                ay += moveSpeed;
+                if (state.upPressed) {
+                    ay -= moveSpeed;
+                }
+                if (state.downPressed) {
+                    ay += moveSpeed;
+                }
+            } else {
+                ay = 0.7;
             }
 
             ax *= 0.9;
@@ -132,7 +138,12 @@ class Hook extends Entity2D {
 
             py = Math.max(-Const.SCREEN_HEIGHT * 0.5, py);
             py = Math.min(Const.SCREEN_HEIGHT * 0.5, py);
-            sprite.rotation = 0.6 * ax;
+
+            if (y > 0) {
+                sprite.rotation = 0.6 * ax;
+            } else {
+                sprite.rotation = Math.atan2(vy, vx) - Math.PI * 0.5;
+            }
         }
 
         if (state.currentPhase == ReelingIn) {

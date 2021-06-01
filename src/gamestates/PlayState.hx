@@ -195,9 +195,6 @@ class PlayState extends elke.gamestate.GameState {
 		sdform.texture = t.getTexture();
 
 		fisher = new Fisher(world);
-		rope = new Rope(world);
-		hook = new Hook(this, world);
-		fishContainer = new Object(world);
 
 		sky = new WaveBackground(world);
 
@@ -212,7 +209,12 @@ class PlayState extends elke.gamestate.GameState {
 		boatBg.tile.dx = -32;
 		boatBg.tile.dy = -18;
 
+		rope = new Rope(world);
+		hook = new Hook(this, world);
+		fishContainer = new Object(world);
+
 		fishPile = new Object(boatBg);
+		fishPile.y = -5;
 
 		var t = hxd.Res.img.bottom.toTile();
 		t.getTexture().wrap = Repeat;
@@ -237,7 +239,7 @@ class PlayState extends elke.gamestate.GameState {
 		depthIndicator.alpha = 0;
 
 		comboText = new Text(hxd.Res.fonts.futilepro_medium_12.toFont(), container);
-		comboText.rotation = -Math.PI * 0.2;
+		comboText.filter = new Outline(1);
 		comboText.textAlign = Center;
 
 		newGame();
@@ -705,7 +707,7 @@ class PlayState extends elke.gamestate.GameState {
 		killedFish.push(f);
 
 		f.rotation = 0;
-		f.vRot = (Math.random() - 0.5) * 0.4;
+		f.vRot = (Math.random() - 0.5) * 0.6;
 
 		var newOriginX = Std.int(f.sprite.tile.width * 0.5);
 		var newOriginY = Std.int(f.sprite.tile.height * 0.5);
@@ -717,26 +719,26 @@ class PlayState extends elke.gamestate.GameState {
 
 		fishPile.addChild(f);
 
-		f.pileX = Math.random() * 50 - 25 - 4;
+		f.pileX = Math.random() * 40 - 20 - 4;
 		f.pileY = -Math.floor(killedFish.length * 0.2) * 8;
 
 		var pPos = fishPile.localToGlobal();
 		f.x = gPos.x - pPos.x;
 		f.y = gPos.y - pPos.y;
 
-		f.by = -8.0;
+		f.by = -7.0 - Math.random() * 2;
 		f.bx = (f.pileX - f.x) * 0.1;
 		f.inPile = true;
 
-		f.bounce();
-
+		/*
 		var t = new PopText('+${calcGold(f.data.SellPrice)}', container);
 		t.text.textColor = 0xFFFFFF;
 		t.filter = new Outline(1);
 
 		var p = f.localToGlobal();
-		t.x = p.x;
+		t.x = Math.round(p.x + Math.random() * 20 - 10);
 		t.y = Math.round(48 + Math.random() * 5);
+		*/
 	}
 
 	var fishRotOffset = 0.0;
@@ -849,6 +851,8 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		comboText.visible = currentPhase == Catching;
+		comboText.x = arrows.x - 45;
+		comboText.y = arrows.y - 32;
 
 		timer.visible = currentPhase == Sinking || currentPhase == Catching;
 		timer.x = Math.round((game.s2d.width - 256) * 0.5);
@@ -890,7 +894,9 @@ class PlayState extends elke.gamestate.GameState {
 			}
 
 			if (!boosting) {
-				catchTime -= dt;
+				if (hook.y > 0) {
+					catchTime -= dt;
+				}
 				timer.value = (catchTime / maxCatchTime);
         		if (timer.value < 0.3) {
             		timer.color.set(0.8, 0.3, 0.3);
@@ -949,6 +955,7 @@ class PlayState extends elke.gamestate.GameState {
 							var g = calcGold(f.data.SellPrice);
 							g = Math.ceil(0.3 * g);
 							giveGold(g);
+
 							var t = new PopText('+${g}', world);
 							t.text.textColor = 0xf3bd00;
 							t.x = hook.x;
@@ -1083,8 +1090,8 @@ class PlayState extends elke.gamestate.GameState {
 
 			comboText.text = currentCombo > 2 ? 'Combo x${currentCombo}' : '';
 			comboText.setScale(1 + comboBombo);
-			comboText.rotation = -Math.PI * 0.2 + comboRoto;
-			comboRoto *= 0.92;
+			comboText.rotation = comboRoto;
+			comboRoto *= 0.9;
 
 			comboText.x = arrows.x - 64;
 			comboText.y = arrows.y - 29;

@@ -15,19 +15,28 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 6, "y": 8, "w": 25, "h": 20 },
     "sourceSize": { "w": 32, "h": 32 },
-    "duration": 100
+    "duration": 60
+   },
+   {
+    "filename": "fisherhead 2.aseprite",
+    "frame": { "x": 0, "y": 21, "w": 25, "h": 20 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 6, "y": 8, "w": 25, "h": 20 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 60
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27",
+  "version": "1.2.27-x64",
   "image": "fisherhead.png",
   "format": "RGBA8888",
-  "size": { "w": 51, "h": 20 },
+  "size": { "w": 51, "h": 41 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
-   { "name": "blink", "from": 1, "to": 1, "direction": "forward" }
+   { "name": "blink", "from": 1, "to": 2, "direction": "forward" }
   ]
  }
 }
