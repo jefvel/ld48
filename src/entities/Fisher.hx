@@ -15,19 +15,28 @@ class Fisher extends Entity2D {
     public function new(?p) {
         super(p);
         sprite = hxd.Res.img.fisher_tilesheet.toSprite2D(this);
-        sprite.originX = 24;
+        sprite.originX = 24 + 32;
         sprite.originY = 64;
         sprite.animation.play("idle");
         head = hxd.Res.img.fisherhead_tilesheet.toSprite2D(this);
         head.originX = 14;
         head.originY = 25;
         head.animation.play("idle");
-        head.x = 26 - sprite.originX;
+        head.x = 26 - sprite.originX + 32;
         head.y = 29 - sprite.originY;
         timeUntilBlink = 0.5 + Math.random() * 5.0;
     }
 
-    var rx = 57;
+    public function charge() {
+        sprite.animation.play("chargeup", false, true, 0, s -> {
+            sprite.animation.play("chargeidle");
+        });
+    }
+    public function throwLine() {
+        sprite.animation.play("idle");
+    }
+
+    var rx = 57 + 32;
     var ry = 29;
     var time = 0.0;
     var timeUntilBlink = 3.0;
@@ -46,6 +55,12 @@ class Fisher extends Entity2D {
         if (timeUntilBlink < 0) {
             timeUntilBlink = 0.5 + Math.random() * 5.0;
             head.animation.play("blink", false, false, 0.0, resetHead);
+        }
+
+        var s = sprite.animation.getSlice("hook");
+        if (s != null) {
+            rodX = s.x - sprite.originX;
+            rodY = s.y - sprite.originY;
         }
     }
 

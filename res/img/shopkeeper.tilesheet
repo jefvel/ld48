@@ -27,6 +27,8 @@
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 1, "direction": "forward" }
+  ],
+  "slices": [
   ]
  }
 }

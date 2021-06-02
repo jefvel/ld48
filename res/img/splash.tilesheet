@@ -89,6 +89,8 @@
   "size": { "w": 190, "h": 72 },
   "scale": "1",
   "frameTags": [
+  ],
+  "slices": [
   ]
  }
 }

@@ -44,6 +44,8 @@
   "size": { "w": 14, "h": 12 },
   "scale": "1",
   "frameTags": [
+  ],
+  "slices": [
   ]
  }
 }

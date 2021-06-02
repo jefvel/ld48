@@ -15,6 +15,11 @@
 					"kind": null
 				},
 				{
+					"typeStr": "5:Arrows,Shmup",
+					"name": "CatchType",
+					"kind": null
+				},
+				{
 					"typeStr": "3",
 					"name": "Armor",
 					"kind": null
@@ -66,7 +71,8 @@
 					"ToDepth": 2000,
 					"Armor": 0,
 					"OriginX": 15,
-					"OriginY": 8
+					"OriginY": 8,
+					"CatchType": 0
 				},
 				{
 					"ID": "Basic2",
@@ -78,7 +84,8 @@
 					"FromDepth": 800,
 					"ToDepth": 3500,
 					"OriginX": 31,
-					"OriginY": 18
+					"OriginY": 18,
+					"CatchType": 0
 				},
 				{
 					"ID": "Eel",
@@ -90,7 +97,8 @@
 					"FromDepth": 2400,
 					"ToDepth": 8000,
 					"OriginX": 29,
-					"OriginY": 14
+					"OriginY": 14,
+					"CatchType": 0
 				},
 				{
 					"ID": "Jelly",
@@ -102,7 +110,8 @@
 					"FromDepth": 4000,
 					"ToDepth": 9000,
 					"OriginX": 13,
-					"OriginY": 5
+					"OriginY": 5,
+					"CatchType": 0
 				},
 				{
 					"ID": "Biggo",
@@ -114,7 +123,8 @@
 					"FromDepth": 8000,
 					"ToDepth": 12000,
 					"OriginX": 123,
-					"OriginY": 20
+					"OriginY": 20,
+					"CatchType": 0
 				},
 				{
 					"ID": "Cthulhu",
@@ -126,7 +136,8 @@
 					"FromDepth": 13000,
 					"ToDepth": 13000,
 					"OriginX": 64,
-					"OriginY": 64
+					"OriginY": 64,
+					"CatchType": 0
 				}
 			],
 			"separators": [],

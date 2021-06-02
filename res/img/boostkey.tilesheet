@@ -26,6 +26,8 @@
   "size": { "w": 30, "h": 53 },
   "scale": "1",
   "frameTags": [
+  ],
+  "slices": [
   ]
  }
 }

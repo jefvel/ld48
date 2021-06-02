@@ -62,6 +62,8 @@
   "size": { "w": 388, "h": 257 },
   "scale": "1",
   "frameTags": [
+  ],
+  "slices": [
   ]
  }
 }

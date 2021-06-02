@@ -238,6 +238,8 @@
    { "name": "hit3", "from": 9, "to": 14, "direction": "forward" },
    { "name": "hit4", "from": 15, "to": 19, "direction": "forward" },
    { "name": "hit5", "from": 20, "to": 24, "direction": "forward" }
+  ],
+  "slices": [
   ]
  }
 }

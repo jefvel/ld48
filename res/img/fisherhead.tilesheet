@@ -37,6 +37,8 @@
   "frameTags": [
    { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
    { "name": "blink", "from": 1, "to": 2, "direction": "forward" }
+  ],
+  "slices": [
   ]
  }
 }

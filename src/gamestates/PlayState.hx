@@ -391,6 +391,8 @@ class PlayState extends elke.gamestate.GameState {
 		started = true;
 		boosterThing.fadeOut();
 
+		fisher.throwLine();
+
 		boostTime = maxBoostTime * (boosterThing.boosts / boosterThing.maxBoosts);
 		initialBoostTime = boostTime;
 
@@ -535,12 +537,15 @@ class PlayState extends elke.gamestate.GameState {
 	function directionPressed(dir:Direction, repeat = false) {
 		if (!started && currentPhase == Throwing && !repeat) {
 			if (dir == Down || dir == Up) {
+				fisher.charge();
 				if (!boosterThing.activate()) {
 					launchHook();
 				}
+
 				if (boosterThing.boosts == boosterThing.maxBoosts) {
 					launchHook();
 				}
+
 				return;
 			}
 		}
@@ -1034,11 +1039,13 @@ class PlayState extends elke.gamestate.GameState {
 			var dx = hook.x + hook.centerX - f.x;
 			var dy = hook.y + hook.centerY - f.y;
 
-			if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
-				f.rot = Math.atan2(dy, dx);
-			}
+			if (currentPhase != ReelingIn) {
+				if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
+					f.rot = Math.atan2(dy, dx);
+				}
 
-			f.rotation = f.rot + (Math.random() * 0.1 - 0.05) + fishRotOffset;
+				f.rotation = f.rot + (Math.random() * 0.1 - 0.05) + fishRotOffset;
+			}
 
 			f.x += dx * f.attractSpeed;
 			f.y += dy * f.attractSpeed;

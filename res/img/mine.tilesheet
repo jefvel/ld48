@@ -91,6 +91,8 @@
   "frameTags": [
    { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
    { "name": "explode", "from": 1, "to": 8, "direction": "forward" }
+  ],
+  "slices": [
   ]
  }
 }

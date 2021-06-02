@@ -78,7 +78,21 @@ class Hook extends Entity2D {
         t += dt;
 
 		if (!sinking) {
-            sprite.rotation = Math.sin(t * 1.6) * 0.4;
+            var nx = state.fisher.x + state.fisher.rodX;
+            var ny = state.fisher.y + state.fisher.rodY;
+            var dx = nx - x;
+            var dy = ny - y;
+
+            x += (dx) * 0.8;
+            y += (dy) * 0.8;
+
+            if (dx * dx + dy * dy < 3 * 3) {
+                var goalRot = Math.sin(t * 1.6) * 0.4;
+                sprite.rotation += (goalRot - sprite.rotation) * 0.1;
+            } else {
+                sprite.rotation = Math.atan2(dy, dx) + Math.PI * 0.5;
+            }
+
 			return;
 		} 
 
@@ -152,7 +166,19 @@ class Hook extends Entity2D {
             x += dx * 0.1;
             y += dy * 0.1;
 
-            sprite.rotation *= 0.8;
+            sprite.rotation *= 0.7;
+            for (f in state.caughtFish) {
+                var dx = x + centerX - f.x;
+                var dy = y + centerY - f.y;
+
+                if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
+				    f.rot = Math.atan2(dy, dx);
+                    f.rotation = f.rot;
+                }
+
+                f.x = x + centerX;
+                f.y = y + centerY;
+            }
         }
 	}
 }

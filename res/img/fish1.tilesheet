@@ -37,6 +37,8 @@
   "frameTags": [
    { "name": "idle", "from": 0, "to": 1, "direction": "forward" },
    { "name": "dead", "from": 2, "to": 2, "direction": "forward" }
+  ],
+  "slices": [
   ]
  }
 }
