@@ -91,7 +91,9 @@ class ArrowQueue extends Entity2D {
 
 	var arrowCollections:Array<ArrowCollection>;
 
-	public var onCatch:Fish->Void;
+	public var bonusKills = 0;
+
+	public var onCatch:(Fish, Bool)->Void;
 	public var onMiss:Fish->Void;
 
     var punchSounds: Array<Sound>;
@@ -158,9 +160,16 @@ class ArrowQueue extends Entity2D {
 			s.play(false, 0.5);
 
 			if (current.arrows.length == 0) {
-				onCatch(current.fish);
+				onCatch(current.fish, false);
                 popCollection();
 				bgshine.alpha = 1.0;
+				for (i in 0...bonusKills) {
+					var col = arrowCollections[0];
+					if (col != null) {
+						onCatch(col.fish, true);
+						popCollection();
+					}
+				}
 			}
 
 			//Game.instance.freeze(0.05);

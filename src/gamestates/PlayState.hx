@@ -87,6 +87,9 @@ class PlayState extends elke.gamestate.GameState {
 	public var maxCombo = 0;
 
 	public var currentCombo = 0;
+	public var maxMultiKill = 4;
+	public var multikillStart = 2;
+	public var multikillIncrease = 2;
 
 	public var currentRound = 0;
 	public var totalRounds = 30;
@@ -278,16 +281,18 @@ class PlayState extends elke.gamestate.GameState {
 	var comboBombo = 0.0;
 	var comboRoto = 0.0;
 
-	function onCatch(f:Fish) {
+	function onCatch(f:Fish, isComboKill = false) {
 		f.kill();
 
 		punchTime = maxPunchTime;
 		game.sound.playWobble(hxd.Res.sound._catch, 0.3);
 		caught ++;
 
-		currentCombo ++;
-		comboBombo += 0.4;
-		comboRoto = (Math.random() - 0.5) * Math.PI * 0.3;
+		if (!isComboKill) {
+			currentCombo ++;
+			comboBombo += 0.4;
+			comboRoto = (Math.random() - 0.5) * Math.PI * 0.3;
+		}
 
 		putFishOnPile(f);
 	}
@@ -1089,6 +1094,10 @@ class PlayState extends elke.gamestate.GameState {
 				punchTime = 0;
 				arrows.failAll();
 			}
+
+			var bonusKills = Math.max(0, Math.floor((currentCombo - multikillStart + multikillIncrease - 1) / multikillIncrease));
+			bonusKills = Math.min(bonusKills, maxMultiKill);
+			arrows.bonusKills = Std.int(bonusKills);
 
 			timer.value = (punchTime / maxPunchTime);
 			timer.color.set(0.79, 0.5, 0.3);
