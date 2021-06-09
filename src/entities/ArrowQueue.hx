@@ -140,12 +140,21 @@ class ArrowQueue extends Entity2D {
 		arrowCollections = [];
 	}
 
+	function removeCollection(c: ArrowCollection) {
+		arrowCollections.remove(c);
+		c.remove();
+	}
+
     function popCollection() {
         var c = arrowCollections.shift();
         if (c != null) {
             c.remove();
         }
     }
+
+
+	/// if true, bonus kills will ignore which kind of fish is auto killed
+	public var bonusKillsAllowAnyKind = false;
 
 	var squareScale = .0;
 	public function onDirPress(dir:Direction) {
@@ -163,16 +172,17 @@ class ArrowQueue extends Entity2D {
 				onCatch(current.fish, false);
                 popCollection();
 				bgshine.alpha = 1.0;
-				for (i in 0...bonusKills) {
-					var col = arrowCollections[0];
-					if (col != null) {
-						onCatch(col.fish, true);
-						popCollection();
+				for (_ in 0...bonusKills) {
+					for (col in arrowCollections) {
+						if (bonusKillsAllowAnyKind || col.fish.data.ID == current.fish.data.ID) {
+							onCatch(col.fish, true);
+							removeCollection(col);
+						}
 					}
 				}
 			}
 
-			//Game.instance.freeze(0.05);
+			// Game.instance.freeze(0.01);
 
 			squareScale = .2;
             return true;
@@ -197,10 +207,52 @@ class ArrowQueue extends Entity2D {
 		x = getScene().width >> 1;
         y = 78;
 
+		var toHide = bonusKills;
+
+		var bonusKillsClear = new Map<Data.FishKind, Int>();
+		var bonusStackPositions = new Map<Data.FishKind, Float>();
+		var lastColVisible = false;
+		var lastWidth = 0.;
+
 		for (c in arrowCollections) {
-			c.x += (sx - c.x) * 0.3;
-			sx += c.width + 16;
+			var id = c.fish.data.ID;
+			if (!bonusKillsClear.exists(id)) {
+				bonusKillsClear[id] = 0;
+			}
+
+			var colVisible = false;
+
+			if (bonusKillsClear[id] == 0) {
+				colVisible = true;
+			}
+
+			if (bonusKillsClear[id] > bonusKills) {
+				colVisible = true;
+			}
+
+			if (colVisible) {
+				sx += lastWidth;
+			}
+
+
+			if (colVisible) {
+				c.x += (sx - c.x) * 0.3;
+				bonusStackPositions[id] = c.x;
+				c.y = 0;
+			} else {
+				c.x += (bonusStackPositions[id] - c.x) * 0.3;
+				c.y += (40 * bonusKillsClear[id] - c.y) * 0.4;
+			}
+
+
+			c.alpha += colVisible ? (1 - c.alpha) * 0.3 : (0.4 - c.alpha) * 0.3;
+
             c.update(dt);
+
+			lastColVisible = colVisible;
+
+			bonusKillsClear[id] ++;
+			lastWidth = c.width + 16;
 		}
 
 		var targetAlpha = 0.0;
