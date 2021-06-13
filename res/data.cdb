@@ -20,6 +20,11 @@
 					"kind": null
 				},
 				{
+					"typeStr": "4",
+					"name": "TimeGain",
+					"kind": null
+				},
+				{
 					"typeStr": "3",
 					"name": "Armor",
 					"kind": null
@@ -72,7 +77,8 @@
 					"Armor": 0,
 					"OriginX": 15,
 					"OriginY": 8,
-					"CatchType": 0
+					"CatchType": 0,
+					"TimeGain": 0.3
 				},
 				{
 					"ID": "Basic2",
@@ -85,7 +91,8 @@
 					"ToDepth": 3500,
 					"OriginX": 31,
 					"OriginY": 18,
-					"CatchType": 0
+					"CatchType": 0,
+					"TimeGain": 0.3
 				},
 				{
 					"ID": "Eel",
@@ -98,7 +105,8 @@
 					"ToDepth": 8000,
 					"OriginX": 29,
 					"OriginY": 14,
-					"CatchType": 0
+					"CatchType": 0,
+					"TimeGain": 0.5
 				},
 				{
 					"ID": "Jelly",
@@ -111,7 +119,8 @@
 					"ToDepth": 9000,
 					"OriginX": 13,
 					"OriginY": 5,
-					"CatchType": 0
+					"CatchType": 0,
+					"TimeGain": 0.8
 				},
 				{
 					"ID": "Biggo",
@@ -124,7 +133,8 @@
 					"ToDepth": 12000,
 					"OriginX": 123,
 					"OriginY": 20,
-					"CatchType": 0
+					"CatchType": 0,
+					"TimeGain": 1.2
 				},
 				{
 					"ID": "Cthulhu",
@@ -137,7 +147,8 @@
 					"ToDepth": 13000,
 					"OriginX": 64,
 					"OriginY": 64,
-					"CatchType": 0
+					"CatchType": 0,
+					"TimeGain": 3
 				}
 			],
 			"separators": [],

@@ -156,6 +156,8 @@ class ArrowQueue extends Entity2D {
 	/// if true, bonus kills will ignore which kind of fish is auto killed
 	public var bonusKillsAllowAnyKind = false;
 
+	var visibleCollections = 2;
+
 	var squareScale = .0;
 	public function onDirPress(dir:Direction) {
         if (arrowCollections.length == 0) {
@@ -214,11 +216,15 @@ class ArrowQueue extends Entity2D {
 		var lastColVisible = false;
 		var lastWidth = 0.;
 
+		var totalVisible = 0;
+
 		for (c in arrowCollections) {
 			var id = c.fish.data.ID;
 			if (!bonusKillsClear.exists(id)) {
 				bonusKillsClear[id] = 0;
 			}
+
+			var hiddenCompletely = false;
 
 			var colVisible = false;
 
@@ -230,6 +236,10 @@ class ArrowQueue extends Entity2D {
 				colVisible = true;
 			}
 
+			if (totalVisible >= visibleCollections) {
+				hiddenCompletely = true;
+			}
+
 			if (colVisible) {
 				sx += lastWidth;
 			}
@@ -239,13 +249,21 @@ class ArrowQueue extends Entity2D {
 				c.x += (sx - c.x) * 0.3;
 				bonusStackPositions[id] = c.x;
 				c.y = 0;
+				totalVisible ++;
 			} else {
 				c.x += (bonusStackPositions[id] - c.x) * 0.3;
 				c.y += (40 * bonusKillsClear[id] - c.y) * 0.4;
 			}
 
+			var targetAlpha = 1.0;
 
-			c.alpha += colVisible ? (1 - c.alpha) * 0.3 : (0.4 - c.alpha) * 0.3;
+			if (!colVisible) {
+				targetAlpha = 0.1;
+			}
+
+			c.alpha += (targetAlpha - c.alpha) * 0.3;
+
+			c.visible = !hiddenCompletely;
 
             c.update(dt);
 

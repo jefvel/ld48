@@ -101,8 +101,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var reelLength = 450;
 
-	var strengths = [1.0, 3.0, 6.0, 12.0, 18.0, 70.0];
-	var lengths = [450, 1200, 2500, 6000, 10000, 13100];
+	var strengths = [4.0, 3.0, 6.0, 12.0, 18.0, 70.0];
+	var lengths = [750, 1200, 2500, 6000, 10000, 13100];
 	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.5];
 
 	var goldMultiplier = 1.0;
@@ -161,6 +161,7 @@ class PlayState extends elke.gamestate.GameState {
 	var shoppingMusic: Channel;
 
 	var comboText : Text;
+	var bonusKillsText : Text;
 
 	public function new(mode: GameMode) {
 		this.gameMode = mode;
@@ -245,6 +246,9 @@ class PlayState extends elke.gamestate.GameState {
 		comboText.filter = new Outline(1);
 		comboText.textAlign = Center;
 
+		bonusKillsText = new Text(hxd.Res.fonts.picory.toFont(), comboText);
+		bonusKillsText.y = comboText.font.lineHeight + 4;
+
 		newGame();
 	}
 
@@ -284,7 +288,10 @@ class PlayState extends elke.gamestate.GameState {
 	function onCatch(f:Fish, isComboKill = false) {
 		f.kill();
 
-		punchTime = maxPunchTime;
+		if (!isComboKill) {
+			punchTime += f.data.TimeGain;
+		}
+
 		game.sound.playWobble(hxd.Res.sound._catch, 0.3);
 		caught ++;
 
@@ -305,11 +312,6 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		currentCombo = 0;
-		if (gameMode == Normal) {
-			punchTime *= 0.8;
-		} else {
-			punchTime *= 0.96;
-		}
 
 		game.sound.playWobble(hxd.Res.sound.ouch, 0.3);
 
@@ -1108,6 +1110,8 @@ class PlayState extends elke.gamestate.GameState {
 			comboText.setScale(1 + comboBombo);
 			comboText.rotation = comboRoto;
 			comboRoto *= 0.9;
+
+			bonusKillsText.text = bonusKills > 0 ? 'Kills per catch: ${bonusKills + 1}' : '';
 
 			comboText.x = arrows.x - 64;
 			comboText.y = arrows.y - 29;
