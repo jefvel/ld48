@@ -94,7 +94,7 @@ class ArrowQueue extends Entity2D {
 	public var bonusKills = 0;
 
 	public var onCatch:(Fish, Bool)->Void;
-	public var onMiss:Fish->Void;
+	public var onMiss:(Fish, ?Bool) ->Void;
 
     var punchSounds: Array<Sound>;
 

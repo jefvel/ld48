@@ -312,19 +312,22 @@ class PlayState extends elke.gamestate.GameState {
 		putFishOnPile(f);
 	}
 
-	function onMiss(f:Fish) {
+	function onMiss(f:Fish, passive = false) {
 		caughtFish.remove(f);
 		fishList.fishMissed(f);
-		missed ++;
-		if (currentCombo > maxCombo) {
-			maxCombo = currentCombo;
-		}
-
-		currentCombo = 0;
-
-		game.sound.playWobble(hxd.Res.sound.ouch, 0.3);
 
 		f.flee();
+
+		if (!passive) {
+			missed ++;
+			if (currentCombo > maxCombo) {
+				maxCombo = currentCombo;
+			}
+
+			currentCombo = 0;
+
+			game.sound.playWobble(hxd.Res.sound.ouch, 0.3);
+		}
 	}
 
 	public function reset() {
@@ -1023,8 +1026,8 @@ class PlayState extends elke.gamestate.GameState {
 						
 						var fish = caughtFish.pop();
 						if (fish != null) {
-							fish.flee();
 							var p = new PopText("Fish Escaped", world);
+							onMiss(fish, true);
 							p.x = fish.x;
 							p.y = fish.y;
 						}
