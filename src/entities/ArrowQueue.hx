@@ -179,6 +179,7 @@ class ArrowQueue extends Entity2D {
 						if (bonusKillsAllowAnyKind || col.fish.data.ID == current.fish.data.ID) {
 							onCatch(col.fish, true);
 							removeCollection(col);
+							break;
 						}
 					}
 				}

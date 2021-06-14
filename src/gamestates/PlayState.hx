@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.CatchingQueue;
 import entities.Sunrays;
 import h2d.filter.Outline;
 import h2d.Particles;
@@ -142,6 +143,7 @@ class PlayState extends elke.gamestate.GameState {
 	public var bottom: Bitmap;
 
 	public var arrows:ArrowQueue;
+	public var fishList: CatchingQueue;
 
 	public var shop:Shop;
 
@@ -206,6 +208,7 @@ class PlayState extends elke.gamestate.GameState {
 		arrows.onCatch = onCatch;
 		arrows.onMiss = onMiss;
 
+
 		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
 		boat.tile.dx = -32;
 		boat.tile.dy = -18;
@@ -239,6 +242,9 @@ class PlayState extends elke.gamestate.GameState {
 
 		boosterThing = new BoosterThing(container);
 		timer = new Timer(container);
+
+		fishList = new CatchingQueue(container);
+
 		depthIndicator = new DepthMeter(container);
 		depthIndicator.alpha = 0;
 
@@ -288,6 +294,8 @@ class PlayState extends elke.gamestate.GameState {
 	function onCatch(f:Fish, isComboKill = false) {
 		f.kill();
 
+		fishList.fishCaught(f);
+
 		if (!isComboKill) {
 			punchTime += f.data.TimeGain;
 		}
@@ -306,6 +314,7 @@ class PlayState extends elke.gamestate.GameState {
 
 	function onMiss(f:Fish) {
 		caughtFish.remove(f);
+		fishList.fishMissed(f);
 		missed ++;
 		if (currentCombo > maxCombo) {
 			maxCombo = currentCombo;
@@ -862,9 +871,12 @@ class PlayState extends elke.gamestate.GameState {
 			boosterThing.y = Math.round(game.s2d.height * 0.7);
 		}
 
+		fishList.bag.visible = currentPhase == Catching;
+		fishList.maxWidth = timer.getBounds().width - 8;
+		fishList.x = timer.x + 8;
+		fishList.y = timer.y + 32;
+
 		comboText.visible = currentPhase == Catching;
-		comboText.x = arrows.x - 45;
-		comboText.y = arrows.y - 32;
 
 		timer.visible = currentPhase == Sinking || currentPhase == Catching;
 		timer.x = Math.round((game.s2d.width - 256) * 0.5);
@@ -984,6 +996,7 @@ class PlayState extends elke.gamestate.GameState {
 
 						} else {
 							caughtFish.push(f);
+							fishList.addFish(f);
 							allFish.remove(f);
 							caughtWeight += f.data.Weight;
 							didCatch = true;
@@ -1113,8 +1126,8 @@ class PlayState extends elke.gamestate.GameState {
 
 			bonusKillsText.text = bonusKills > 0 ? 'Kills per catch: ${bonusKills + 1}' : '';
 
-			comboText.x = arrows.x - 64;
-			comboText.y = arrows.y - 29;
+			comboText.x = timer.x;
+			comboText.y = arrows.y;
 
 			if (arrows.isFinished()) {
 				timeUntilDone -= dt;
