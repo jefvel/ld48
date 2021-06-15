@@ -204,7 +204,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		sky = new WaveBackground(world);
 
-		arrows = new ArrowQueue(container);
+		arrows = new ArrowQueue(this, container);
 		arrows.onCatch = onCatch;
 		arrows.onMiss = onMiss;
 
@@ -256,6 +256,11 @@ class PlayState extends elke.gamestate.GameState {
 		bonusKillsText.y = comboText.font.lineHeight + 4;
 
 		newGame();
+	}
+
+	public function pushFishToBackOfQueue(f: Fish) {
+		fishList.moveFishToEnd(f);
+		arrows.pushFishToBack(f);
 	}
 
 	public function newGame() {
@@ -509,6 +514,8 @@ class PlayState extends elke.gamestate.GameState {
 
 			return;
 		}
+
+		arrows.reset();
 
 		openShop();
 	}

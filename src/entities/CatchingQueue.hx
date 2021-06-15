@@ -160,6 +160,10 @@ class CatchingQueue extends Entity2D {
 				el.g = el.b = 0;
 			}
 
+			if (fish.mode == InQueue) {
+				targetY += Math.min(10, Math.max(0, targetX - el.x));
+			}
+
 			el.x += (targetX - el.x) * moveSpeed;
 			el.y += (targetY - el.y) * moveSpeed;
 

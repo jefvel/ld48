@@ -1,5 +1,6 @@
 package entities;
 
+import gamestates.PlayState;
 import elke.process.Timeout;
 import elke.Game;
 import hxd.res.Sound;
@@ -96,10 +97,15 @@ class ArrowQueue extends Entity2D {
 	public var onCatch:(Fish, Bool)->Void;
 	public var onMiss:(Fish, ?Bool) ->Void;
 
+	var state : PlayState;
+
     var punchSounds: Array<Sound>;
 
-	public function new(?p) {
+	public function new(state, ?p) {
 		super(p);
+
+		this.state = state;
+
 		bgshine = new Bitmap(hxd.Res.img.arrowsbgshine.toTile(), this);
 		bgshine.tile.dx = bgshine.tile.dy = -4;
 		bgshine.x = bgshine.y = -4;
@@ -152,7 +158,6 @@ class ArrowQueue extends Entity2D {
         }
     }
 
-
 	/// if true, bonus kills will ignore which kind of fish is auto killed
 	public var bonusKillsAllowAnyKind = false;
 
@@ -174,6 +179,8 @@ class ArrowQueue extends Entity2D {
 				onCatch(current.fish, false);
                 popCollection();
 				bgshine.alpha = 1.0;
+
+				// Get bonus kills
 				for (_ in 0...bonusKills) {
 					for (col in arrowCollections) {
 						if (bonusKillsAllowAnyKind || col.fish.data.ID == current.fish.data.ID) {
@@ -183,6 +190,7 @@ class ArrowQueue extends Entity2D {
 						}
 					}
 				}
+
 			}
 
 			// Game.instance.freeze(0.01);
@@ -192,7 +200,35 @@ class ArrowQueue extends Entity2D {
 		} else {
             popCollection();
 			onMiss(current.fish);
+
+			var toPush = [];
+			
+			// Push missed bonus fish to back of queue
+			for (col in arrowCollections) {
+				if (toPush.length >= bonusKills) {
+					break;
+				}
+
+				if (bonusKillsAllowAnyKind || col.fish.data.ID == current.fish.data.ID) {
+					toPush.push(col);
+				}
+			}
+
+			for (c in toPush) {
+				state.pushFishToBackOfQueue(c.fish);
+			}
+
             return false;
+		}
+	}
+
+	public function pushFishToBack(f: Fish) {
+		for (c in arrowCollections) {
+			if (c.fish == f) {
+				arrowCollections.remove(c);
+				arrowCollections.push(c);
+				return;
+			}
 		}
 	}
 
