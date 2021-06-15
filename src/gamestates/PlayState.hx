@@ -154,6 +154,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	var depthIndicator: DepthMeter;
 
+	var roundResult: RoundResult;
+
 	var noise : Perlin;
 
 	var waveNoise: Channel;
@@ -440,8 +442,11 @@ class PlayState extends elke.gamestate.GameState {
 	function reelIn() {
 		catchTime = 0.0;
 		currentPhase = ReelingIn;
+
 		timeUntilCatching = totalTimeUntilCatching;
+
 		game.sound.playWobble(hxd.Res.sound.reelin, 0.4);
+
 		if (fishingMusic != null) {
 			var f = fishingMusic;
 			fishingMusic.fadeTo(0, 0.3, () -> {
@@ -463,10 +468,6 @@ class PlayState extends elke.gamestate.GameState {
 
 
 		for (f in caughtFish) {
-			//if (f.dead) {
-				//onCatch(f);
-				//continue;
-			//}
 			arrows.addArrow(f, f.pattern);
 		}
 
@@ -517,7 +518,9 @@ class PlayState extends elke.gamestate.GameState {
 
 		arrows.reset();
 
-		openShop();
+		roundResult = new RoundResult(killedFish, maxCombo, timer.value, container);
+
+		// openShop();
 	}
 
 	public function loseGame() {
@@ -1063,7 +1066,7 @@ class PlayState extends elke.gamestate.GameState {
 		fishRotOffset *= 0.9;
 
 		for (f in caughtFish) {
-			if (f.dead && currentPhase == Catching)
+			if (f.dead && (currentPhase == Catching || currentPhase == Shopping))
 				continue;
 
 			var dx = hook.x + hook.centerX - f.x;
