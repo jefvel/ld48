@@ -27,6 +27,7 @@ class Fish extends Entity2D {
         Jelly: [Left, Left, Right, Right, Up, Up, Down, Down],
         Biggo: [Left, Right, Up, Down, Left, Right, Up, Down, Left, Right, Left, Right],
         Cthulhu: [Up, Left, Down, Right, Up, Left, Down, Right, Up, Left, Right, Left, Up, Left, Right, Left, Down, Right, Up, Left],
+        Snekris: [Up, Up, Up, Up, Up],
     }
 
     var vx = 0.0;
@@ -51,6 +52,7 @@ class Fish extends Entity2D {
             case Basic2: hxd.Res.img.fish1_tilesheet.toSprite2D(this);
             case Eel: hxd.Res.img.fish2_tilesheet.toSprite2D(this);
             case Jelly: hxd.Res.img.fish3_tilesheet.toSprite2D(this);
+            case Snekris: hxd.Res.img.fish.Snaktris_tilesheet.toSprite2D(this);
             case Biggo: hxd.Res.img.fish4_tilesheet.toSprite2D(this);
             case Cthulhu: hxd.Res.img.crumbo_tilesheet.toSprite2D(this);
         }
@@ -65,6 +67,7 @@ class Fish extends Entity2D {
             case Jelly: fishPatterns.Jelly;
             case Biggo: fishPatterns.Biggo;
             case Cthulhu: fishPatterns.Cthulhu;
+            case Snekris: fishPatterns.Snekris;
         }
 
         x = Math.round(Math.random() * Const.SEA_WIDTH);

@@ -92,6 +92,8 @@ class PlayState extends elke.gamestate.GameState {
 	public var multikillStart = 2;
 	public var multikillIncrease = 2;
 
+	public var gameData: GameSaveData;
+
 	public var currentRound = 0;
 	public var totalRounds = 30;
 
@@ -266,6 +268,8 @@ class PlayState extends elke.gamestate.GameState {
 	}
 
 	public function newGame() {
+		gameData = new GameSaveData();
+
 		currentRound = 1;
 		totalGold = 0;
 		gold = 0;
@@ -312,6 +316,11 @@ class PlayState extends elke.gamestate.GameState {
 
 		if (!isComboKill) {
 			currentCombo ++;
+
+			if (maxCombo < currentCombo) {
+				maxCombo = currentCombo;
+			}
+
 			comboBombo += 0.4;
 			comboRoto = (Math.random() - 0.5) * Math.PI * 0.3;
 		}
@@ -518,7 +527,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		arrows.reset();
 
-		roundResult = new RoundResult(killedFish, maxCombo, timer.value, container);
+		roundResult = new RoundResult(killedFish, maxCombo, punchTime, container);
 
 		// openShop();
 	}

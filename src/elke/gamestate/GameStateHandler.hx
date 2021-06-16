@@ -9,6 +9,8 @@ class GameStateHandler {
 		return instance;
 	}
 
+	var stateStack : Array<GameState>;
+
 	var currentState:GameState;
 
 	var game:Game;
@@ -16,10 +18,26 @@ class GameStateHandler {
 	public function new(g:Game) {
 		instance = this;
 		game = g;
+
+		stateStack = [];
+
 		hxd.Window.getInstance().addEventTarget(onEvent);
 	}
 
+	public function pushState(s: GameState) {
+		stateStack.push(s);
+	}
+
 	public function update(dt:Float) {
+		var i = 0;
+		for (s in stateStack) {
+			if (s.alwaysActive || i == stateStack.length) {
+				s.update(dt);
+			}
+
+			i ++;
+		}
+
 		if (currentState != null) {
 			currentState.update(dt);
 		}

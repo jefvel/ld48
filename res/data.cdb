@@ -20,9 +20,8 @@
 					"kind": null
 				},
 				{
-					"typeStr": "5:Arrows,Shmup",
-					"name": "CatchType",
-					"kind": null
+					"typeStr": "5:Arrows,Avoid,Tetris",
+					"name": "CatchType"
 				},
 				{
 					"typeStr": "4",
@@ -149,6 +148,26 @@
 						"size": 32,
 						"x": 3,
 						"y": 0
+					}
+				},
+				{
+					"ID": "Snekris",
+					"Name": "Snekris",
+					"CatchType": 0,
+					"TimeGain": 1.5,
+					"Armor": 0,
+					"Weight": 6,
+					"SellPrice": 200,
+					"Amount": 20,
+					"FromDepth": 4200,
+					"ToDepth": 8000,
+					"OriginX": 29,
+					"OriginY": 8,
+					"Icon": {
+						"file": "img/fishIcons.png",
+						"size": 32,
+						"x": 2,
+						"y": 1
 					}
 				},
 				{

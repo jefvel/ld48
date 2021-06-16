@@ -6,6 +6,11 @@ class GameState {
 
 	public var name:String;
 
+	/**
+	 * when set to true, state will run even if it's not active
+	 */
+	public var alwaysActive = false;
+
 	public function onEvent(e:hxd.Event):Void {}
 
 	public function onEnter():Void {}
