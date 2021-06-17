@@ -103,7 +103,9 @@ class RoundResult extends Entity2D {
 		bg = new Bitmap(Tile.fromColor(0x000000), this);
 		bg.alpha = 0.05;
 
-		var resultText = new Text(hxd.Res.fonts.futilepro_medium_12.toFont(), this);
+		var resultText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), this);
+		resultText.setScale(2);
+
 		resultText.text = "Fishing Results";
 	
 		comboScore = Math.floor(maxCombo * pointsPerCombo);
@@ -128,6 +130,12 @@ class RoundResult extends Entity2D {
 		bg.alpha = 0.2;
 		totalScoreText = new h2d.HtmlText(hxd.Res.fonts.headline.toFont(), this);
 
+		resultText.dropShadow = {
+			dx: 1,
+			dy: 1,
+			color: 0x000000,
+			alpha: 0.4,
+		};
 
 		totalScoreText.dropShadow = {
 			dx: 1,
