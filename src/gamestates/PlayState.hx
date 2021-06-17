@@ -105,7 +105,7 @@ class PlayState extends elke.gamestate.GameState {
 	public var reelLength = 450;
 
 	var strengths = [4.0, 3.0, 6.0, 12.0, 18.0, 70.0];
-	var lengths = [750, 1200, 2500, 6000, 10000, 13100];
+	var lengths = [1750, 1200, 2500, 6000, 10000, 13100];
 	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.5];
 
 	var goldMultiplier = 1.0;

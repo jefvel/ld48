@@ -122,7 +122,7 @@ class CatchingQueue extends Entity2D {
 		var i = 0;
 		var freq = 0.4;
 		if (fishList.length > 0) {
-			fishSpacing = Math.min(16, maxWidth / fishList.length);
+			fishSpacing = Math.min(16, (maxWidth - 6) / Math.max(0, fishList.length - 1));
 		}
 
 		var catchSpeed = 0.2;
