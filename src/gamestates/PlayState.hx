@@ -1,5 +1,6 @@
 package gamestates;
 
+import graphics.BoatTransition;
 import entities.CatchingQueue;
 import entities.Sunrays;
 import h2d.filter.Outline;
@@ -607,8 +608,9 @@ class PlayState extends elke.gamestate.GameState {
 			}
 		}
 
-		if (currentPhase == Shopping) {
-			shop.directionPressed(dir);
+		if (currentPhase == Shopping && !repeat) {
+			//shop.directionPressed(dir);
+			roundResult.directionPressed(dir);
 		}
 	}
 

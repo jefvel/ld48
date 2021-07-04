@@ -19,6 +19,8 @@ typedef FishListItem = {
 	fish: Fish,
 	b: BatchElement,
 	mode: FishQueueMode,
+	x: Float,
+	y: Float,
 }
 
 class CatchingQueue extends Entity2D {
@@ -67,13 +69,15 @@ class CatchingQueue extends Entity2D {
 		var el = new BatchElement(tile);
 
 		el.alpha = 0.0;
-		el.x = fishSpacing * fishList.length;
-		el.y = 10.0;
+		var x = fishSpacing * fishList.length;
+		var y = 10.0;
 
 		fishList.push({
 			fish: f,
 			b: el,
 			mode: InQueue,
+			x: x,
+			y: y,
 		});
 	}
 
@@ -164,8 +168,11 @@ class CatchingQueue extends Entity2D {
 				targetY += Math.min(10, Math.max(0, targetX - el.x));
 			}
 
-			el.x += (targetX - el.x) * moveSpeed;
-			el.y += (targetY - el.y) * moveSpeed;
+			fish.x += (targetX - fish.x) * moveSpeed;
+			fish.y += (targetY - fish.y) * moveSpeed;
+
+			el.x = Math.round(fish.x);
+			el.y = Math.round(fish.y);
 
 			if (fish.mode != InQueue) {
 				if (Math.abs(el.y - targetY) < 1) {
