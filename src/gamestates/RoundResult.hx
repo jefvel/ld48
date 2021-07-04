@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.CatchingQueue;
 import graphics.BoatTransition;
 import elke.graphics.Transition;
 import hxd.Event;
@@ -12,6 +13,14 @@ import h2d.Tile;
 import h2d.Bitmap;
 import entities.Fish;
 import elke.entity.Entity2D;
+
+enum ResultPresentingSection {
+	Start;
+	CatchTime;
+	MaxCombo;
+	CaughtFish;
+	Complete;
+}
 class TextWithLabel extends Object {
 	var _label: Text;
 	var _text: Text;
@@ -90,7 +99,6 @@ class TextButton extends Interactive {
 		this.width = b.width;
 		this.height = b.height;
 		this.onPush = e -> {
-			onTap();
 			onPress();
 		}
 	}
@@ -115,6 +123,8 @@ class RoundResult extends Entity2D {
 	var bg : Bitmap;
 	var totalBg : Bitmap;
 
+	var currentState: ResultPresentingSection = Start;
+
 	var totalScoreText: h2d.HtmlText;
 
 	var timeLeftText : TextWithLabel;
@@ -135,6 +145,10 @@ class RoundResult extends Entity2D {
 	var buttonContainer : Object;
 	var returnButton : TextButton;
 	var retryButton: TextButton;
+
+	var queue: CatchingQueue;
+	var caughtFishScore = 0;
+	var caughtFishScoreText : Text;
 
 	public function new(caughtFish, maxCombo, timeLeft, ?p) {
 		super(p);
@@ -196,17 +210,34 @@ class RoundResult extends Entity2D {
 
 		retryButton = new TextButton(arrows.sub(32, 0, 32, 32), 'Continue\nfishing', doRetry, buttonContainer);
 		retryButton.x = returnButton.width + 16;
+
+		queue = new CatchingQueue(this);
+		queue.animated = false;
+		queue.x = paddingX + 4;
+		queue.y = maxComboText.y + maxComboText.textHeight + 32;
+		queue.maxWidth = 250;
+		caughtFishScoreText = new Text(hxd.Res.fonts.picory.toFont(), queue);
+		caughtFishScoreText.x = 240;
+		caughtFishScoreText.y = -6;
+		// caughtFishScoreText.y = Math.round((16 - caughtFishScoreText.textHeight) * 0.5);
 	}
 
-	var onReturn : Void -> Void;
-	var onRetry : Void -> Void;
+	public var onReturn : Void -> Void;
+	public var onRetry : Void -> Void;
 	var chosen = false;
 
 	var canLeave = false;
 
 	function doReturn() {
+		if (chosen) {
+			return;
+		}
+
 		returnButton.onTap();
+		chosen = true;
+
 		new BoatTransition(() -> {
+			remove();
 			if (onReturn != null) {
 				onReturn();
 			}
@@ -214,8 +245,15 @@ class RoundResult extends Entity2D {
 	}
 
 	function doRetry() {
+		if (chosen) {
+			return;
+		}
+
 		retryButton.onTap();
+		chosen = true;
+
 		new BoatTransition(() -> {
+			remove();
 			if (onRetry != null) {
 				onRetry();
 			}
@@ -223,15 +261,10 @@ class RoundResult extends Entity2D {
 	}
 
 	public function directionPressed(dir: PlayState.Direction) {
-		if (chosen) {
-			return;
-		}
-
 		if (!canLeave) {
 			return;
 		}
 
-		chosen = true;
 		switch(dir) {
 			case Left: doReturn();
 			case Right: doRetry();
@@ -248,6 +281,7 @@ class RoundResult extends Entity2D {
 	}
 
 	function revealTimeLeft() {
+		currentState = CatchTime;
 		timeLeftText.text = '${roundedTime}s * ${scorePerExtraSecond}  =  $timeScore';
 
 		timeLeftText.visible = true;
@@ -257,27 +291,38 @@ class RoundResult extends Entity2D {
 	}
 
 	function revealCombo() {
+		currentState = MaxCombo;
 		maxComboText.visible = true;
 		totalScore += comboScore;
 
 		punchSound();
 	}
 
+	function startShowCatch() {
+		currentState = CaughtFish;
+	}
+
 	var finalized = false;
 	function finalizeRound() {
+		currentState = Complete;
 		if (finalized) {
 			return;
 		}
 
 		finalized = true;
 		punchSound();
+
 		canLeave = true;
 	}
 
-	var timePerReveal = 0.8;
+	var timePerReveal = 0.85;
 
 	var time = 0.;
 	var prevInterpScore = 0.0;
+
+	var timePerFish = 0.1;
+	var currentTimePerFish = 0.;
+	var fishCatchTimeout = 1.3;
 
 	override function update(dt:Float) {
 		super.update(dt);
@@ -288,14 +333,37 @@ class RoundResult extends Entity2D {
 		time += dt;
 		if (time >= timePerReveal) {
 			time = 0;
-			if (!timeLeftText.visible) {
+			if (currentState == Start) {
 				revealTimeLeft();
-			} else if (!maxComboText.visible) {
+			} else if (currentState == CatchTime) {
 				revealCombo();
-			} else {
-				finalizeRound();
+			} else if (currentState == MaxCombo) {
+				startShowCatch();
 			}
 		}
+
+		if (currentState == CaughtFish) {
+			currentTimePerFish += dt;
+			if (currentTimePerFish > timePerFish) {
+				var f = caughtFish.shift();
+				if (f == null ) {
+					fishCatchTimeout -= dt;
+					if (fishCatchTimeout <= 0) {
+						finalizeRound();
+					}
+				} else {
+					totalScore += f.data.Score;
+
+					queue.addFish(f);
+					hxd.Res.sound.fishthud.play(false, 0.3);
+					currentTimePerFish -= timePerFish;
+
+					caughtFishScore += f.data.Score;
+					caughtFishScoreText.text = '= $caughtFishScore';
+				}
+			}
+		}
+
 
 		var sinc = (totalScore - scoreInterpVal) * 0.08;
 
@@ -332,7 +400,6 @@ class RoundResult extends Entity2D {
 		totalScoreText.x = 32;
 		totalScoreText.y = s.height - totalScoreText.textHeight * totalScoreText.scaleY - 28;
 
-		var b = buttonContainer.getBounds();
 		var padding = Math.round((totalBg.height - 32) * 0.5);
 		var tWidth = retryButton.width + returnButton.width + 16;
 		buttonContainer.x = s.width - tWidth - padding;

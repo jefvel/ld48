@@ -35,6 +35,8 @@ class CatchingQueue extends Entity2D {
 
 	public var maxWidth = 300.0;
 
+	public var animated = true;
+
 	public function new(?p) {
 		super(p);
 		rootTile = hxd.Res.img.fishIcons.toTile();
@@ -116,6 +118,14 @@ class CatchingQueue extends Entity2D {
 
 	var fishSpacing = 4.0;
 
+	override function sync(ctx:RenderContext) {
+		super.sync(ctx);
+		// bag.visible = animated;
+		if (!animated) {
+			bag.visible = false;
+		}
+	}
+
 	var time = 0.;
 	override function update(dt:Float) {
 		super.update(dt);
@@ -129,13 +139,26 @@ class CatchingQueue extends Entity2D {
 			fishSpacing = Math.min(16, (maxWidth - 6) / Math.max(0, fishList.length - 1));
 		}
 
+		if (!animated) {
+			fishSpacing = 16;
+		}
+
 		var catchSpeed = 0.2;
+
+		var rowY = 0;
+		var fishPerRow = Math.floor(maxWidth / fishSpacing);
 
 		for (fish in fishList) {
 			var el = fish.b;
 
 			var targetX:Float = Math.round(i * fishSpacing);
 			var targetY:Float = Math.round(Math.sin(time * 0.5 + i * freq) * 2);
+
+			if (!animated) {
+				targetX = Math.round((i % fishPerRow) * fishSpacing);
+				targetY = Math.floor(i / fishPerRow) * 18;
+			}
+
 			var targetAlpha = 1.0;
 
 			var fadeSpeed = 0.2;

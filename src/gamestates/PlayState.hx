@@ -347,7 +347,7 @@ class PlayState extends elke.gamestate.GameState {
 		}
 	}
 
-	public function reset() {
+	public function reset(keepFish = false) {
 		currentDepth = 0.0;
 		currentCombo = 0;
 
@@ -363,8 +363,12 @@ class PlayState extends elke.gamestate.GameState {
 		killedFish = [];
 		mines = [];
 		caughtWeight = 0.0;
+
 		fishContainer.removeChildren();
-		fishPile.removeChildren();
+
+		if (!keepFish) {
+			fishPile.removeChildren();
+		}
 
 		boat.x = fisher.x;
 
@@ -529,6 +533,7 @@ class PlayState extends elke.gamestate.GameState {
 		arrows.reset();
 
 		roundResult = new RoundResult(killedFish, maxCombo, punchTime, container);
+		roundResult.onRetry = newRound;
 
 		// openShop();
 	}
@@ -563,7 +568,12 @@ class PlayState extends elke.gamestate.GameState {
 		stopShopMusic();
 		hxd.Res.sound.closeshop.play(false, 0.6);
 		world.filter = null;
-		reset();
+		newRound();
+	}
+
+	function newRound() {
+		roundResult = null;
+		reset(true);
 	}
 
 	public var downPressed = false;
