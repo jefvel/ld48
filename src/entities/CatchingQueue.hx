@@ -74,6 +74,14 @@ class CatchingQueue extends Entity2D {
 		var x = fishSpacing * fishList.length;
 		var y = 10.0;
 
+		if (!animated) {
+			var fishPerRow = Math.floor(maxWidth / fishSpacing);
+			x = (fishList.length % fishPerRow) * fishSpacing;
+			var row = Math.floor(fishList.length / fishPerRow);
+			y = 10. + row * 16;
+		}
+
+
 		fishList.push({
 			fish: f,
 			b: el,

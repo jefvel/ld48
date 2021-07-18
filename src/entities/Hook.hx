@@ -180,5 +180,12 @@ class Hook extends Entity2D {
                 f.y = y + centerY;
             }
         }
+
+        if (state.currentPhase == Catching) {
+            var dx = state.fisher.x + state.fisher.rodX - x;
+            var dy = state.fisher.y + state.fisher.rodY - y;
+            x += dx;
+            y += dy;
+        }
 	}
 }

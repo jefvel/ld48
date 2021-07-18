@@ -1,5 +1,7 @@
 package gamestates;
 
+import h2d.filter.Glow;
+import elke.T;
 import entities.CatchingQueue;
 import graphics.BoatTransition;
 import elke.graphics.Transition;
@@ -16,6 +18,7 @@ import elke.entity.Entity2D;
 
 enum ResultPresentingSection {
 	Start;
+	BoostScore;
 	CatchTime;
 	MaxCombo;
 	CaughtFish;
@@ -30,6 +33,7 @@ class TextWithLabel extends Object {
 	public var text(get, set): String;
 	public var label(get, set): String;
 	
+	var f: Glow;
 	public var textHeight(get, null): Float;
 
 	public function new(label: String, text: String, ?p) {
@@ -45,6 +49,14 @@ class TextWithLabel extends Object {
 
 		_text.text = text;
 		_label.text = label;
+		f = new Glow(0xffffff, 0.8, 1);
+	}
+
+	var bounceTime = 0.0;
+	var maxBounceTime = 0.2;
+	public function bounce() {
+		bounceTime = maxBounceTime;
+		this.filter = f;
 	}
 
 	override function sync(ctx:RenderContext) {
@@ -54,6 +66,22 @@ class TextWithLabel extends Object {
 
 		_label.x = labelWidth;
 		_text.x = labelWidth + 6;
+
+		bounceTime -= ctx.elapsedTime;
+		bounceTime = Math.max(0, bounceTime);
+
+		var b = T.bounceIn((bounceTime / maxBounceTime));
+
+		f.radius = (bounceTime / maxBounceTime) * 1.4;
+		f.alpha = (bounceTime / maxBounceTime);
+
+		if (f.radius == 0) {
+			filter = null;
+		} else {
+			filter = f;
+		}
+
+		setScale(1.0 + b * 0.25);
 	}
 
 	function set_text(t) {
@@ -104,20 +132,21 @@ class TextButton extends Interactive {
 	}
 
 	public function update(dt: Float) {
-		sInc *= 0.6;
+		sInc *= 0.7;
 		bm.setScale(1 + sInc);
 	}
 
 	public function onTap() {
 		sInc = 0.4;
-		hxd.Res.sound.buttonpress.play(false, 0.4);
+		hxd.Res.sound.buttonpress.play(false, 0.56);
 	}
 }
 
 class RoundResult extends Entity2D {
 	var timeLeft: Float;
 	var roundedTime = 0.;
-	var maxCombo: Int;
+	var maxCombo: Int = 0;
+	var boostScore: Int = 0;
 	var caughtFish: Array<Fish>;
 
 	var bg : Bitmap;
@@ -127,6 +156,7 @@ class RoundResult extends Entity2D {
 
 	var totalScoreText: h2d.HtmlText;
 
+	var boostScoreText: TextWithLabel;
 	var timeLeftText : TextWithLabel;
 	var maxComboText : TextWithLabel;
 
@@ -137,7 +167,7 @@ class RoundResult extends Entity2D {
 
 	var totalScore = 0;
 
-	var scorePerExtraSecond = 1500.0;
+	var scorePerExtraSecond = 900.0;
 	var scoreInterpVal = 0.;
 
 	var pointsPerCombo = 1000.0;
@@ -150,9 +180,10 @@ class RoundResult extends Entity2D {
 	var caughtFishScore = 0;
 	var caughtFishScoreText : Text;
 
-	public function new(caughtFish, maxCombo, timeLeft, ?p) {
+	public function new(caughtFish, maxCombo, timeLeft, boostScore, ?p) {
 		super(p);
 
+		this.boostScore = boostScore;
 		this.caughtFish = caughtFish;
 		this.maxCombo = maxCombo;
 		this.timeLeft = timeLeft;
@@ -175,9 +206,14 @@ class RoundResult extends Entity2D {
 
 		timeScore = Math.floor(roundedTime * scorePerExtraSecond);	resultText.x = resultText.y = 32;
 
+		boostScoreText = new TextWithLabel('Boost Score', '$boostScore', this);
+		boostScoreText.y = resultText.y + 64;
+		boostScoreText.x = paddingX;
+		boostScoreText.visible = false;
+
 		timeLeftText = new TextWithLabel('Time Left', '', this);
 		timeLeftText.x = paddingX;
-		timeLeftText.y = resultText.y + 64;
+		timeLeftText.y = boostScoreText.y + 18;
 		timeLeftText.visible = false;
 
 		maxComboText = new TextWithLabel('Biggest Combo', '$maxCombo * ${pointsPerCombo}  =  $comboScore', this);
@@ -214,10 +250,10 @@ class RoundResult extends Entity2D {
 		queue = new CatchingQueue(this);
 		queue.animated = false;
 		queue.x = paddingX + 4;
-		queue.y = maxComboText.y + maxComboText.textHeight + 32;
+		queue.y = maxComboText.y + maxComboText.textHeight + 40;
 		queue.maxWidth = 250;
 		caughtFishScoreText = new Text(hxd.Res.fonts.picory.toFont(), queue);
-		caughtFishScoreText.x = 240;
+		caughtFishScoreText.x = 236;
 		caughtFishScoreText.y = -6;
 		// caughtFishScoreText.y = Math.round((16 - caughtFishScoreText.textHeight) * 0.5);
 	}
@@ -277,7 +313,16 @@ class RoundResult extends Entity2D {
 	var minTickSound = 0.0;
 
 	function punchSound() {
-		hxd.Res.sound.scorepunch.play(false, 0.6);
+		hxd.Res.sound.scorepunch.play(false, 0.8);
+	}
+
+	function revealBoostScore() {
+		currentState = BoostScore;
+		boostScoreText.visible = true;
+		totalScore += boostScore;
+		boostScoreText.bounce();
+
+		punchSound();
 	}
 
 	function revealTimeLeft() {
@@ -286,6 +331,7 @@ class RoundResult extends Entity2D {
 
 		timeLeftText.visible = true;
 		totalScore += timeScore;
+		timeLeftText.bounce();
 
 		punchSound();
 	}
@@ -294,6 +340,7 @@ class RoundResult extends Entity2D {
 		currentState = MaxCombo;
 		maxComboText.visible = true;
 		totalScore += comboScore;
+		maxComboText.bounce();
 
 		punchSound();
 	}
@@ -322,10 +369,11 @@ class RoundResult extends Entity2D {
 
 	var timePerFish = 0.1;
 	var currentTimePerFish = 0.;
-	var fishCatchTimeout = 1.3;
+	var fishCatchTimeout = 1.5;
 
 	override function update(dt:Float) {
 		super.update(dt);
+
 		if (alpha < 1) {
 			alpha += (1. - bg.alpha) * 0.2;
 		}
@@ -334,6 +382,8 @@ class RoundResult extends Entity2D {
 		if (time >= timePerReveal) {
 			time = 0;
 			if (currentState == Start) {
+				revealBoostScore();
+			} else if (currentState == BoostScore) {
 				revealTimeLeft();
 			} else if (currentState == CatchTime) {
 				revealCombo();
@@ -376,7 +426,6 @@ class RoundResult extends Entity2D {
 			scoreTickSound = hxd.Res.sound.scoretick.play(false, 0.1);
 		}
 
-		//totalScoreText.setScale(1. + Math.min(0.1, sinc * 0.1));
 		totalScoreText.text = '<font color="#33ff33">Score</font> ${Math.round(scoreInterpVal)}';
 
 		returnButton.update(dt);

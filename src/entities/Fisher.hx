@@ -32,7 +32,16 @@ class Fisher extends Entity2D {
             sprite.animation.play("chargeidle");
         });
     }
+
     public function throwLine() {
+        sprite.animation.play("idle");
+    }
+
+    public function reelIn() {
+        sprite.animation.play("reelin");
+    }
+
+    public function endReelIn() {
         sprite.animation.play("idle");
     }
 

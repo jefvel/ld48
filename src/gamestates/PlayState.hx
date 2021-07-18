@@ -127,6 +127,8 @@ class PlayState extends elke.gamestate.GameState {
 	public var caughtFish:Array<Fish>;
 	public var caughtWeight = 0.0;
 
+	public var boostScore = 0;
+
 	public var killedFish:Array<Fish>;
 
 	var mines : Array<Mine>;
@@ -246,6 +248,8 @@ class PlayState extends elke.gamestate.GameState {
 		shop.onWin = winGame;
 
 		boosterThing = new BoosterThing(container);
+		boosterThing.onFail = launchHook;
+
 		timer = new Timer(container);
 
 		fishList = new CatchingQueue(container);
@@ -349,6 +353,7 @@ class PlayState extends elke.gamestate.GameState {
 
 	public function reset(keepFish = false) {
 		currentDepth = 0.0;
+		boostScore = 0;
 		currentCombo = 0;
 
 		currentPhase = Throwing;
@@ -461,6 +466,8 @@ class PlayState extends elke.gamestate.GameState {
 
 		game.sound.playWobble(hxd.Res.sound.reelin, 0.4);
 
+		fisher.reelIn();
+
 		if (fishingMusic != null) {
 			var f = fishingMusic;
 			fishingMusic.fadeTo(0, 0.3, () -> {
@@ -473,6 +480,8 @@ class PlayState extends elke.gamestate.GameState {
 	function startCatch() {
 		currentPhase = Catching;
 		punchTime = maxPunchTime;
+
+		fisher.endReelIn();
 
 		arrows.reset();
 		timeUntilDone = totalTimeUntilDone;
@@ -532,10 +541,15 @@ class PlayState extends elke.gamestate.GameState {
 
 		arrows.reset();
 
-		roundResult = new RoundResult(killedFish, maxCombo, punchTime, container);
+		roundResult = new RoundResult(killedFish, maxCombo, punchTime, boostScore, container);
 		roundResult.onRetry = newRound;
+		roundResult.onReturn = returnToTown;
 
 		// openShop();
+	}
+
+	function returnToTown() {
+		game.states.setState(new TownState());
 	}
 
 	public function loseGame() {
@@ -611,7 +625,8 @@ class PlayState extends elke.gamestate.GameState {
 
 					var animations = ["hit1", "hit2", "hit3", "hit4", "hit5",];
 
-					fishRotOffset = -0.2 - Math.random() * Math.PI * 0.4;
+					var rr = 0.4;
+					fishRotOffset = -rr - Math.random() * Math.PI * rr * 2;
 
 					splatter.animation.play(animations[Std.int(Math.random() * animations.length)], false, false, 0, (s) -> splatter.remove());
 				}
@@ -1012,7 +1027,10 @@ class PlayState extends elke.gamestate.GameState {
 
 							var g = calcGold(f.data.SellPrice);
 							g = Math.ceil(0.3 * g);
+
 							giveGold(g);
+
+							boostScore += Math.ceil(f.data.Score * 0.6);
 
 							var t = new PopText('+${g}', world);
 							t.text.textColor = 0xf3bd00;
@@ -1094,8 +1112,10 @@ class PlayState extends elke.gamestate.GameState {
 			var dy = hook.y + hook.centerY - f.y;
 
 			if (currentPhase != ReelingIn) {
-				if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
-					f.rot = Math.atan2(dy, dx);
+				if (currentPhase != Catching) {
+					if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
+						f.rot = Math.atan2(dy, dx);
+					}
 				}
 
 				f.rotation = f.rot + (Math.random() * 0.1 - 0.05) + fishRotOffset;

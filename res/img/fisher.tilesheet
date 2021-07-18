@@ -1,7 +1,7 @@
 { "frames": [
    {
     "filename": "fisher 0.aseprite",
-    "frame": { "x": 94, "y": 104, "w": 55, "h": 41 },
+    "frame": { "x": 0, "y": 120, "w": 55, "h": 41 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 38, "y": 23, "w": 55, "h": 41 },
@@ -46,7 +46,7 @@
    },
    {
     "filename": "fisher 5.aseprite",
-    "frame": { "x": 0, "y": 120, "w": 33, "h": 64 },
+    "frame": { "x": 141, "y": 104, "w": 33, "h": 64 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 40, "y": 0, "w": 33, "h": 64 },
@@ -55,7 +55,7 @@
    },
    {
     "filename": "fisher 6.aseprite",
-    "frame": { "x": 0, "y": 120, "w": 33, "h": 64 },
+    "frame": { "x": 141, "y": 104, "w": 33, "h": 64 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 41, "y": 0, "w": 33, "h": 64 },
@@ -97,6 +97,15 @@
     "spriteSourceSize": { "x": 34, "y": 13, "w": 58, "h": 51 },
     "sourceSize": { "w": 128, "h": 64 },
     "duration": 100
+   },
+   {
+    "filename": "fisher 11.aseprite",
+    "frame": { "x": 94, "y": 104, "w": 46, "h": 62 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 26, "y": 2, "w": 46, "h": 62 },
+    "sourceSize": { "w": 128, "h": 64 },
+    "duration": 90
    }
  ],
  "meta": {
@@ -104,17 +113,18 @@
   "version": "1.2.27",
   "image": "fisher.png",
   "format": "RGBA8888",
-  "size": { "w": 180, "h": 184 },
+  "size": { "w": 180, "h": 168 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 0, "direction": "forward" },
    { "name": "chargeup", "from": 1, "to": 4, "direction": "forward" },
    { "name": "chargeidle", "from": 5, "to": 6, "direction": "forward" },
    { "name": "waitpunch", "from": 7, "to": 7, "direction": "forward" },
-   { "name": "punch", "from": 8, "to": 10, "direction": "forward" }
+   { "name": "punch", "from": 8, "to": 10, "direction": "forward" },
+   { "name": "reelin", "from": 11, "to": 11, "direction": "forward" }
   ],
   "slices": [
-   { "name": "hook", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 90, "y": 26, "w": 1, "h": 1 } }, { "frame": 1, "bounds": {"x": 29, "y": 4, "w": 1, "h": 1 } }, { "frame": 2, "bounds": {"x": 29, "y": 4, "w": 1, "h": 1 } }, { "frame": 3, "bounds": {"x": 29, "y": 4, "w": 1, "h": 1 } }, { "frame": 4, "bounds": {"x": 28, "y": 4, "w": 1, "h": 1 } }, { "frame": 5, "bounds": {"x": 48, "y": 2, "w": 1, "h": 1 } }, { "frame": 6, "bounds": {"x": 49, "y": 2, "w": 1, "h": 1 } }, { "frame": 8, "bounds": {"x": 89, "y": 24, "w": 1, "h": 1 } }] }
+   { "name": "hook", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 90, "y": 26, "w": 1, "h": 1 } }, { "frame": 1, "bounds": {"x": 29, "y": 4, "w": 1, "h": 1 } }, { "frame": 2, "bounds": {"x": 28, "y": 4, "w": 1, "h": 1 } }, { "frame": 3, "bounds": {"x": 29, "y": 4, "w": 1, "h": 1 } }, { "frame": 4, "bounds": {"x": 28, "y": 4, "w": 1, "h": 1 } }, { "frame": 5, "bounds": {"x": 48, "y": 2, "w": 1, "h": 1 } }, { "frame": 6, "bounds": {"x": 49, "y": 2, "w": 1, "h": 1 } }, { "frame": 7, "bounds": {"x": 89, "y": 25, "w": 1, "h": 1 } }, { "frame": 8, "bounds": {"x": 89, "y": 25, "w": 1, "h": 1 } }, { "frame": 9, "bounds": {"x": 89, "y": 24, "w": 1, "h": 1 } }, { "frame": 11, "bounds": {"x": 28, "y": 4, "w": 1, "h": 1 } }] }
   ]
  }
 }
