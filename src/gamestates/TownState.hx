@@ -26,6 +26,15 @@ class TownState extends GameState {
         world.addChild(backestground);
         world.addChild(background);
         world.addChild(foreground);
+        var entities = new Object(world);
+        for (m in level.l_Entities.all_Merchant) {
+            var s = hxd.Res.img.merchant_tilesheet.toSprite2D(entities);
+            s.x = m.pixelX;
+            s.y = m.pixelY;
+            s.animation.play();
+        }
+
+        world.addChild(entities);
         world.x = -300;
     }
 
