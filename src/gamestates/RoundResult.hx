@@ -256,6 +256,8 @@ class RoundResult extends Entity2D {
 		caughtFishScoreText.x = 236;
 		caughtFishScoreText.y = -6;
 		// caughtFishScoreText.y = Math.round((16 - caughtFishScoreText.textHeight) * 0.5);
+
+		hxd.Res.sound.resultswooshin.play(false, 0.4);
 	}
 
 	public var onReturn : Void -> Void;
@@ -271,6 +273,8 @@ class RoundResult extends Entity2D {
 
 		returnButton.onTap();
 		chosen = true;
+
+		hxd.Res.sound.town.arrive.play(false, 0.4);
 
 		new BoatTransition(() -> {
 			remove();

@@ -1,5 +1,6 @@
 package;
 
+import gamestates.TownState;
 import gamestates.MainMenuState;
 import elke.Game;
 import gamestates.PlayState;
@@ -13,6 +14,7 @@ class Main {
 			initialState: new MainMenuState(),
 			#else
 			initialState: new PlayState(Normal),
+			//initialState: new TownState(),
 			#end
 			onInit: () -> {},
 			tickRate: Const.TICK_RATE,

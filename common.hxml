@@ -4,6 +4,8 @@
 
 -lib heaps
 
+-lib deepnightLibs
+-lib ldtk-haxe-api
 -lib hscript
 -lib castle
 -lib stb_ogg_sound

@@ -167,5 +167,9 @@ class BoatTransition extends Entity2D {
 		var b = bm.getBounds();
 		bm.x = Math.round((s.width - b.width) * 0.5);
 		bm.y = Math.round((s.height - b.height) * 0.5);
+
+		if (parent != null) {
+			parent.addChild(this);
+		}
 	}
 }
