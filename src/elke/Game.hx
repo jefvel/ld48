@@ -1,5 +1,6 @@
 package elke;
 
+import h3d.Engine;
 import elke.gamestate.GameState;
 import elke.sound.Sounds;
 import elke.gamestate.GameStateHandler;
@@ -189,6 +190,11 @@ class Game extends hxd.App {
 
             maxTicksPerUpdate --;
         }
+    }
+
+    override function render(e:Engine) {
+        super.render(e);
+        states.onRender(e);
     }
 
     override function onResize() {

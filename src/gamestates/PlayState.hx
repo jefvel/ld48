@@ -183,8 +183,15 @@ class PlayState extends elke.gamestate.GameState {
 		container = new Object(game.s2d);
 		bg = new Bg(container);
 
+		var project = new levels.Levels();
+
 		world = new Object(container);
 		backgroundLayer = new Object(world);
+
+		var skyBg = project.all_levels.Sky.l_Background.render();
+		skyBg.y = -256;
+		skyBg.x = -128;
+		// backgroundLayer.addChild(skyBg);
 
 		var particles = new Particles(world);
 		particles.load(haxe.Json.parse(hxd.Res.particles.bubble.entry.getText()), hxd.Res.particles.bubble.entry.path);
@@ -901,8 +908,8 @@ class PlayState extends elke.gamestate.GameState {
 			var sit = (1.0 - st);
 			var shakeX = noise.perlin1D(4000, shakeStart + st * 30, 4, 0.5);
 			var shakeY = noise.perlin1D(2000, shakeStart + st * 30, 4, 0.5);
-			shakeX = (shakeX * 2 - 1.0) * sit * shakeIntensity;
-			shakeY = (shakeY * 2 - 1.0) * sit * shakeIntensity;
+			shakeX = Math.round((shakeX * 2 - 1.0) * sit * shakeIntensity);
+			shakeY = Math.round((shakeY * 2 - 1.0) * sit * shakeIntensity);
 
 			world.x += shakeX;
 			world.y += shakeY;

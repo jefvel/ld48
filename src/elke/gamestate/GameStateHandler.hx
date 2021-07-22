@@ -1,5 +1,6 @@
 package elke.gamestate;
 
+import h3d.Engine;
 import elke.Game;
 
 class GameStateHandler {
@@ -40,6 +41,12 @@ class GameStateHandler {
 
 		if (currentState != null) {
 			currentState.update(dt);
+		}
+	}
+
+	public function onRender(e: Engine) {
+		if (currentState != null) {
+			currentState.onRender(e);
 		}
 	}
 
