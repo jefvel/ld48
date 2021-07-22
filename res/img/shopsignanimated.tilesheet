@@ -1,0 +1,51 @@
+{ "frames": [
+   {
+    "filename": "shopsignanimated 0.aseprite",
+    "frame": { "x": 34, "y": 0, "w": 32, "h": 30 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 32, "h": 30 },
+    "sourceSize": { "w": 34, "h": 32 },
+    "duration": 800
+   },
+   {
+    "filename": "shopsignanimated 1.aseprite",
+    "frame": { "x": 67, "y": 0, "w": 32, "h": 30 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 32, "h": 30 },
+    "sourceSize": { "w": 34, "h": 32 },
+    "duration": 1200
+   },
+   {
+    "filename": "shopsignanimated 2.aseprite",
+    "frame": { "x": 34, "y": 0, "w": 32, "h": 30 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 32, "h": 30 },
+    "sourceSize": { "w": 34, "h": 32 },
+    "duration": 800
+   },
+   {
+    "filename": "shopsignanimated 3.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 33, "h": 30 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 33, "h": 30 },
+    "sourceSize": { "w": 34, "h": 32 },
+    "duration": 1200
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.27",
+  "image": "shopsignanimated.png",
+  "format": "RGBA8888",
+  "size": { "w": 99, "h": 30 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "slices": [
+  ]
+ }
+}

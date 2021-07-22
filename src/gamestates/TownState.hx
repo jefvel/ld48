@@ -9,6 +9,7 @@ class TownState extends GameState {
     var container: Object;
     var world: Object;
 
+    var entities: Object;
     var characters : Object;
 
     var fisher: TownCharacter;
@@ -33,13 +34,12 @@ class TownState extends GameState {
         world.addChild(backestground);
         world.addChild(background);
 
+        entities = new Object(world);
+
         characters = new Object(world);
 
         world.addChild(foreground);
 
-        var entities = new Object(world);
-
-        world.addChild(entities);
         world.x = -2000;
 
         spawnCharacters();
@@ -56,12 +56,23 @@ class TownState extends GameState {
         }
 
         fisher = new TownCharacter(characters);
-        fisher.setX(934);
+        fisher.setX(934 + 32);
         fisher.y = 256;
+
+        for (s in level.l_Entities.all_Shop_Sign) {
+            var spr = hxd.Res.img.shopsignanimated_tilesheet.toSprite2D(entities);
+            spr.x = s.pixelX;
+            spr.y = s.pixelY;
+            spr.animation.play();
+        }
     }
 
     override function onRender(e:Engine) {
         super.onRender(e);
+    }
+
+    override function update(dt:Float) {
+        super.update(dt);
 
         var newTargetX = (game.s2d.width * 0.5 - fisher.x);
         newTargetX = Math.min(0, newTargetX);
@@ -71,10 +82,6 @@ class TownState extends GameState {
         targetX = Math.max(-1280 + game.s2d.width, targetX);
 
         world.x = Math.round(targetX);
-    }
-
-    override function update(dt:Float) {
-        super.update(dt);
     }
 
     override function onLeave() {

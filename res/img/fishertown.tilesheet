@@ -1,7 +1,7 @@
 { "frames": [
    {
     "filename": "fishertown 0.aseprite",
-    "frame": { "x": 0, "y": 59, "w": 35, "h": 58 },
+    "frame": { "x": 0, "y": 60, "w": 35, "h": 58 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 58 },
@@ -10,7 +10,7 @@
    },
    {
     "filename": "fishertown 1.aseprite",
-    "frame": { "x": 72, "y": 60, "w": 35, "h": 57 },
+    "frame": { "x": 0, "y": 119, "w": 35, "h": 57 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 13, "y": 7, "w": 35, "h": 57 },
@@ -19,25 +19,25 @@
    },
    {
     "filename": "fishertown 2.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 39, "h": 58 },
+    "frame": { "x": 0, "y": 0, "w": 41, "h": 59 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 9, "y": 5, "w": 39, "h": 58 },
+    "spriteSourceSize": { "x": 8, "y": 5, "w": 41, "h": 59 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 60
    },
    {
     "filename": "fishertown 3.aseprite",
-    "frame": { "x": 40, "y": 0, "w": 35, "h": 59 },
+    "frame": { "x": 42, "y": 0, "w": 36, "h": 59 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 13, "y": 5, "w": 35, "h": 59 },
+    "spriteSourceSize": { "x": 12, "y": 5, "w": 36, "h": 59 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 60
    },
    {
     "filename": "fishertown 4.aseprite",
-    "frame": { "x": 76, "y": 0, "w": 35, "h": 59 },
+    "frame": { "x": 79, "y": 59, "w": 35, "h": 59 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 13, "y": 5, "w": 35, "h": 59 },
@@ -46,19 +46,19 @@
    },
    {
     "filename": "fishertown 5.aseprite",
-    "frame": { "x": 36, "y": 60, "w": 35, "h": 58 },
+    "frame": { "x": 79, "y": 0, "w": 36, "h": 58 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 58 },
+    "spriteSourceSize": { "x": 13, "y": 6, "w": 36, "h": 58 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 60
    },
    {
     "filename": "fishertown 6.aseprite",
-    "frame": { "x": 0, "y": 118, "w": 35, "h": 57 },
+    "frame": { "x": 36, "y": 60, "w": 35, "h": 58 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 57 },
+    "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 58 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 60
    }
@@ -68,7 +68,7 @@
   "version": "1.2.27",
   "image": "fishertown.png",
   "format": "RGBA8888",
-  "size": { "w": 111, "h": 175 },
+  "size": { "w": 115, "h": 176 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 1, "direction": "forward" },

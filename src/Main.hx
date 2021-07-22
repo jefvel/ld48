@@ -13,8 +13,8 @@ class Main {
 			#if !debug
 			initialState: new MainMenuState(),
 			#else
-			// initialState: new PlayState(Normal),
-			initialState: new TownState(),
+			initialState: new PlayState(Normal),
+			//initialState: new TownState(),
 			#end
 			onInit: () -> {},
 			tickRate: Const.TICK_RATE,

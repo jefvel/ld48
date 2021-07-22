@@ -21,6 +21,7 @@ class TownCharacter extends Entity2D {
 		sprite = hxd.Res.img.fishertown_tilesheet.toSprite2D(this);
 		sprite.originX = 32;
 		sprite.originY = 64;
+		sprite.scaleX = -1;
 
 		y = 256;
 	}
@@ -64,10 +65,10 @@ class TownCharacter extends Entity2D {
 		} else {
 			sprite.animation.play("walk");
 		}
+		x = Math.round(tx);
 	}
 
 	override function sync(ctx:RenderContext) {
 		super.sync(ctx);
-		x = Math.round(tx);
 	}
 }
