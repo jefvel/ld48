@@ -1,8 +1,10 @@
 package gamestates;
 
+import hxd.Key;
 import h3d.Engine;
 import entities.TownCharacter;
 import h2d.Object;
+import entities.TextButton;
 import elke.gamestate.GameState;
 
 class TownState extends GameState {
@@ -15,6 +17,12 @@ class TownState extends GameState {
     var fisher: TownCharacter;
     var level: levels.Levels.Levels_Level;
 
+    var parallax1: Object;
+
+    var ui : Object;
+    var activityButton1: TextButton;
+    var currentActivity: String = null;
+
     public function new() {
         name = "town";
     }
@@ -24,14 +32,19 @@ class TownState extends GameState {
         container = new Object(game.s2d);
         var project = new levels.Levels();
         level = project.all_levels.Level_0;
+        
+        var sky = project.all_levels.Sky.l_Background.render();
 
         world = new Object(container);
+        parallax1 = new Object(world);
 
-        var backestground = level.l_Background2.render();
+        parallax1.addChild(sky);
+
+        //var backestground = level.l_Background2.render();
         var background = level.l_Background.render();
         var foreground = level.l_Foreground.render();
 
-        world.addChild(backestground);
+        //world.addChild(backestground);
         world.addChild(background);
 
         entities = new Object(world);
@@ -43,6 +56,15 @@ class TownState extends GameState {
         world.x = -2000;
 
         spawnCharacters();
+
+        ui = new Object(container);
+        activityButton1 = new TextButton(hxd.Res.img.endroundarrows.toTile().sub(32, 32, 32, 32), "Go\nfish", onActivity, ui);
+    }
+
+    function onActivity() {
+        if (currentActivity != null) {
+            activityButton1.onTap();
+        }
     }
 
     var targetX = -2000.;
@@ -82,7 +104,41 @@ class TownState extends GameState {
         targetX = Math.max(-1280 + game.s2d.width, targetX);
 
         world.x = Math.round(targetX);
+
+        parallax1.x = Math.round(-world.x * 0.9);
+
+        var setActivity = false;
+        for (a in level.l_Entities.all_Activity) {
+            if (a.pixelX < fisher.x && a.pixelX + a.width > fisher.x) {
+                setActivity = true;
+                if (currentActivity != a.f_ID) {
+                    activityButton1.setText(a.f_Name);
+                    currentActivity = a.f_ID;
+                    var s = game.s2d;
+                    activityButton1.x = s.width - activityButton1.width - 16;
+                    activityButton1.y = s.height - activityButton1.height - 16;
+                }
+            }
+        }
+
+        if (!setActivity) {
+            currentActivity = null;
+        }
+
+        if (Key.isDown(Key.W) || Key.isDown(Key.UP)) {
+            if (!activatePressed) {
+                onActivity();
+                activatePressed = true;
+            }
+        } else {
+            activatePressed = false;
+        }
+
+        activityButton1.visible = currentActivity != null;
+        activityButton1.update(dt);
     }
+
+    var activatePressed = false;
 
     override function onLeave() {
         super.onLeave();

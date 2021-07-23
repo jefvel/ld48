@@ -6,6 +6,7 @@ import elke.entity.Entity2D;
 
 class Fisher extends Entity2D {
     var sprite : Sprite;
+    var sweat : Sprite;
 
 	public var rodX = 34;
 	public var rodY = -34;
@@ -14,6 +15,10 @@ class Fisher extends Entity2D {
 
     public function new(?p) {
         super(p);
+
+        sweat = hxd.Res.img.sweat_tilesheet.toSprite2D(this);
+        sweat.originX = sweat.originY = 16;
+
         sprite = hxd.Res.img.fisher_tilesheet.toSprite2D(this);
         sprite.originX = 24 + 32;
         sprite.originY = 64;
@@ -25,6 +30,11 @@ class Fisher extends Entity2D {
         head.x = 26 - sprite.originX + 32;
         head.y = 29 - sprite.originY;
         timeUntilBlink = 0.5 + Math.random() * 5.0;
+
+        sweat.x = head.x - 14;
+        sweat.y = head.y - 12;
+        sweat.animation.play();
+        sweat.visible = false;
     }
 
     public function charge() {
@@ -39,10 +49,12 @@ class Fisher extends Entity2D {
 
     public function reelIn() {
         sprite.animation.play("reelin");
+        sweat.visible = true;
     }
 
     public function endReelIn() {
         sprite.animation.play("idle");
+        sweat.visible = false;
     }
 
     var rx = 57 + 32;
