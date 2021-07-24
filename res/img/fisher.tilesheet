@@ -105,7 +105,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 39, "y": 8, "w": 52, "h": 56 },
     "sourceSize": { "w": 128, "h": 64 },
-    "duration": 60
+    "duration": 30
    },
    {
     "filename": "fisher 12.aseprite",
@@ -114,12 +114,12 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 38, "y": 8, "w": 52, "h": 56 },
     "sourceSize": { "w": 128, "h": 64 },
-    "duration": 60
+    "duration": 30
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27",
+  "version": "1.2.27-x64",
   "image": "fisher.png",
   "format": "RGBA8888",
   "size": { "w": 180, "h": 168 },

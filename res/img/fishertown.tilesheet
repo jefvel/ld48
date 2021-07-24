@@ -65,7 +65,7 @@
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27",
+  "version": "1.2.27-x64",
   "image": "fishertown.png",
   "format": "RGBA8888",
   "size": { "w": 115, "h": 176 },

@@ -38,7 +38,7 @@
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27",
+  "version": "1.2.27-x64",
   "image": "bubbles.png",
   "format": "RGBA8888",
   "size": { "w": 14, "h": 12 },

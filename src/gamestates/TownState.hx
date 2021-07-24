@@ -1,5 +1,6 @@
 package gamestates;
 
+import graphics.BoatTransition;
 import hxd.Key;
 import h3d.Engine;
 import entities.TownCharacter;
@@ -43,6 +44,7 @@ class TownState extends GameState {
         //var backestground = level.l_Background2.render();
         var background = level.l_Background.render();
         var foreground = level.l_Foreground.render();
+        var above = level.l_Above.render();
 
         //world.addChild(backestground);
         world.addChild(background);
@@ -53,17 +55,35 @@ class TownState extends GameState {
 
         world.addChild(foreground);
 
+        world.addChild(above);
+
         world.x = -2000;
 
         spawnCharacters();
 
         ui = new Object(container);
+
         activityButton1 = new TextButton(hxd.Res.img.endroundarrows.toTile().sub(32, 32, 32, 32), "Go\nfish", onActivity, ui);
+        activityButton1.alpha = 0.0;
     }
 
+    var busy = false;
+
     function onActivity() {
+        if (busy) {
+            return;
+        }
+
         if (currentActivity != null) {
             activityButton1.onTap();
+        }
+
+        busy = true;
+
+        if (currentActivity == "GoFish") {
+            new BoatTransition(() -> {
+                game.states.setState(new PlayState(Normal));
+            }, null, game.s2d);
         }
     }
 
@@ -111,12 +131,15 @@ class TownState extends GameState {
         for (a in level.l_Entities.all_Activity) {
             if (a.pixelX < fisher.x && a.pixelX + a.width > fisher.x) {
                 setActivity = true;
+
                 if (currentActivity != a.f_ID) {
                     activityButton1.setText(a.f_Name);
                     currentActivity = a.f_ID;
+
+                    var padding = 24;
                     var s = game.s2d;
-                    activityButton1.x = s.width - activityButton1.width - 16;
-                    activityButton1.y = s.height - activityButton1.height - 16;
+                    activityButton1.x = s.width - activityButton1.width - padding;
+                    activityButton1.y = s.height - activityButton1.height - 18;
                 }
             }
         }
@@ -134,7 +157,10 @@ class TownState extends GameState {
             activatePressed = false;
         }
 
-        activityButton1.visible = currentActivity != null;
+        var v = currentActivity != null && !busy;
+        var tAlpha = v ? 1.0 : 0.0;
+
+        activityButton1.alpha += (tAlpha - activityButton1.alpha) * 0.2;
         activityButton1.update(dt);
     }
 

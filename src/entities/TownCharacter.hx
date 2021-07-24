@@ -56,7 +56,7 @@ class TownCharacter extends Entity2D {
 
 
 		tx += vx;
-		tx = Math.max(128, Math.min(tx, 1000));
+		tx = Math.max(64, Math.min(tx, 1044));
 
 		vx *= 0.72;
 
@@ -65,6 +65,7 @@ class TownCharacter extends Entity2D {
 		} else {
 			sprite.animation.play("walk");
 		}
+
 		x = Math.round(tx);
 	}
 
