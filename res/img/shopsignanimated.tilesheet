@@ -38,7 +38,7 @@
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27-x64",
+  "version": "1.2.28-x64",
   "image": "shopsignanimated.png",
   "format": "RGBA8888",
   "size": { "w": 99, "h": 30 },

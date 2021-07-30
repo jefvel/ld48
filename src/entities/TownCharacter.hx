@@ -66,8 +66,27 @@ class TownCharacter extends Entity2D {
 			sprite.animation.play("walk");
 		}
 
+		if (sprite.animation.currentAnimationName == "walk") {
+			if (lastWalkFrame != sprite.animation.currentFrame) {
+				lastWalkFrame = sprite.animation.currentFrame;
+				if (lastWalkFrame == 4 || lastWalkFrame == 7) {
+					var sounds = [
+						hxd.Res.sound.footsteps.step1,
+						hxd.Res.sound.footsteps.step2,
+						hxd.Res.sound.footsteps.step3,
+						hxd.Res.sound.footsteps.step4,
+					];
+
+					sounds[Std.int(sounds.length * Math.random())].play(false, 0.05);
+				}
+			}
+
+		}
+
 		x = Math.round(tx);
 	}
+
+	var lastWalkFrame = 0;
 
 	override function sync(ctx:RenderContext) {
 		super.sync(ctx);

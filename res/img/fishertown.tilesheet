@@ -1,7 +1,7 @@
 { "frames": [
    {
     "filename": "fishertown 0.aseprite",
-    "frame": { "x": 0, "y": 60, "w": 35, "h": 58 },
+    "frame": { "x": 79, "y": 59, "w": 35, "h": 58 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 58 },
@@ -37,10 +37,10 @@
    },
    {
     "filename": "fishertown 4.aseprite",
-    "frame": { "x": 79, "y": 59, "w": 35, "h": 59 },
+    "frame": { "x": 0, "y": 60, "w": 35, "h": 58 },
     "rotated": false,
     "trimmed": true,
-    "spriteSourceSize": { "x": 13, "y": 5, "w": 35, "h": 59 },
+    "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 58 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 60
    },
@@ -61,18 +61,27 @@
     "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 58 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 60
+   },
+   {
+    "filename": "fishertown 7.aseprite",
+    "frame": { "x": 72, "y": 118, "w": 35, "h": 58 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 13, "y": 6, "w": 35, "h": 58 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 60
    }
  ],
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.27-x64",
+  "version": "1.2.28-x64",
   "image": "fishertown.png",
   "format": "RGBA8888",
   "size": { "w": 115, "h": 176 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 1, "direction": "forward" },
-   { "name": "walk", "from": 2, "to": 6, "direction": "forward" }
+   { "name": "walk", "from": 2, "to": 7, "direction": "forward" }
   ],
   "slices": [
   ]

@@ -65,6 +65,7 @@ class BoatMask extends AbstractMask {
 			if( this.mask == null ) throw "Mask filter has no mask object";
 			return null;
 		}
+
 		var out = ctx.textures.allocTileTarget("maskTmp", t);
 		ctx.engine.pushTarget(out);
 		pass.shader.texture = t.getTexture();
@@ -155,7 +156,6 @@ class BoatTransition extends Entity2D {
 		}
 
 		_scale = Math.max(0.001, _scale);
-		bm.setScale(_scale);
 	}
 
 	override function sync(ctx:RenderContext) {
@@ -163,6 +163,8 @@ class BoatTransition extends Entity2D {
 
 		var s = getScene();
 		bg.tile.setSize(s.width, s.height);
+
+		bm.setScale(_scale);
 
 		var b = bm.getBounds();
 		bm.x = Math.round((s.width - b.width) * 0.5);

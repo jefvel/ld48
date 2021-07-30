@@ -1,5 +1,7 @@
 package gamestates;
 
+import hxd.snd.effect.Spatialization;
+import hxd.snd.Manager;
 import graphics.BoatTransition;
 import hxd.Key;
 import h3d.Engine;
@@ -23,6 +25,9 @@ class TownState extends GameState {
     var ui : Object;
     var activityButton1: TextButton;
     var currentActivity: String = null;
+
+    var oceanAmbience: hxd.snd.Channel;
+    var eff : Spatialization;
 
     public function new() {
         name = "town";
@@ -65,6 +70,15 @@ class TownState extends GameState {
 
         activityButton1 = new TextButton(hxd.Res.img.endroundarrows.toTile().sub(32, 32, 32, 32), "Go\nfish", onActivity, ui);
         activityButton1.alpha = 0.0;
+
+        oceanAmbience = hxd.Res.sound.town.oceanambience.play(true, 0.1);
+        eff = new hxd.snd.effect.Spatialization();
+        oceanAmbience.addEffect(eff);
+        eff.maxDistance = 200;
+        eff.referenceDistance = 200;
+        eff.rollOffFactor = 0.5;
+        eff.fadeDistance = 200;
+        eff.position.set(1050, 10, 0);
     }
 
     var busy = false;
@@ -74,9 +88,11 @@ class TownState extends GameState {
             return;
         }
 
-        if (currentActivity != null) {
-            activityButton1.onTap();
+        if (currentActivity == null) {
+            return;
         }
+
+        activityButton1.onTap();
 
         busy = true;
 
@@ -162,6 +178,12 @@ class TownState extends GameState {
 
         activityButton1.alpha += (tAlpha - activityButton1.alpha) * 0.2;
         activityButton1.update(dt);
+
+        var l = Manager.get().listener;
+        eff.position.set(Math.max(fisher.x, 877), fisher.y, 200);
+        l.direction.set(0, 0, 1.0);
+        l.up.set(0, 1, 0);
+        l.position.set(fisher.x, fisher.y, 0);
     }
 
     var activatePressed = false;
@@ -169,5 +191,9 @@ class TownState extends GameState {
     override function onLeave() {
         super.onLeave();
         container.remove();
+        oceanAmbience.fadeTo(0, 0.3, () -> {
+            oceanAmbience.stop();
+            oceanAmbience = null;
+        });
     }
 }
