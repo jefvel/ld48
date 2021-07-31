@@ -1,5 +1,7 @@
 package entities;
 
+import h2d.filter.DropShadow;
+import h2d.Object;
 import h2d.Bitmap;
 import h2d.Text;
 import h2d.Tile;
@@ -9,10 +11,15 @@ class TextButton extends Interactive {
 	var bm : Bitmap;
 	var label : Text;
 	var sInc = 0.0;
+	var baseScale = 0.0;
 
-	public function new(t: Tile, label: String, onPress: Void -> Void, ?p) {
+	public var pressed = false;
+	var bmContainer : Object;
+
+	public function new(t: Tile, label: String, ?onPress: Void -> Void, ?onRelease: Void -> Void, ?p) {
 		super(0, 0, p);
-		bm = new Bitmap(t, this);
+		bmContainer = new Object(this);
+		bm = new Bitmap(t, bmContainer);
 		this.label = new Text(hxd.Res.fonts.picory.toFont(), this);
 		this.label.x = t.width + 4;
 
@@ -29,7 +36,21 @@ class TextButton extends Interactive {
 		bm.y += 16;
 
 		this.onPush = e -> {
-			onPress();
+			pressed = true;
+			if (onPress != null) {
+				onPress();
+			}
+		}
+
+		this.onRelease = e -> {
+			pressed = false;
+			if (onRelease != null) {
+				onRelease();
+			}
+		}
+
+		this.onReleaseOutside = e -> {
+			pressed = false;
 		}
 
 		setText(label);
@@ -46,7 +67,17 @@ class TextButton extends Interactive {
 
 	public function update(dt: Float) {
 		sInc *= 0.7;
-		bm.setScale(1 + sInc);
+		bm.setScale(1 + baseScale + sInc);
+	}
+
+	public function activate() {
+		onTap();
+		baseScale = 0.1;
+	}
+
+	public function deactivate() {
+		baseScale = 0.0;
+		sInc = -0.2;
 	}
 
 	public function onTap() {

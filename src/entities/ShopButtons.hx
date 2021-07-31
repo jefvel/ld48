@@ -26,7 +26,6 @@ class Button extends Interactive {
 
 class ShopButtons extends Object {
     public var buttonsList : Array<Button>;
-    public var payDebtBtn: Button;
     public var goFishBtn: Button;
     public var selectedIndex = 0;
 
@@ -54,19 +53,12 @@ class ShopButtons extends Object {
 
         buttonsList = [];
 
-        var b = new Button("Pay Back Your Debt", this);
-        b.name = "purchase";
-        b.description = "So you want to quit your job as a fisher? That will cost you 15,000 Gold";
-        b.y = 2;
-        buttonsList.push(b);
-        payDebtBtn = b;
-
-        var b = new Button("Go Fish", this);
+        var b = new Button("Close Shop", this);
         b.description = "Bring back whatever you manage catch!";
         b.name = "exit";
         buttonsList.push(b);
         goFishBtn = b;
 
-        b.y = 42;
+        b.y = 2;
     }
 }

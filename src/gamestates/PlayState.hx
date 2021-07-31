@@ -82,10 +82,6 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var currentDebt = 15000;
 
-	public var totalGold = 0;
-	public var gold = 0;
-	public var missed = 0;
-	public var caught = 0;
 	public var maxCombo = 0;
 
 	public var currentCombo = 0;
@@ -152,8 +148,6 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var shop:Shop;
 
-	public var unlocked:Map<Data.Items_Type, Int>;
-
 	public var boosterThing:BoosterThing;
 	public var timer:Timer;
 
@@ -179,6 +173,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	override function onEnter() {
 		super.onEnter();
+
+		newGame();
 
 		container = new Object(game.s2d);
 		bg = new Bg(container);
@@ -250,9 +246,11 @@ class PlayState extends elke.gamestate.GameState {
 
 		foregroundLayer = new Object(world);
 
+		/*
 		shop = new Shop(this, container);
 		shop.onClose = closeShop;
 		shop.onWin = winGame;
+		*/
 
 		boosterThing = new BoosterThing(container);
 		boosterThing.onFail = launchHook;
@@ -271,7 +269,7 @@ class PlayState extends elke.gamestate.GameState {
 		bonusKillsText = new Text(hxd.Res.fonts.picory.toFont(), comboText);
 		bonusKillsText.y = comboText.font.lineHeight + 4;
 
-		newGame();
+		reset();
 	}
 
 	public function pushFishToBackOfQueue(f: Fish) {
@@ -280,14 +278,8 @@ class PlayState extends elke.gamestate.GameState {
 	}
 
 	public function newGame() {
-		gameData = new GameSaveData();
+		gameData = GameSaveData.getCurrent();
 
-		currentRound = 1;
-		totalGold = 0;
-		gold = 0;
-		missed = 0;
-		caught = 0;
-		maxCombo = 0;
 		playTime = 0.0;
 
 		if (gameMode == Normal) {
@@ -297,18 +289,9 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		resetPurchases();
-		reset();
 	}
 
 	public function resetPurchases() {
-		unlocked = new Map<Data.Items_Type, Int>();
-
-		unlocked.set(Line, 0);
-		unlocked.set(Strength, 0);
-		unlocked.set(MoneyMultiplier, 0);
-		unlocked.set(Speed, 0);
-		unlocked.set(Magnet, 0);
-		unlocked.set(Protection, 0);
 	}
 
 	var comboBombo = 0.0;
@@ -324,7 +307,7 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		game.sound.playWobble(hxd.Res.sound._catch, 0.3);
-		caught ++;
+		gameData.caught ++;
 
 		if (!isComboKill) {
 			currentCombo ++;
@@ -347,7 +330,7 @@ class PlayState extends elke.gamestate.GameState {
 		f.flee();
 
 		if (!passive) {
-			missed ++;
+			gameData.missed ++;
 			if (currentCombo > maxCombo) {
 				maxCombo = currentCombo;
 			}
@@ -386,6 +369,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		arrows.reset();
 
+		var unlocked = gameData.unlocked;
 		maxWeight = strengths[unlocked.get(Strength)];
 		reelLength = lengths[unlocked.get(Line)];
 		sinkSpeed = speeds[unlocked.get(Speed)];
@@ -524,8 +508,8 @@ class PlayState extends elke.gamestate.GameState {
 	}
 
 	function giveGold(amount: Int) {
-		totalGold += amount;
-		gold += amount;
+		gameData.totalGold += amount;
+		gameData.gold += amount;
 	}
 
 	function finishRound() {
@@ -534,10 +518,16 @@ class PlayState extends elke.gamestate.GameState {
 
 		for (f in killedFish) {
 			giveGold(Math.ceil(f.data.SellPrice * goldMultiplier));
+
+			gameData.ownedFish.push(f.data.ID);
+		}
+
+		if (maxCombo > gameData.bestMaxCombo) {
+			gameData.bestMaxCombo = maxCombo;
 		}
 
 		if (currentRound > totalRounds) {
-			if (gold < currentDebt) {
+			if (gameData.gold < currentDebt) {
 				loseGame();
 			} else {
 				winGame();

@@ -21,33 +21,29 @@ class Shop extends Entity2D {
     var itemListSelected = true;
     var keeper: ShopKeeper;
 
-    var state : PlayState;
-
-    var goldText: Text;
-    var coin: Bitmap;
-
-    var debtText: Text;
+    var data : GameSaveData;
 
     var buttons: ShopButtons;
 
     public var onClose : Void -> Void;
     public var onWin : Void -> Void;
 
-    public function new(state: PlayState, ?p) {
+    public function new(data: GameSaveData, ?p) {
         super(p);
+        data = GameSaveData.getCurrent();
         bg = new Bitmap(Tile.fromColor(0xf3e181, 1,1, 0.2), this);
         container = new Object(this);
         sign = new Bitmap(hxd.Res.img.shopsign.toTile(), container);
         sign.x = 30;
-        sign.y = 30;
+        sign.y = 38;
 
         keeper = new ShopKeeper(sign);
         keeper.x = 4;
         keeper.y = sign.tile.height + 80;
 
         alpha = 0;
-        itemList = new ItemList(state, container);
-        itemList.y = sign.y + 48;
+        itemList = new ItemList(data, container);
+        itemList.y = sign.y;
         itemList.x = sign.x + sign.tile.width + 32;
 
         buttons = new ShopButtons(container);
@@ -59,27 +55,11 @@ class Shop extends Entity2D {
         cursor.width = 200;
         cursor.height = 43;
 
-        goldText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), container);
-        goldText.textAlign = Right;
-        goldText.y = sign.y;
-
-        coin = new Bitmap(hxd.Res.img.coin.toTile(), goldText);
-        coin.y = -0;
-        coin.x = -goldText.textWidth - 19;
-
         buttons.goFishBtn.onClick = e -> {
             doClose();
         }
 
-        buttons.payDebtBtn.onClick = e -> {
-            tryWin();
-        }
-
-        debtText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), buttons);
-        debtText.textAlign = Center;
-        debtText.x = Math.round(buttons.payDebtBtn.width * 0.5);
-
-        this.state = state;
+        this.data = data;
     }
 
     public var showing = false;
@@ -129,26 +109,7 @@ class Shop extends Entity2D {
         }
     }
 
-    var won = false;
-    function tryWin() {
-        if (won) {
-            return;
-        }
-
-        if (state.gold >= state.currentDebt) {
-            state.gold -= state.currentDebt;
-            onWin();
-            won = true;
-        } else {
-            Game.instance.sound.playWobble(hxd.Res.sound.forbidden);
-        }
-    }
-
     function doClose() {
-        if (won) {
-            return;
-        }
-
         onClose();
     }
 
@@ -158,7 +119,7 @@ class Shop extends Entity2D {
         if (itemListSelected) {
             var item = itemList.getSelectedItem();
             if (item != null) {
-                if (item.info.Price <= state.gold) {
+                if (item.info.Price <= data.gold) {
                     purchaseItem(item.info);
                 } else {
                     Game.instance.sound.playWobble(hxd.Res.sound.forbidden);
@@ -168,10 +129,6 @@ class Shop extends Entity2D {
             var btn = buttons.getSelectedItem();
             if (btn.name == "exit") {
                 doClose();
-            }
-
-            if (btn.name == "purchase") {
-                tryWin();
             }
         }
     }
@@ -189,8 +146,8 @@ class Shop extends Entity2D {
             "You're my favourite customer",
         ];
 
-        state.gold -= item.Price;
-        state.unlocked[item.Type] ++;
+        data.gold -= item.Price;
+        // state.unlocked[item.Type] ++;
         itemList.refreshItems();
         keeper.say(msgs[Std.int(Math.random() * msgs.length)], 2.0);
         Game.instance.sound.playWobble(hxd.Res.sound.purchase, 0.6);
@@ -240,20 +197,6 @@ class Shop extends Entity2D {
             container.x *= 0.8;
             alpha += (1.0 - alpha) * 0.2;
             bg.alpha += (1.0 - alpha) * 0.1;
-
-            goldText.x = itemList.x + 232;
-            goldText.text = '${state.gold}';
-            coin.x = -55;
-
-            if (state.gameMode == Normal) {
-                debtText.text = 'Day ${state.currentRound - 1}/${state.totalRounds}\nDebt: ${state.currentDebt}';
-            } else {
-                debtText.text = 'Debt: ${state.currentDebt}';
-            }
-
-            debtText.y = -debtText.textHeight - 8;
-
-            buttons.payDebtBtn.alpha = (state.gold >= state.currentDebt) ? 1.0 : 0.6;
 
             updateCursor();
         } else {

@@ -39,16 +39,16 @@ class Item extends Object {
 }
 
 class ItemList extends Entity2D {
-    var state : PlayState;
+    var data : GameSaveData;
     public var items: Array<Item>;
     public var selectedIndex = 0;
     var container : Object;
 
-    public function new(state: PlayState,?p) {
+    public function new(data: GameSaveData,?p) {
         super(p);
         items = [];
 
-        this.state = state;
+        this.data = data;
         container = new Object(this);
 
     }
@@ -75,7 +75,7 @@ class ItemList extends Entity2D {
     override function update(dt:Float) {
         super.update(dt);
         for (i in items) {
-            var canAfford = state.gold >= i.info.Price;
+            var canAfford = data.gold >= i.info.Price;
             i.alpha = canAfford ? 1.0 : 0.5;
         }
     }
@@ -84,7 +84,7 @@ class ItemList extends Entity2D {
         container.removeChildren();
         items = [];
 
-        var unlocked = state.unlocked;
+        var unlocked = data.unlocked;
         for (i in Data.items.all) {
             var upgradeIndex = 0;
             if (unlocked.exists(i.Type)) {

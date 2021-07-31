@@ -1,5 +1,9 @@
 package gamestates;
 
+import h2d.filter.Displacement;
+import h2d.filter.Shader;
+import format.pdf.Filter;
+import graphics.SineDeformShader;
 import entities.TextButton;
 import h2d.filter.Glow;
 import elke.T;
@@ -142,6 +146,7 @@ class RoundResult extends Entity2D {
 	var queue: CatchingQueue;
 	var caughtFishScore = 0;
 	var caughtFishScoreText : Text;
+	var dFilter : Displacement;
 
 	public function new(caughtFish, maxCombo, timeLeft, boostScore, ?p) {
 		super(p);
@@ -160,6 +165,9 @@ class RoundResult extends Entity2D {
 		resultText.setScale(2);
 
 		resultText.text = "Fishing Results";
+		dFilter = new h2d.filter.Displacement(hxd.Res.img.water.toTile());
+		dFilter.dispX = dFilter.dispY = 3;
+		resultText.filter = dFilter;
 	
 		comboScore = Math.floor(maxCombo * pointsPerCombo);
 
@@ -344,6 +352,9 @@ class RoundResult extends Entity2D {
 		if (alpha < 1) {
 			alpha += (1. - bg.alpha) * 0.2;
 		}
+
+		dFilter.dispX *= 0.9;
+		dFilter.dispY *= 0.89;
 
 		time += dt;
 		if (time >= timePerReveal) {

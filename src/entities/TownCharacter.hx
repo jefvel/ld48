@@ -16,6 +16,8 @@ class TownCharacter extends Entity2D {
     var walkingLeft = false;
     var walkingRight = false;
 
+	public var disableControls = false;
+
 	public function new(?p) {
 		super(p);
 		sprite = hxd.Res.img.fishertown_tilesheet.toSprite2D(this);
@@ -33,8 +35,8 @@ class TownCharacter extends Entity2D {
 	public override function update(dt:Float) {
 		super.update(dt);
 
-        walkingRight = Key.isDown(Key.D) || Key.isDown(Key.RIGHT);
-        walkingLeft = Key.isDown(Key.A) || Key.isDown(Key.LEFT);
+        walkingRight = !disableControls && (Key.isDown(Key.D) || Key.isDown(Key.RIGHT));
+        walkingLeft = !disableControls && (Key.isDown(Key.A) || Key.isDown(Key.LEFT));
 
 		var ax = 0.;
 		if (walkingRight) {
