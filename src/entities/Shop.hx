@@ -147,7 +147,7 @@ class Shop extends Entity2D {
         ];
 
         data.gold -= item.Price;
-        // state.unlocked[item.Type] ++;
+        data.unlocked[item.Type] ++;
         itemList.refreshItems();
         keeper.say(msgs[Std.int(Math.random() * msgs.length)], 2.0);
         Game.instance.sound.playWobble(hxd.Res.sound.purchase, 0.6);

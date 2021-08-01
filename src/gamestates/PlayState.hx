@@ -146,8 +146,6 @@ class PlayState extends elke.gamestate.GameState {
 	public var arrows:ArrowQueue;
 	public var fishList: CatchingQueue;
 
-	public var shop:Shop;
-
 	public var boosterThing:BoosterThing;
 	public var timer:Timer;
 
@@ -245,12 +243,6 @@ class PlayState extends elke.gamestate.GameState {
 		fisher.x = Const.SEA_WIDTH >> 1;
 
 		foregroundLayer = new Object(world);
-
-		/*
-		shop = new Shop(this, container);
-		shop.onClose = closeShop;
-		shop.onWin = winGame;
-		*/
 
 		boosterThing = new BoosterThing(container);
 		boosterThing.onFail = launchHook;
@@ -541,8 +533,6 @@ class PlayState extends elke.gamestate.GameState {
 		roundResult = new RoundResult(killedFish, maxCombo, punchTime, boostScore, container);
 		roundResult.onRetry = newRound;
 		roundResult.onReturn = returnToTown;
-
-		// openShop();
 	}
 
 	function returnToTown() {
@@ -564,22 +554,6 @@ class PlayState extends elke.gamestate.GameState {
 			});
 			shoppingMusic = null;
 		}
-	}
-
-	function openShop() {
-		shop.show();
-
-		shoppingMusic = hxd.Res.sound.shopmusic.play(true, 0.34);
-		hxd.Res.sound.openshop.play(false, 0.6);
-		world.filter = new h2d.filter.Blur(5, 0.9, 1.0);
-	}
-
-	function closeShop() {
-		shop.close();
-		stopShopMusic();
-		hxd.Res.sound.closeshop.play(false, 0.6);
-		world.filter = null;
-		newRound();
 	}
 
 	function newRound() {
@@ -647,7 +621,6 @@ class PlayState extends elke.gamestate.GameState {
 
 	function onUse() {
 		if (currentPhase == Shopping) {
-			shop.usePressed();
 		}
 	}
 
@@ -733,7 +706,6 @@ class PlayState extends elke.gamestate.GameState {
 				finishRound();
 			}
 			if (e.keyCode == Key.P) {
-				closeShop();
 			}
 
 			if (e.keyCode == Key.M) {
@@ -869,11 +841,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		playTime += dt;
 
-		if (shop.showing) {
-			world.x += (500 - world.x) * 0.1;
-		} else {
-			world.x += ((-Const.SEA_WIDTH * 0.5 + game.s2d.width * 0.5) - world.x) * 0.2;
-		}
+		world.x += ((-Const.SEA_WIDTH * 0.5 + game.s2d.width * 0.5) - world.x) * 0.2;
 
 		bg.ratio = (currentDepth / 13000.0);
 

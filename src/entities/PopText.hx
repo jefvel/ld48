@@ -27,7 +27,7 @@ class PopText extends Object {
     var elapsed = 0.0;
     override function sync(ctx:RenderContext) {
         super.sync(ctx);
-        yy -= ctx.elapsedTime * 4;
+        yy -= ctx.elapsedTime * 24;
         text.y = Math.round(yy);
         elapsed += ctx.elapsedTime;
         if (elapsed > 0.6) {

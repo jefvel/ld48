@@ -1,5 +1,11 @@
 package gamestates;
 
+import entities.PopText;
+import elke.graphics.Sprite;
+import entities.BasicFish;
+import h2d.col.Point;
+import entities.FishInventory;
+import hxd.Event;
 import h2d.filter.Blur;
 import entities.Shop;
 import h3d.shader.Displacement;
@@ -22,8 +28,10 @@ class TownState extends GameState {
 
     var entities: Object;
     var characters : Object;
+    var playerLayer : Object;
 
     var fisher: TownCharacter;
+    var fishMonger: Sprite;
     var level: levels.Levels.Levels_Level;
 
     var parallax1: Object;
@@ -44,6 +52,9 @@ class TownState extends GameState {
     var coinDisplay: CoinDisplay;
 
     var data : GameSaveData;
+
+    var fishInventory: FishInventory;
+    var soldFishList: Array<BasicFish>;
 
     public function new() {
         name = "town";
@@ -75,6 +86,7 @@ class TownState extends GameState {
         entities = new Object(world);
 
         characters = new Object(world);
+        playerLayer = new Object(world);
 
         world.addChild(foreground);
 
@@ -91,11 +103,12 @@ class TownState extends GameState {
 
         initSounds();
 
+        soldFishList = [];
+
         shop = new Shop(data, container);
         coinDisplay = new CoinDisplay(container);
         coinDisplay.coins = data.gold;
-
-        trace(data.ownedFish);
+        fishInventory = new FishInventory(data, container);
     }
 
     function initSounds() {
@@ -151,40 +164,53 @@ class TownState extends GameState {
         if (currentActivity == "SellFish") {
             activityButton1.activate();
             activated = true;
-            data.addGold(54);
+
+            curSellTime = sellTime;
+            sellTimeRatio = 1.0;
+
+            selling = true;
+
             return;
         } else {
             activityButton1.onTap();
         }
 
-        busy = true;
 
         if (currentActivity == "GoFish") {
+            busy = true;
             new BoatTransition(() -> {
                 game.states.setState(new PlayState(Normal));
             }, null, game.s2d);
         }
 
         if (currentActivity == "TradeItems") {
+            busy = true;
             world.filter = new Blur(3);
             worldZoom = 2.0;
-            shop.show();
             shop.onClose = closeShop;
+            shop.show();
         }
     }
+
+    var selling = false;
+    var sellTime = 0.2;
+    var curSellTime = 0.;
+    var sellTimeRatio = 1.0;
+    var minSellTimeRatio = 0.3;
     
     var worldZoom = 1.0;
 
     function closeShop() {
         worldZoom = 1.0;
-        shop.close();
         world.filter = null;
+        shop.close();
         busy = false;
     }
 
     function onActivityEnd() {
         if(lastActivity == "SellFish") {
             activityButton1.deactivate();
+            selling = false;
         }
 
         lastActivity = null;
@@ -205,9 +231,10 @@ class TownState extends GameState {
             s.x = m.pixelX;
             s.y = m.pixelY;
             s.animation.play();
+            fishMonger = s;
         }
 
-        fisher = new TownCharacter(characters);
+        fisher = new TownCharacter(playerLayer);
         fisher.setX(934 + 32);
         fisher.y = 256;
 
@@ -313,9 +340,106 @@ class TownState extends GameState {
         } else {
             coinDisplay.active = false;
         }
+
+        fishInventory.active = (currentActivity == "SellFish");
+        if (fishInventory.active) {
+            var b = fishInventory.getBounds();
+            fishInventory.y = Math.round((game.s2d.height - b.height) * 0.5);
+            fishInventory.x = Math.round((game.s2d.width - b.width) * 0.75);
+        }
+
+        if (selling) {
+            curSellTime += dt;
+            if (curSellTime >= sellTime * sellTimeRatio) {
+                curSellTime = .0;
+
+                var f = fishInventory.pullFirstFish();
+                if (f == null) {
+                    return;
+                }
+
+                var point = new Point(f.x, f.y);
+                point = fishInventory.localToGlobal(point);
+                point = world.globalToLocal(point);
+
+                f.x = point.x;
+                f.y = point.y;
+
+                characters.addChild(f);
+
+                sellTimeRatio *= 0.9;
+                sellTimeRatio = Math.max(minSellTimeRatio, sellTimeRatio);
+
+                soldFishList.push(f);
+                hxd.Res.sound.town.fishwhoos.play(false, 0.2);
+            }
+        }
+
+        var tx = fishMonger.x + 28;
+        var ty = fishMonger.y + 47;
+        for (f in soldFishList) {
+            var dx = (tx - f.x) * 0.2;
+            var dy = (ty - f.y) * 0.2;
+            f.x += dx;
+            f.y += dy;
+            f.rotation = -dx * 0.04;
+
+            if (dx * dx + dy * dy < 0.5 * 0.5) {
+                f.remove();
+                soldFishList.remove(f);
+                var info = Data.fish.get(f.fishKind);
+
+
+                game.sound.playWobble(hxd.Res.sound.town.sellsound, 0.6);
+
+                var t = new PopText('${info.SellPrice}$$', world);
+                t.text.textColor = 0xffffff;
+                t.text.dropShadow = {
+                    dx: 1,
+                    dy: 1,
+                    alpha: 0.4,
+                    color: 0x222222,
+                }
+
+                t.x = Math.round(tx + (Math.random() * 64 - 32));
+                t.y = ty - 64;
+
+                data.addGold(info.SellPrice);
+            }
+        }
     }
 
     var activatePressed = false;
+
+    override function onEvent(e:Event) {
+        super.onEvent(e);
+        if (!shop.showing) {
+            return;
+        }
+
+        if (e.kind == EKeyDown) {
+            if (e.keyCode == Key.A || e.keyCode == Key.LEFT) {
+                shop.directionPressed(Left);
+            }
+            if (e.keyCode == Key.D || e.keyCode == Key.RIGHT) {
+                shop.directionPressed(Right);
+            }
+            if (e.keyCode == Key.W || e.keyCode == Key.UP) {
+                shop.directionPressed(Up);
+            }
+            if (e.keyCode == Key.S || e.keyCode == Key.DOWN) {
+                shop.directionPressed(Down);
+            }
+
+            if (e.keyCode == Key.ENTER || e.keyCode == Key.E || e.keyCode == Key.SPACE) {
+                shop.usePressed();
+            }
+
+            if (e.keyCode == Key.ESCAPE) {
+                closeShop();
+            }
+        }
+    }
 
     override function onLeave() {
         super.onLeave();

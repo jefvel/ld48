@@ -13,7 +13,12 @@ class GameSaveData {
 
 	public var currentDebt = 15000;
 
-	public var ownedFish : Array<Data.FishKind> = [Basic, Basic, Basic, Basic2, Basic2, Eel];
+	public var ownedFish : Array<Data.FishKind> = [
+		Basic, Basic, Basic, Basic2, Basic2, Eel,
+		Basic, Basic, Basic, Basic2, Basic2, Eel,
+		Basic, Basic, Basic, Basic2, Basic2, Eel,
+		Basic, Basic, Basic, Basic2, Basic2, Eel,
+	];
 
 	public var unlocked:Map<Data.Items_Type, Int>;
 
