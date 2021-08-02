@@ -1,5 +1,6 @@
 package gamestates;
 
+import graphics.BoatTransition;
 import hxd.Event;
 import hxd.snd.Channel;
 import elke.graphics.Sprite;
@@ -36,9 +37,17 @@ class MainMenuState extends GameState {
         buttons = new Object(container);
         mainText = new Text(hxd.Res.fonts.futilepro_medium_12.toFont(), container);
         mainText.textAlign = Center;
-        mainText.text = "Select Difficulty";
+        mainText.text = "Click to Start";
+        mainText.dropShadow = {
+            dx: 1,
+            dy: 1,
+            alpha: 0.3,
+            color: 0x111111,
+        }
+
         mainText.scale(2);
 
+        /*
         normalButton = new Button("Normal", buttons);
         chillButton = new Button("Chill", buttons);
         chillButton.x = normalButton.width + 32;
@@ -62,6 +71,7 @@ class MainMenuState extends GameState {
         chillButton.onClick = e -> {
             select(Chill);
         }
+        */
     }
 
     var showingIntro = false;
@@ -103,8 +113,21 @@ class MainMenuState extends GameState {
         //});
     }
 
+
     override function onEvent(e:Event) {
         super.onEvent(e);
+
+        if (e.kind == EPush) {
+            if (launched) {
+                return;
+            }
+            launched = true;
+            hxd.Res.sound.reelin.play(false, 0.4);
+            new BoatTransition(() -> {
+                game.states.setState(new PlayState(Normal));
+            }, game.s2d);
+        }
+
         if (showingIntro) {
             if (e.kind == EKeyDown) {
                 launch();
@@ -130,7 +153,7 @@ class MainMenuState extends GameState {
     override function update(dt:Float) {
         super.update(dt);
 		mainText.x = Math.round(game.s2d.width * 0.5);
-		mainText.y = Math.round(game.s2d.height * 0.2);
+		mainText.y = Math.round(game.s2d.height * 0.5 - mainText.textHeight * 0.5);
         buttons.y = Math.round(game.s2d.height * 0.5);
         var bnds = buttons.getBounds();
         buttons.x = Math.round((game.s2d.width - bnds.width) * 0.5);

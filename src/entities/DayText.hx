@@ -19,6 +19,12 @@ class DayText extends Object {
         var t = new Text(font, this);
 
         t.textAlign = Center;
+        t.dropShadow = {
+            dx: 1,
+            dy: 1,
+            alpha: 0.3,
+            color: 0x222222,
+        }
         t.text = text;
 
         this.text = t;
@@ -26,7 +32,7 @@ class DayText extends Object {
         debtText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), this);
         debtText.textAlign = Center;
         debtText.y = t.textHeight + 16;
-        debtText.text = 'You are $$${debt} dollars in debt';
+        //debtText.text = 'You are $$${debt} dollars in debt';
         alpha = -1;
     }
 

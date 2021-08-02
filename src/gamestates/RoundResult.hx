@@ -120,6 +120,8 @@ class RoundResult extends Entity2D {
 	var bg : Bitmap;
 	var totalBg : Bitmap;
 
+	var ffwdImg:Bitmap;
+
 	var currentState: ResultPresentingSection = Start;
 
 	var totalScoreText: h2d.HtmlText;
@@ -127,6 +129,7 @@ class RoundResult extends Entity2D {
 	var boostScoreText: TextWithLabel;
 	var timeLeftText : TextWithLabel;
 	var maxComboText : TextWithLabel;
+	var totalFishCaughtText: TextWithLabel;
 
 	var comboScore = 0;
 	var timeScore = 0;
@@ -194,6 +197,11 @@ class RoundResult extends Entity2D {
 		maxComboText.y = timeLeftText.y + 18;
 		maxComboText.visible = false;
 
+		totalFishCaughtText = new TextWithLabel('Caught Fish', '0', this);
+		totalFishCaughtText.x = paddingX;
+		totalFishCaughtText.y = maxComboText.y + 24;
+		totalFishCaughtText.visible = false;
+
 		totalBg = new Bitmap(Tile.fromColor(0x000000), bg);
 		bg.alpha = 0.2;
 		totalScoreText = new h2d.HtmlText(hxd.Res.fonts.headline.toFont(), this);
@@ -229,6 +237,9 @@ class RoundResult extends Entity2D {
 		caughtFishScoreText.x = 236;
 		caughtFishScoreText.y = -6;
 		// caughtFishScoreText.y = Math.round((16 - caughtFishScoreText.textHeight) * 0.5);
+
+		ffwdImg = new Bitmap(hxd.Res.img.fastforward.toTile(), this);
+		ffwdImg.visible = false;
 
 		hxd.Res.sound.resultswooshin.play(false, 0.4);
 	}
@@ -324,6 +335,7 @@ class RoundResult extends Entity2D {
 
 	function startShowCatch() {
 		currentState = CaughtFish;
+		totalFishCaughtText.visible = true;
 	}
 
 	var finalized = false;
@@ -391,7 +403,7 @@ class RoundResult extends Entity2D {
 			currentTimePerFish += dt;
 			if (currentTimePerFish > timePerFish) {
 				var f = caughtFish.shift();
-				if (f == null ) {
+				if (f == null) {
 					fishCatchTimeout -= dt;
 					if (fishCatchTimeout <= 0) {
 						finalizeRound();
@@ -405,6 +417,8 @@ class RoundResult extends Entity2D {
 
 					caughtFishScore += f.data.Score;
 					caughtFishScoreText.text = '= $caughtFishScore';
+
+					totalFishCaughtText.text = '${queue.fishList.length}';
 				}
 			}
 		}
@@ -430,6 +444,8 @@ class RoundResult extends Entity2D {
 
 		returnButton.update(dt);
 		retryButton.update(dt);
+
+		ffwdImg.visible = currentState != Complete && speedup;
 	}
 
 	override function sync(ctx:RenderContext) {
@@ -453,5 +469,9 @@ class RoundResult extends Entity2D {
 		var tWidth = retryButton.width + returnButton.width + 16;
 		buttonContainer.x = s.width - tWidth - padding;
 		buttonContainer.y = totalBg.y + padding;
+
+		ffwdImg.x = s.width - 32 - padding;
+		ffwdImg.y =  totalBg.y + padding;
+
 	}
 }

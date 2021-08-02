@@ -27,7 +27,7 @@ class WonGameState extends GameState {
         var fnt = hxd.Res.fonts.equipmentpro_medium_12.toFont();
         daysTxt = new Text(fnt, diploma);
         daysTxt.textColor = 0x4b314e;
-        daysTxt.text = '${playState.currentRound}';
+        daysTxt.text = '${playState.gameData.currentRound}';
         daysTxt.x = 239;
         daysTxt.y = 104;
 

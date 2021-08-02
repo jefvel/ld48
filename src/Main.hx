@@ -10,10 +10,11 @@ class Main {
 
 	static function main() {
 		game = new Game({
-			#if !debug
+			#if !debug 
 			initialState: new MainMenuState(),
 			#else
 			//initialState: new PlayState(Normal),
+			//initialState: new MainMenuState(),
 			initialState: new TownState(),
 			#end
 			onInit: () -> {},

@@ -1,7 +1,7 @@
 { "frames": [
    {
     "filename": "fishmonger 0.aseprite",
-    "frame": { "x": 0, "y": 0, "w": 54, "h": 72 },
+    "frame": { "x": 0, "y": 74, "w": 54, "h": 72 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 6, "y": 18, "w": 54, "h": 72 },
@@ -10,7 +10,7 @@
    },
    {
     "filename": "fishmonger 1.aseprite",
-    "frame": { "x": 55, "y": 0, "w": 54, "h": 72 },
+    "frame": { "x": 55, "y": 74, "w": 54, "h": 72 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 6, "y": 18, "w": 54, "h": 72 },
@@ -19,12 +19,48 @@
    },
    {
     "filename": "fishmonger 2.aseprite",
-    "frame": { "x": 110, "y": 0, "w": 36, "h": 69 },
+    "frame": { "x": 110, "y": 69, "w": 36, "h": 69 },
     "rotated": false,
     "trimmed": true,
     "spriteSourceSize": { "x": 10, "y": 21, "w": 36, "h": 69 },
     "sourceSize": { "w": 64, "h": 90 },
-    "duration": 1050
+    "duration": 20000
+   },
+   {
+    "filename": "fishmonger 3.aseprite",
+    "frame": { "x": 110, "y": 0, "w": 37, "h": 68 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 10, "y": 22, "w": 37, "h": 68 },
+    "sourceSize": { "w": 64, "h": 90 },
+    "duration": 65535
+   },
+   {
+    "filename": "fishmonger 4.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 54, "h": 73 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 8, "y": 17, "w": 54, "h": 73 },
+    "sourceSize": { "w": 64, "h": 90 },
+    "duration": 60
+   },
+   {
+    "filename": "fishmonger 5.aseprite",
+    "frame": { "x": 55, "y": 0, "w": 54, "h": 73 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 8, "y": 17, "w": 54, "h": 73 },
+    "sourceSize": { "w": 64, "h": 90 },
+    "duration": 100
+   },
+   {
+    "filename": "fishmonger 6.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 54, "h": 73 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 8, "y": 17, "w": 54, "h": 73 },
+    "sourceSize": { "w": 64, "h": 90 },
+    "duration": 100
    }
  ],
  "meta": {
@@ -32,11 +68,12 @@
   "version": "1.2.28-x64",
   "image": "fishmonger.png",
   "format": "RGBA8888",
-  "size": { "w": 146, "h": 72 },
+  "size": { "w": 147, "h": 146 },
   "scale": "1",
   "frameTags": [
    { "name": "idle", "from": 0, "to": 1, "direction": "forward" },
-   { "name": "pondering", "from": 2, "to": 2, "direction": "forward" }
+   { "name": "pondering", "from": 2, "to": 3, "direction": "forward" },
+   { "name": "accept", "from": 4, "to": 6, "direction": "forward" }
   ],
   "slices": [
   ]

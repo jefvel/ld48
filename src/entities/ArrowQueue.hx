@@ -87,7 +87,7 @@ class ArrowQueue extends Entity2D {
 	public var queue:Array<Arrow>;
 	var bgshine:Bitmap;
 	var bg: Bitmap;
-	var square: Bitmap;
+	public var square: Bitmap;
 	var arrowStuff: Object;
 
 	var arrowCollections:Array<ArrowCollection>;

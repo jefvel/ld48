@@ -91,7 +91,6 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var gameData: GameSaveData;
 
-	public var currentRound = 0;
 	public var totalRounds = 30;
 
 	public var maxBoostTime = 2.0;
@@ -258,14 +257,16 @@ class PlayState extends elke.gamestate.GameState {
 		comboText.filter = new Outline(1);
 		comboText.textAlign = Center;
 
-		bonusKillsText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), arrows);
+		bonusKillsText = new Text(hxd.Res.fonts.picory.toFont(), arrows);
 		bonusKillsText.textAlign = Center;
-		bonusKillsText.x = 17;
-		bonusKillsText.y = -21;//;comboText.font.lineHeight + 4;
+		bonusKillsText.x = -8;
+		bonusKillsText.y = -29; //27;//;comboText.font.lineHeight + 4;
+		bonusKillsText.scale(2);
+		//bonusKillsText.rotation = -Math.PI * 0.03;
 		bonusKillsText.dropShadow = {
 			dx: 1,
 			dy: 1,
-			alpha: 0.3,
+			alpha: 0.7,
 			color: 0x111111,
 		}
 
@@ -388,7 +389,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		spawnFish();
 
-		var t = gameMode == Chill ? 'Day ${currentRound}' : 'Day ${currentRound} out of ${totalRounds}';
+		var t = 'Day ${gameData.currentRound}';
 		var dayText = new DayText(t, currentDebt, game.s2d);
 
 		if (waveNoise != null) {
@@ -514,7 +515,7 @@ class PlayState extends elke.gamestate.GameState {
 
 	function finishRound() {
 		currentPhase = Shopping;
-		currentRound++;
+		gameData.currentRound++;
 
 		for (f in killedFish) {
 			// giveGold(Math.ceil(f.data.SellPrice * goldMultiplier));
@@ -525,7 +526,7 @@ class PlayState extends elke.gamestate.GameState {
 			gameData.bestMaxCombo = maxCombo;
 		}
 
-		if (currentRound > totalRounds) {
+		if (gameData.currentRound > totalRounds) {
 			if (gameData.gold < currentDebt) {
 				loseGame();
 			} else {
@@ -1154,6 +1155,7 @@ class PlayState extends elke.gamestate.GameState {
 			comboRoto *= 0.9;
 
 			bonusKillsText.text = bonusKills > 0 ? 'x${bonusKills + 1}' : '';
+			bonusKillsText.alpha = arrows.square.alpha * 2;
 
 			comboText.x = timer.x;
 			comboText.y = arrows.y;

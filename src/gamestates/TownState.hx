@@ -202,6 +202,7 @@ class TownState extends GameState {
 
         if (currentActivity == "GoFish") {
             busy = true;
+            hxd.Res.sound.driveoff.play(false, 0.6);
             new BoatTransition(() -> {
                 game.states.setState(new PlayState(Normal));
             }, null, game.s2d);
@@ -257,6 +258,7 @@ class TownState extends GameState {
             s.y = m.pixelY;
             s.animation.play();
             fishMonger = s;
+            fishMonger.animation.play("idle");
         }
 
         fisher = new TownCharacter(playerLayer);
@@ -438,11 +440,10 @@ class TownState extends GameState {
             }
             fishMonger.animation.play("pondering");
         } else {
-            fishMonger.animation.play("idle");
             moneyGottenText.visible = false;
         }
 
-        if (finishedSelling && soldFishList.length == 0) {
+        if (finishedSelling && soldFishList.length == 0 && lastSoldFishPrice.alpha <= 0.3) {
             finishedSelling = false;
             if (totalSellPrice > 0) {
                 returnMoneyToBag = true;
@@ -464,6 +465,10 @@ class TownState extends GameState {
                 totalSellPrice = 0;
                 game.sound.playWobble(hxd.Res.sound.town.coinfinish, 0.3);
             }
+
+            fishMonger.animation.play("accept", false, true, 0, (s) -> {
+                fishMonger.animation.play("idle");
+            });
         }
     }
 

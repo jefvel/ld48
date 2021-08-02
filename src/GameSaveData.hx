@@ -1,5 +1,5 @@
 class GameSaveData {
-	public var currentRound = 0;
+	public var currentRound = 1;
 
 	public var totalGold = 0;
 	public var gold = 0;
