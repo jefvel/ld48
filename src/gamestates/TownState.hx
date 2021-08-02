@@ -29,6 +29,7 @@ class TownState extends GameState {
 
     var entities: Object;
     var characters : Object;
+    var aboveNpcsLayer : Object;
     var playerLayer : Object;
 
     var fisher: TownCharacter;
@@ -58,7 +59,9 @@ class TownState extends GameState {
     var soldFishList: Array<BasicFish>;
     var totalSellPrice = 0;
     var moneyGottenText: Text;
+    var lastSoldFishPrice : Text;
 	var returnMoneyToBag = false;
+    var finishedSelling = false;
 
     public function new() {
         name = "town";
@@ -90,6 +93,9 @@ class TownState extends GameState {
         entities = new Object(world);
 
         characters = new Object(world);
+        aboveNpcsLayer = new Object(world);
+        aboveNpcsLayer.addChild(level.l_AboveNpcs.render());
+
         playerLayer = new Object(world);
 
         world.addChild(foreground);
@@ -122,11 +128,16 @@ class TownState extends GameState {
             alpha: 0.4,
         }
         moneyGottenText.textAlign = Center;
+
+        lastSoldFishPrice = new Text(hxd.Res.fonts.picory.toFont(), moneyGottenText);
+        lastSoldFishPrice.y = 18;
+        lastSoldFishPrice.alpha = 0;
+        lastSoldFishPrice.textAlign = Center;
     }
 
     function initSounds() {
-        oceanAmbience = hxd.Res.sound.town.oceanambience.play(true, 0.1);
-        townAmbience = hxd.Res.sound.town.chatterwind.play(true, 0.05);
+        oceanAmbience = hxd.Res.sound.town.oceanambience.play(true, 0.2);
+        townAmbience = hxd.Res.sound.town.chatterwind.play(true, 0.08);
 
         wavesEff = new hxd.snd.effect.Spatialization();
         wavesEff.maxDistance = 150;
@@ -224,10 +235,7 @@ class TownState extends GameState {
         if(lastActivity == "SellFish") {
             activityButton1.deactivate();
             selling = false;
-
-            if (totalSellPrice > 0) {
-                returnMoneyToBag = true;
-            }
+            finishedSelling = true;
         }
 
         lastActivity = null;
@@ -365,7 +373,7 @@ class TownState extends GameState {
         if (fishInventory.active) {
             var b = fishInventory.getBounds();
             fishInventory.y = Math.round((game.s2d.height - b.height) * 0.5);
-            fishInventory.x = Math.round((game.s2d.width - b.width) * 0.75);
+            fishInventory.x = Math.round((game.s2d.width - b.width) * 0.8);
         }
 
         if (selling) {
@@ -395,8 +403,8 @@ class TownState extends GameState {
             }
         }
 
-        var tx = fishMonger.x + 28;
-        var ty = fishMonger.y + 47;
+        var tx = fishMonger.x + 41;
+        var ty = fishMonger.y + 90;
         for (f in soldFishList) {
             var dx = (tx - f.x) * 0.28;
             var dy = (ty - f.y) * 0.15;
@@ -412,23 +420,11 @@ class TownState extends GameState {
 
                 game.sound.playWobble(hxd.Res.sound.town.sellsound, 0.6);
 
-                /*
-                var t = new PopText('${info.SellPrice}$$', world);
-                t.text.textColor = 0xffffff;
-                t.text.dropShadow = {
-                    dx: 1,
-                    dy: 1,
-                    alpha: 0.4,
-                    color: 0x222222,
-                }
-
-                t.x = Math.round(tx + (Math.random() * 64 - 32));
-                t.y = ty - 64;
-                */
-
-                // data.addGold(info.SellPrice);
+                data.addSoldFish(info);
 
                 totalSellPrice += info.SellPrice;
+                lastSoldFishPrice.text = '+${info.SellPrice}$$';
+                lastSoldFishPrice.alpha = 1.0;
             }
         }
 
@@ -440,11 +436,24 @@ class TownState extends GameState {
                 moneyGottenText.x = p.x + 32;
                 moneyGottenText.y = p.y - 32;
             }
+            fishMonger.animation.play("pondering");
         } else {
+            fishMonger.animation.play("idle");
             moneyGottenText.visible = false;
         }
 
+        if (finishedSelling && soldFishList.length == 0) {
+            finishedSelling = false;
+            if (totalSellPrice > 0) {
+                returnMoneyToBag = true;
+            }
+        }
+
+        lastSoldFishPrice.alpha *= 0.9;
+
         if (returnMoneyToBag) {
+            lastSoldFishPrice.alpha = 0;
+
             var dx = (coinDisplay.x + 32 - moneyGottenText.x) * 0.3;
             var dy = (coinDisplay.y - moneyGottenText.y) * 0.2;
             moneyGottenText.x += dx;

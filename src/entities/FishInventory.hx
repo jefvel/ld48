@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.Text;
 import h2d.Tile;
 import h2d.TileGroup;
 import h2d.ScaleGrid;
@@ -17,6 +18,9 @@ class FishInventory extends Entity2D {
 	public var active = false;
 
 	var tileMap : Map<Data.FishKind, Tile>;
+	var title : Text;
+
+	var emptyText: Text;
 
 	public function new(data: GameSaveData,?p) {
 		super(p);
@@ -34,8 +38,25 @@ class FishInventory extends Entity2D {
 		tileMap = new Map<Data.FishKind, Tile>();
 
 		for (fish in Data.fish.all) {
-			tileMap.set(fish.ID, tile.sub(fish.Icon.x * fish.Icon.size, fish.Icon.y * fish.Icon.size, fish.Icon.size, fish.Icon.size));
+			tileMap.set(fish.ID, tile.sub(
+				fish.Icon.x * fish.Icon.size,
+				fish.Icon.y * fish.Icon.size,
+				fish.Icon.size,
+				fish.Icon.size
+			));
 		}
+
+		title = new Text(hxd.Res.fonts.picory.toFont(), this);
+		title.y = -14;
+		title.x = 2;
+		title.text = "Your Fish Inventory";
+
+		emptyText = new Text(title.font, this);
+		emptyText.text = "-- Empty --";
+		emptyText.alpha = 0.6;
+		emptyText.textAlign = Center;
+		emptyText.x = w >> 1;
+		emptyText.y = h >> 1;
 	}
 
     public function pullFirstFish() {
@@ -74,12 +95,15 @@ class FishInventory extends Entity2D {
 		var fishPerRow = Math.floor((w - padding - 16) / spacing);
 		for (f in data.ownedFish) {
 			var t = tileMap.get(f);
-			fishes.add(fx * spacing, fy * spacing, t);
+			fishes.add(fx * spacing, fy * spacing * 2 + 4, t);
 			fx ++;
+
 			if (fx >= fishPerRow) {
 				fx = 0;
 				fy ++;
 			}
 		}
+
+		emptyText.visible = data.ownedFish.length == 0;
 	}
 }

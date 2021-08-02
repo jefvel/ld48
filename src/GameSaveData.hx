@@ -12,6 +12,8 @@ class GameSaveData {
 	public var playTime = 0.0;
 
 	public var currentDebt = 15000;
+	public var totalSoldFish = 0;
+	public var totalSoldFishValue = 0;
 
 	public var ownedFish : Array<Data.FishKind> = [
 		Basic, Basic, Basic, Basic2, Basic2, Eel,
@@ -36,6 +38,11 @@ class GameSaveData {
 	public function addGold(amount) {
 		gold += amount;
 		totalGold += amount;
+	}
+
+	public function addSoldFish(f: Data.Fish) {
+		totalSoldFish ++;
+		totalSoldFishValue += f.SellPrice;
 	}
 
 	static var current: GameSaveData;

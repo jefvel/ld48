@@ -258,8 +258,16 @@ class PlayState extends elke.gamestate.GameState {
 		comboText.filter = new Outline(1);
 		comboText.textAlign = Center;
 
-		bonusKillsText = new Text(hxd.Res.fonts.picory.toFont(), comboText);
-		bonusKillsText.y = comboText.font.lineHeight + 4;
+		bonusKillsText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), arrows);
+		bonusKillsText.textAlign = Center;
+		bonusKillsText.x = 17;
+		bonusKillsText.y = -21;//;comboText.font.lineHeight + 4;
+		bonusKillsText.dropShadow = {
+			dx: 1,
+			dy: 1,
+			alpha: 0.3,
+			color: 0x111111,
+		}
 
 		reset();
 	}
@@ -1145,7 +1153,7 @@ class PlayState extends elke.gamestate.GameState {
 			comboText.rotation = comboRoto;
 			comboRoto *= 0.9;
 
-			bonusKillsText.text = bonusKills > 0 ? 'Kills per catch: ${bonusKills + 1}' : '';
+			bonusKillsText.text = bonusKills > 0 ? 'x${bonusKills + 1}' : '';
 
 			comboText.x = timer.x;
 			comboText.y = arrows.y;

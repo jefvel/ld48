@@ -1,5 +1,6 @@
 package gamestates;
 
+import hxd.Key;
 import h2d.filter.Displacement;
 import h2d.filter.Shader;
 import format.pdf.Filter;
@@ -148,6 +149,8 @@ class RoundResult extends Entity2D {
 	var caughtFishScoreText : Text;
 	var dFilter : Displacement;
 
+	var speedup = false;
+
 	public function new(caughtFish, maxCombo, timeLeft, boostScore, ?p) {
 		super(p);
 
@@ -161,8 +164,7 @@ class RoundResult extends Entity2D {
 		bg = new Bitmap(Tile.fromColor(0x000000), this);
 		bg.alpha = 0.05;
 
-		var resultText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), this);
-		resultText.setScale(2);
+		var resultText = new Text(hxd.Res.fonts.headline.toFont(), this);
 
 		resultText.text = "Fishing Results";
 		dFilter = new h2d.filter.Displacement(hxd.Res.img.water.toTile());
@@ -178,7 +180,7 @@ class RoundResult extends Entity2D {
 		timeScore = Math.floor(roundedTime * scorePerExtraSecond);	resultText.x = resultText.y = 32;
 
 		boostScoreText = new TextWithLabel('Boost Score', '$boostScore', this);
-		boostScoreText.y = resultText.y + 64;
+		boostScoreText.y = resultText.y + 58;
 		boostScoreText.x = paddingX;
 		boostScoreText.visible = false;
 
@@ -346,6 +348,8 @@ class RoundResult extends Entity2D {
 	var currentTimePerFish = 0.;
 	var fishCatchTimeout = 1.5;
 
+	var keys = [Key.SPACE, Key.A, Key.S, Key.D, Key.W, Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT, Key.E];
+
 	override function update(dt:Float) {
 		super.update(dt);
 
@@ -353,10 +357,23 @@ class RoundResult extends Entity2D {
 			alpha += (1. - bg.alpha) * 0.2;
 		}
 
+		speedup = false;
+		for (k in keys) {
+			if (Key.isDown(k)) {
+				speedup = true;
+				break;
+			}
+		}
+
+		if (speedup){
+			dt *= 5;
+		}
+
 		dFilter.dispX *= 0.9;
 		dFilter.dispY *= 0.89;
 
 		time += dt;
+
 		if (time >= timePerReveal) {
 			time = 0;
 			if (currentState == Start) {
@@ -393,7 +410,12 @@ class RoundResult extends Entity2D {
 		}
 
 
-		var sinc = (totalScore - scoreInterpVal) * 0.08;
+		var speed = 0.08;
+		if (speedup) {
+			speed = Math.pow(speed, 1 / 5);
+		}
+
+		var sinc = (totalScore - scoreInterpVal) * speed;
 
 		prevInterpScore = scoreInterpVal;
 		scoreInterpVal += sinc;
