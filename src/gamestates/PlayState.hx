@@ -509,8 +509,7 @@ class PlayState extends elke.gamestate.GameState {
 		currentRound++;
 
 		for (f in killedFish) {
-			giveGold(Math.ceil(f.data.SellPrice * goldMultiplier));
-
+			// giveGold(Math.ceil(f.data.SellPrice * goldMultiplier));
 			gameData.ownedFish.push(f.data.ID);
 		}
 
@@ -990,17 +989,20 @@ class PlayState extends elke.gamestate.GameState {
 						if (boosting) {
 							f.kill();
 
+							/*
 							var g = calcGold(f.data.SellPrice);
 							g = Math.ceil(0.3 * g);
-
 							giveGold(g);
+							*/
 
 							boostScore += Math.ceil(f.data.Score * 0.6);
 
+							/*
 							var t = new PopText('+${g}', world);
 							t.text.textColor = 0xf3bd00;
 							t.x = hook.x;
 							t.y = hook.y;
+							*/
 
 							allFish.remove(f);
 							f.rotAway();
