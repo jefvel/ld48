@@ -1,0 +1,87 @@
+{ "frames": [
+   {
+    "filename": "medals 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   },
+   {
+    "filename": "medals 1.aseprite",
+    "frame": { "x": 51, "y": 0, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   },
+   {
+    "filename": "medals 2.aseprite",
+    "frame": { "x": 102, "y": 0, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   },
+   {
+    "filename": "medals 3.aseprite",
+    "frame": { "x": 0, "y": 51, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   },
+   {
+    "filename": "medals 4.aseprite",
+    "frame": { "x": 51, "y": 51, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   },
+   {
+    "filename": "medals 5.aseprite",
+    "frame": { "x": 102, "y": 51, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   },
+   {
+    "filename": "medals 6.aseprite",
+    "frame": { "x": 0, "y": 102, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   },
+   {
+    "filename": "medals 7.aseprite",
+    "frame": { "x": 51, "y": 102, "w": 50, "h": 50 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+    "sourceSize": { "w": 50, "h": 50 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.28-x64",
+  "image": "medals.png",
+  "format": "RGBA8888",
+  "size": { "w": 152, "h": 152 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "slices": [
+  ]
+ }
+}

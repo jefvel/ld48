@@ -582,6 +582,136 @@
 				"Hook1",
 				"Magnet1"
 			]
+		},
+		{
+			"name": "medals",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "ID",
+					"kind": null,
+					"scope": null
+				},
+				{
+					"typeStr": "14",
+					"name": "Icon",
+					"kind": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Name",
+					"kind": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Description",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "NewgroundsID"
+				}
+			],
+			"lines": [
+				{
+					"ID": "Fish0",
+					"Name": "Easy catch",
+					"NewgroundsID": 64528,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 0,
+						"y": 0
+					},
+					"Description": "Catch small fish"
+				},
+				{
+					"ID": "Fish1",
+					"Name": "Another one",
+					"Description": "Catch a medium fish",
+					"NewgroundsID": 64529,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 1,
+						"y": 0
+					}
+				},
+				{
+					"ID": "Fish2",
+					"Name": "Eely business",
+					"Description": "Catch an eel",
+					"NewgroundsID": 64530,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 2,
+						"y": 0
+					}
+				},
+				{
+					"ID": "Fish3",
+					"Name": "Slimy",
+					"Description": "Catch a jellyfish",
+					"NewgroundsID": 64531,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 3,
+						"y": 0
+					}
+				},
+				{
+					"ID": "Fish4",
+					"Name": "Big thing",
+					"Description": "Catch a big fish",
+					"NewgroundsID": 64532,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 4,
+						"y": 0
+					}
+				},
+				{
+					"ID": "Fish5",
+					"Name": "Snakey time",
+					"Description": "Catch a Snake",
+					"NewgroundsID": 64533,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 0,
+						"y": 1
+					}
+				},
+				{
+					"ID": "Boss",
+					"Name": "Killing The Lord",
+					"Description": "Catch the Boss",
+					"NewgroundsID": 64534,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 1,
+						"y": 1
+					}
+				},
+				{
+					"ID": "LongDeal",
+					"Name": "Long Deal ",
+					"Description": "Test the Fishmonger's patience",
+					"NewgroundsID": 64535,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 2,
+						"y": 1
+					}
+				}
+			],
+			"separators": [],
+			"props": {}
 		}
 	],
 	"customTypes": [],

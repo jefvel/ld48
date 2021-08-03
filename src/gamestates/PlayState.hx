@@ -271,6 +271,8 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		reset();
+
+		var i = Newgrounds.instance;
 	}
 
 	public function pushFishToBackOfQueue(f: Fish) {

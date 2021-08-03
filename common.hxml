@@ -9,6 +9,7 @@
 -lib hscript
 -lib castle
 -lib stb_ogg_sound
+-lib newgrounds
 
 # -lib hide
 # -lib hxbit

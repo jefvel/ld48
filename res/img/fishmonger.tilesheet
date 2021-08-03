@@ -24,7 +24,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 10, "y": 21, "w": 36, "h": 69 },
     "sourceSize": { "w": 64, "h": 90 },
-    "duration": 10000
+    "duration": 6000
    },
    {
     "filename": "fishmonger 3.aseprite",
@@ -33,7 +33,7 @@
     "trimmed": true,
     "spriteSourceSize": { "x": 10, "y": 22, "w": 37, "h": 68 },
     "sourceSize": { "w": 64, "h": 90 },
-    "duration": 10000
+    "duration": 6000
    },
    {
     "filename": "fishmonger 4.aseprite",
