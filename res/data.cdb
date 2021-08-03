@@ -20,7 +20,7 @@
 					"kind": null
 				},
 				{
-					"typeStr": "5:Arrows,Avoid,Tetris",
+					"typeStr": "5:Arrows,Avoid,Tetris,Boss",
 					"name": "CatchType"
 				},
 				{
@@ -87,7 +87,7 @@
 					"OriginX": 15,
 					"OriginY": 8,
 					"CatchType": 0,
-					"TimeGain": 0.3,
+					"TimeGain": 0.33,
 					"Icon": {
 						"file": "img/fishIcons.png",
 						"size": 32,
@@ -108,7 +108,7 @@
 					"OriginX": 31,
 					"OriginY": 18,
 					"CatchType": 0,
-					"TimeGain": 0.3,
+					"TimeGain": 0.5,
 					"Icon": {
 						"file": "img/fishIcons.png",
 						"size": 32,
@@ -162,7 +162,7 @@
 				{
 					"ID": "Snekris",
 					"Name": "Snekris",
-					"CatchType": 0,
+					"CatchType": 1,
 					"TimeGain": 1.5,
 					"Armor": 0,
 					"Weight": 6,
@@ -212,7 +212,7 @@
 					"ToDepth": 13000,
 					"OriginX": 64,
 					"OriginY": 64,
-					"CatchType": 0,
+					"CatchType": 3,
 					"TimeGain": 3,
 					"Icon": {
 						"file": "img/fishIcons.png",

@@ -16,6 +16,8 @@ class TextButton extends Interactive {
 	public var pressed = false;
 	var bmContainer : Object;
 
+	public var muted = false;
+
 	public function new(t: Tile, label: String, ?onPress: Void -> Void, ?onRelease: Void -> Void, ?p) {
 		super(0, 0, p);
 		bmContainer = new Object(this);
@@ -82,6 +84,8 @@ class TextButton extends Interactive {
 
 	public function onTap() {
 		sInc = 0.4;
-		hxd.Res.sound.buttonpress.play(false, 0.56);
+		if (!muted) {
+			hxd.Res.sound.buttonpress.play(false, 0.56);
+		}
 	}
 }

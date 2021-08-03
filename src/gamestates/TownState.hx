@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.TextPrompt;
 import h2d.Text;
 import entities.PopText;
 import elke.graphics.Sprite;
@@ -214,6 +215,33 @@ class TownState extends GameState {
             worldZoom = 2.0;
             shop.onClose = closeShop;
             shop.show();
+        }
+
+        if (currentActivity == "LookOcean") {
+            busy = true;
+            var prompts = [
+                "Man, the ocean's so vast. if I had a better boat I could explore it all",
+                "I wonder what's out there, other than hundreds of fish"
+            ];
+
+            var text = prompts[Std.int(Math.random() * prompts.length)];
+
+            var p = new TextPrompt(text, container, () -> {
+                busy = false;
+            });
+        }
+        
+        if (currentActivity == "LookBoat") {
+            busy = true;
+            var prompts = [
+                "It's a sweet boat, looks like a viking ship.",
+            ];
+
+            var text = prompts[Std.int(Math.random() * prompts.length)];
+
+            var p = new TextPrompt(text, container, () -> {
+                busy = false;
+            });
         }
     }
 

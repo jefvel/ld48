@@ -28,6 +28,7 @@ class BoosterThing extends Entity2D {
     public var maxBoosts = 5;
 
     var boostKey: Sprite;
+    var boostInfo : TextButton;
     var glowFilter : Glow;
 
     public function new(?p) {
@@ -52,12 +53,27 @@ class BoosterThing extends Entity2D {
         top = new Bitmap(hxd.Res.img.boosterarrowtop.toTile(), this);
         top.tile.dx = top.tile.dy = -3;
 
+        /*
         boostKey = hxd.Res.img.boostkey_tilesheet.toSprite2D(this);
         boostKey.originX = 16;
         boostKey.originY = 16;
         boostKey.y = 64;
         boostKey.x = 1;
         boostKey.animation.play();
+        */
+
+        boostInfo = new TextButton(
+            hxd.Res.img.endroundarrows.toTile().sub(32, 32, 32, 32),
+            "Tap\nTo Boost",
+            null,
+            null,
+            this
+        );
+
+        boostInfo.muted = true;
+
+        boostInfo.x = -16;
+        boostInfo.y = 64 - 16;
     }
 
     public function reset() {
@@ -70,6 +86,8 @@ class BoosterThing extends Entity2D {
 
     public function activate() {
         activated = true;
+
+        boostInfo.onTap();
 
         if (inArea) {
             successfulTurn = true;
@@ -119,6 +137,8 @@ class BoosterThing extends Entity2D {
 
     override function update(dt:Float) {
         super.update(dt);
+
+        boostInfo.update(dt);
 
         glowFilter.radius *= 0.83;
         glowFilter.alpha *= 0.8;

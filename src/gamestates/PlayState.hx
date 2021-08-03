@@ -305,6 +305,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		if (!isComboKill) {
 			punchTime += f.data.TimeGain;
+			punchTime = Math.min(punchTime, maxPunchTime);
 		}
 
 		game.sound.playWobble(hxd.Res.sound._catch, 0.3);
