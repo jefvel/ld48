@@ -234,7 +234,7 @@ class TownState extends GameState {
         if (currentActivity == "LookBoat") {
             busy = true;
             var prompts = [
-                "It's a sweet boat, looks like a viking ship.",
+                "It's a sweet boat, looks like a viking ship",
             ];
 
             var text = prompts[Std.int(Math.random() * prompts.length)];
@@ -466,9 +466,17 @@ class TownState extends GameState {
                 moneyGottenText.x = p.x + 32;
                 moneyGottenText.y = p.y - 32;
             }
+
             fishMonger.animation.play("pondering");
+            sellingTime += dt;
+
+            if (fishMonger.animation.currentFrame == 4) {
+                Newgrounds.instance.unlockMedal(LongDeal);
+            }
+
         } else {
             moneyGottenText.visible = false;
+            sellingTime = 0;
         }
 
         if (finishedSelling && soldFishList.length == 0 && lastSoldFishPrice.alpha <= 0.3) {
@@ -499,6 +507,8 @@ class TownState extends GameState {
             });
         }
     }
+
+    var sellingTime = 0.0;
 
     var activatePressed = false;
 

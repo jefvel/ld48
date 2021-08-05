@@ -1,3 +1,4 @@
+import entities.MedalPopup;
 import elke.Game;
 import h2d.Object;
 #if js
@@ -72,7 +73,13 @@ class Newgrounds {
 		#end
 	}
 
+	var unlockedMedals = new Map<Data.MedalsKind, Bool>();
+
 	public function unlockMedal(medal: Data.MedalsKind) {
+		if (unlockedMedals[medal]) {
+			return;
+		}
+
 		var m = Data.medals.get(medal);
 		if (m == null) {
 			return;
@@ -99,10 +106,12 @@ class Newgrounds {
 		#else
 		showMedalToast(m);
 		#end
+
+		unlockedMedals[medal] = true;
 	}
 
 	function showMedalToast(m: Data.Medals) {
-
+		var t = new MedalPopup(m, container);
 	}
 
 	#if js

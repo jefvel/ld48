@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.filter.Displacement;
 import hxd.snd.Channel;
 import elke.Game;
 import h2d.Tile;
@@ -102,5 +103,6 @@ class TextPrompt extends Entity2D {
 			curChan = Game.instance.sound.playWobble(hxd.Res.sound.speech.think);
 		}
 	}
+
 	var curChan: Channel;
 }

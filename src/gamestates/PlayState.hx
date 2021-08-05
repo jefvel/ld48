@@ -324,6 +324,19 @@ class PlayState extends elke.gamestate.GameState {
 			comboRoto = (Math.random() - 0.5) * Math.PI * 0.3;
 		}
 
+		var medal: Data.MedalsKind = 
+		switch (f.data.ID) {
+			case Basic: Fish0;
+			case Basic2: Fish1;
+			case Eel: Fish2;
+			case Jelly: Fish3;
+			case Biggo: Fish4;
+			case Snekris: Fish5;
+			case Cthulhu: Boss;
+		}
+
+		Newgrounds.instance.unlockMedal(medal);
+
 		putFishOnPile(f);
 	}
 

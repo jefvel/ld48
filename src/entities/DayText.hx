@@ -31,8 +31,16 @@ class DayText extends Object {
 
         debtText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), this);
         debtText.textAlign = Center;
-        debtText.y = t.textHeight + 16;
-        //debtText.text = 'You are $$${debt} dollars in debt';
+        debtText.y = t.textHeight + 2;
+        debtText.text = 'Calm Waters';
+        debtText.alpha = 0.;
+        debtText.dropShadow= {
+            dx: 1,
+            dy: 1,
+            alpha: 0.2,
+            color: 0x000000,
+        }
+
         alpha = -1;
     }
 
@@ -53,6 +61,9 @@ class DayText extends Object {
             }
             return;
         }
+
+        debtText.alpha += ctx.elapsedTime / 1.;
+        debtText.alpha = Math.min(1, debtText.alpha);
 
         if (elapsed > 1.8) {
             yy -= ctx.elapsedTime * 4;
