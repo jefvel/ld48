@@ -485,6 +485,9 @@ class PlayState extends elke.gamestate.GameState {
 		}
 	}
 
+	var caughtFishCount = 0;
+	var punchedFishCount = 0;
+
 	function startCatch() {
 		currentPhase = Catching;
 		punchTime = maxPunchTime;
@@ -497,6 +500,8 @@ class PlayState extends elke.gamestate.GameState {
 			fightingMusic.stop();
 		}
 
+
+		caughtFishCount = caughtFish.length;
 
 		for (f in caughtFish) {
 			arrows.addArrow(f, f.pattern);
@@ -536,6 +541,12 @@ class PlayState extends elke.gamestate.GameState {
 		for (f in killedFish) {
 			// giveGold(Math.ceil(f.data.SellPrice * goldMultiplier));
 			gameData.ownedFish.push(f.data.ID);
+		}
+
+		punchedFishCount = killedFish.length;
+
+		if (punchedFishCount == 0 && caughtFishCount >= 15) {
+			Newgrounds.instance.unlockMedal(JustPretending);
 		}
 
 		if (maxCombo > gameData.bestMaxCombo) {

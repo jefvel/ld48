@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.TownDog;
 import entities.TextPrompt;
 import h2d.Text;
 import entities.PopText;
@@ -34,6 +35,7 @@ class TownState extends GameState {
     var playerLayer : Object;
 
     var fisher: TownCharacter;
+    var dog:TownDog;
     var fishMonger: Sprite;
     var level: levels.Levels.Levels_Level;
 
@@ -287,6 +289,12 @@ class TownState extends GameState {
             s.animation.play();
             fishMonger = s;
             fishMonger.animation.play("idle");
+        }
+
+        for (m in level.l_Entities.all_Dog) {
+            dog = new TownDog(characters);
+            dog.x = m.pixelX;
+            dog.y = m.pixelY;
         }
 
         fisher = new TownCharacter(playerLayer);

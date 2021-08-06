@@ -349,6 +349,18 @@ class RoundResult extends Entity2D {
 		punchSound();
 
 		canLeave = true;
+
+		if (totalScore >= 20000) {
+			Newgrounds.instance.unlockMedal(Score20K);
+		}
+
+		if (totalScore >= 50000) {
+			Newgrounds.instance.unlockMedal(Score50K);
+		}
+
+		if (totalScore >= 80000) {
+			Newgrounds.instance.unlockMedal(Score80K);
+		}
 	}
 
 	var timePerReveal = 0.85;

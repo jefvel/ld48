@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.filter.Bloom;
 import h2d.Text;
 import h2d.Bitmap;
 import h2d.ScaleGrid;
@@ -9,7 +10,7 @@ class MedalPopup extends Entity2D {
 
 	var medal : Data.Medals;
 	var bg : ScaleGrid;
-	var w = 256;
+	var maxWidth = 256;
 	var icon: Bitmap;
 
 	var px = 8;
@@ -23,7 +24,7 @@ class MedalPopup extends Entity2D {
 
 		bg = new ScaleGrid(hxd.Res.img.medalbg.toTile(), 4, 4, 4, 4, this);
 		bg.height = py * 2 + medal.Icon.size;
-		bg.width = w;
+		bg.width = maxWidth;
 
 		var tile = hxd.Res.img.medals.medals_png.toTile();
 		var w = medal.Icon.size;
@@ -39,28 +40,41 @@ class MedalPopup extends Entity2D {
 		description = new Text(hxd.Res.fonts.picory.toFont(), title);
 		description.y = title.textHeight + 4;
 		description.text = medal.Description;
-		description.maxWidth = w - px * 2 - 4 - medal.Icon.size;
+		description.maxWidth = maxWidth - px * 2 - 4 - medal.Icon.size;
 
 		var b = title.getBounds();
 		title.y = Math.round((bg.height - b.height) * 0.5);
-		alpha = 0;
+		alpha = 0.8;
 
-		hxd.Res.sound.medalunlock.play(false, 0.3);
+		hxd.Res.sound.medalunlock.play(false, 0.5);
+		f = new Bloom(10, 10.0, 5.0);
+		filter = f;
 	}
 
 	var fadingIn = true;
 	var fadingOut = false;
-	var timeLeft = 3.0;
+	var timeLeft = 5.0;
 	var offsetX = -6.;
+	var spacing = 8;
+	var f : h2d.filter.Bloom;
+
 	override function update(dt:Float) {
 		super.update(dt);
+		f.power *= 0.9;
+		f.amount *= 0.88;
+		f.radius *= 0.94;
+
 		var s = getScene();
 		if (s == null) {
 			return;
 		}
 
 		var b = getBounds();
-		y = s.height - b.height - 16;
+		y = s.height - b.height - spacing;
+
+		if (parent != null) {
+			parent.addChild(this);
+		}
 
 		if (fadingOut) {
 			alpha *= 0.9;
@@ -71,7 +85,7 @@ class MedalPopup extends Entity2D {
 		}
 
 		offsetX *= 0.9;
-		x = Math.round(16 + offsetX);
+		x = Math.round(spacing + offsetX);
 		if (fadingIn) {
 			alpha += (1 - alpha) * 0.2;
 			timeLeft -= dt;

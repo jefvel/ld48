@@ -15,11 +15,15 @@ class GameSaveData {
 	public var totalSoldFish = 0;
 	public var totalSoldFishValue = 0;
 
+	public var unlockedMedals = new Map<Data.MedalsKind, Bool>();
+	public var personalHighscore = 0;
+	public var interactedWith : Array<String> = [];
+
 	public var ownedFish : Array<Data.FishKind> = [
-		Basic, Basic, Basic, Basic2, Basic2, Eel,
-		Basic, Basic, Basic, Basic2, Basic2, Eel,
-		Basic, Basic, Basic, Basic2, Basic2, Eel,
-		Basic, Basic, Basic, Basic2, Basic2, Eel,
+		// Basic, Basic, Basic, Basic2, Basic2, Eel,
+		// Basic, Basic, Basic, Basic2, Basic2, Eel,
+		// Basic, Basic, Basic, Basic2, Basic2, Eel,
+		// Basic, Basic, Basic, Basic2, Basic2, Eel,
 	];
 
 	public var unlocked:Map<Data.Items_Type, Int>;

@@ -73,9 +73,8 @@ class Newgrounds {
 		#end
 	}
 
-	var unlockedMedals = new Map<Data.MedalsKind, Bool>();
-
 	public function unlockMedal(medal: Data.MedalsKind) {
+		var unlockedMedals = GameSaveData.getCurrent().unlockedMedals;
 		if (unlockedMedals[medal]) {
 			return;
 		}

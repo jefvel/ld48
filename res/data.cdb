@@ -708,6 +708,78 @@
 						"x": 2,
 						"y": 1
 					}
+				},
+				{
+					"ID": "JustPretending",
+					"Name": "Just pretending",
+					"Description": "Pull up at least 15 fish, but throw them back into the ocean",
+					"NewgroundsID": 64541,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 3,
+						"y": 1
+					}
+				},
+				{
+					"ID": "Score50K",
+					"Name": "50K",
+					"Description": "Get a score of more than 50k",
+					"NewgroundsID": 64542,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 4,
+						"y": 1
+					}
+				},
+				{
+					"ID": "Score20K",
+					"Name": "10K",
+					"Description": "Get a score of more than 20k",
+					"NewgroundsID": 64543,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 0,
+						"y": 2
+					}
+				},
+				{
+					"ID": "Score80K",
+					"Name": "80K",
+					"Description": "Get a score of more than 80k",
+					"NewgroundsID": 64544,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 1,
+						"y": 2
+					}
+				},
+				{
+					"ID": "Townsman",
+					"Name": "Townsman",
+					"Description": "Explore the town",
+					"NewgroundsID": 64545,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 2,
+						"y": 2
+					}
+				},
+				{
+					"ID": "Dog",
+					"Name": "Dog",
+					"Description": "Get a new friend",
+					"NewgroundsID": 64562,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 3,
+						"y": 2
+					}
 				}
 			],
 			"separators": [],
