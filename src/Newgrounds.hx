@@ -30,11 +30,6 @@ class Newgrounds {
 		});
 
 		NG.core.initEncryption(ENCRYPTION_KEY);
-		NG.core.requestMedals(() -> {
-			for(medal in NG.core.medals) {
-				medal.sendDebugUnlock();
-			}
-		});
 
 		refreshNGMedals();
 

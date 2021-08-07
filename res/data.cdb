@@ -103,7 +103,7 @@
 					"Weight": 0.4,
 					"SellPrice": 14,
 					"Amount": 40,
-					"FromDepth": 800,
+					"FromDepth": 1400,
 					"ToDepth": 3500,
 					"OriginX": 31,
 					"OriginY": 18,
