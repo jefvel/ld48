@@ -138,7 +138,7 @@ class RoundResult extends Entity2D {
 
 	var totalScore = 0;
 
-	var scorePerExtraSecond = 900.0;
+	var scorePerExtraSecond = 700.0;
 	var scoreInterpVal = 0.;
 
 	var pointsPerCombo = 500.0;
