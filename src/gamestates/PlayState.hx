@@ -103,6 +103,7 @@ class PlayState extends elke.gamestate.GameState {
 	var strengths = [2, 3.0, 6.0, 12.0, 18.0, 70.0];
 	var lengths = [800, 1200, 2500, 6000, 10000, 13100];
 	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.5];
+	var boostLengths = [300, 500, 1000, 1];
 
 	var goldMultiplier = 1.0;
 	var multipliers = [1.0, 1.2, 1.5, 1.9, 2.3, 3];

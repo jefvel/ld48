@@ -299,7 +299,7 @@ class TownState extends GameState {
 
         fisher = new TownCharacter(playerLayer);
         fisher.setX(934 + 32);
-        fisher.y = 256;
+        fisher.y = 384;
 
         for (s in level.l_Entities.all_Shop_Sign) {
             var spr = hxd.Res.img.shopsignanimated_tilesheet.toSprite2D(entities);

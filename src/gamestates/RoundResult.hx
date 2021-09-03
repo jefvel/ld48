@@ -110,6 +110,7 @@ class TextWithLabel extends Object {
 		return _text.textHeight;
 	}
 }
+
 class RoundResult extends Entity2D {
 	var timeLeft: Float;
 	var roundedTime = 0.;
