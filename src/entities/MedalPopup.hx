@@ -71,6 +71,7 @@ class MedalPopup extends Entity2D {
 
 		var b = getBounds();
 		y = s.height - b.height - spacing;
+		//y = spacing;
 
 		if (parent != null) {
 			parent.addChild(this);
@@ -85,7 +86,7 @@ class MedalPopup extends Entity2D {
 		}
 
 		offsetX *= 0.9;
-		x = Math.round(spacing + offsetX);
+		x = Math.round(s.width - b.width - spacing + offsetX);
 		if (fadingIn) {
 			alpha += (1 - alpha) * 0.2;
 			timeLeft -= dt;
