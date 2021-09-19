@@ -15,8 +15,8 @@ class Timer extends Entity2D {
 
     public function new(?p) {
         super(p);
-        frame = new Bitmap(hxd.Res.img.timerbar.toTile(), this);
         bar = new Bitmap(Tile.fromColor(0xFFFFFF), this);
+        frame = new Bitmap(hxd.Res.img.timerbar.toTile(), this);
         bar.x = bar.y = 2;
         bar.tile.setSize(frame.tile.width - 4, frame.tile.height - 4);
         color = bar.color = new Vector(1.0, 1, 1);

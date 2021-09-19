@@ -82,6 +82,7 @@ class MedalPopup extends Entity2D {
 			if (alpha < 0.05) {
 				remove();
 			}
+
 			return;
 		}
 

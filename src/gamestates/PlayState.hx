@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.WeightBar;
 import graphics.BoatTransition;
 import entities.CatchingQueue;
 import entities.Sunrays;
@@ -166,6 +167,8 @@ class PlayState extends elke.gamestate.GameState {
 	var comboText : Text;
 	var bonusKillsText : Text;
 
+	var weightBar : WeightBar;
+
 	public function new(mode: GameMode) {
 		this.gameMode = mode;
 		noise = new Perlin();
@@ -250,6 +253,10 @@ class PlayState extends elke.gamestate.GameState {
 		boosterThing.onFail = launchHook;
 
 		timer = new Timer(container);
+
+		weightBar = new WeightBar(timer);
+		weightBar.x = - 69;
+		weightBar.total = maxWeight;
 
 		fishList = new CatchingQueue(container);
 
@@ -475,8 +482,6 @@ class PlayState extends elke.gamestate.GameState {
 			waveNoise.stop();
 			waveNoise = null;
 		}
-
-		depthIndicator.full = false;
 
 		fishingMusic = hxd.Res.sound.fishingsong.play(true, 0.5);
 	}
@@ -970,8 +975,12 @@ class PlayState extends elke.gamestate.GameState {
 			hook.sprite.animation.play("idle");
 		}
 
+		weightBar.visible = currentPhase == Sinking;
 		if (currentPhase == Sinking) {
 			boostTime -= dt;
+
+			weightBar.total = maxWeight;
+			weightBar.current = caughtWeight;
 
 			var boosting = false;
 
@@ -1081,8 +1090,6 @@ class PlayState extends elke.gamestate.GameState {
 						}
 					}
 				}
-			} else {
-				depthIndicator.full = true;
 			}
 
 			var mineR2 = 26 * 26;
