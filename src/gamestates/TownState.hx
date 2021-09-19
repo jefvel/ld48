@@ -245,6 +245,13 @@ class TownState extends GameState {
                 busy = false;
             });
         }
+
+        if (currentActivity == "TalkDog") {
+            busy = true;
+            dog.talkTo(() -> {
+                busy = false;
+            });
+        }
     }
 
     var selling = false;

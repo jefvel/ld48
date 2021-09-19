@@ -867,24 +867,24 @@
 						},
 						{
 							"__identifier": "Dog",
-							"__grid": [23,20],
+							"__grid": [22,20],
 							"__pivot": [0,0],
 							"__tile": null,
 							"width": 64,
 							"height": 64,
 							"defUid": 23,
-							"px": [368,320],
+							"px": [352,320],
 							"fieldInstances": []
 						},
 						{
 							"__identifier": "Activity",
-							"__grid": [23,20],
+							"__grid": [22,20],
 							"__pivot": [0,0],
 							"__tile": null,
 							"width": 64,
 							"height": 64,
 							"defUid": 12,
-							"px": [368,320],
+							"px": [352,320],
 							"fieldInstances": [
 								{
 									"__identifier": "Name",
