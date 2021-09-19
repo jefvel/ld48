@@ -13,6 +13,8 @@ class Const {
     public static inline final SEA_WIDTH = 400;
     public static inline final SCREEN_HEIGHT = 310;
 
+    public static inline final UNITS_PER_METER = 8;
+
 	static var keys = [Key.SPACE, Key.A, Key.S, Key.D, Key.W, Key.UP, Key.DOWN, Key.LEFT, Key.RIGHT, Key.E];
     public static function isAnyKeyDown() {
 		for (k in keys) {

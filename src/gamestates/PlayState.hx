@@ -103,7 +103,7 @@ class PlayState extends elke.gamestate.GameState {
 	var strengths = [2, 3.0, 6.0, 12.0, 18.0, 70.0];
 	var lengths = [800, 1200, 2500, 6000, 10000, 13100];
 	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.5];
-	var boostLengths = [300, 500, 1000, 1];
+	var boostLengths = [250, 500, 1000, 4000, 8000];
 
 	var goldMultiplier = 1.0;
 	var multipliers = [1.0, 1.2, 1.5, 1.9, 2.3, 3];
@@ -130,6 +130,8 @@ class PlayState extends elke.gamestate.GameState {
 	var mines : Array<Mine>;
 
 	public var currentDepth = 0.0;
+
+	var depthText: Text;
 
 	public var sinkSpeed = 2.0;
 	public var sinkMultiplier = 1.0;
@@ -269,6 +271,18 @@ class PlayState extends elke.gamestate.GameState {
 			dy: 1,
 			alpha: 0.7,
 			color: 0x111111,
+		}
+
+		depthText = new Text(hxd.Res.fonts.picory.toFont(), container);
+		depthText.textAlign = Right;
+		depthText.y = 12;
+		depthText.x = game.s2d.width - 18;
+
+		depthText.dropShadow = {
+			color: 0xFFFFFF,
+			dx: 1,
+			dy: 1,
+			alpha: 0.3,
 		}
 
 		reset();
@@ -875,6 +889,12 @@ class PlayState extends elke.gamestate.GameState {
 	override function update(dt:Float) {
 		super.update(dt);
 
+		if (currentDepth > 0) {
+			depthText.text = '${Math.round(currentDepth / Const.UNITS_PER_METER)} / ${reelLength / Const.UNITS_PER_METER}m';
+		} else {
+			depthText.text = "";
+		}
+
 		playTime += dt;
 
 		world.x += ((-Const.SEA_WIDTH * 0.5 + game.s2d.width * 0.5) - world.x) * 0.2;
@@ -963,8 +983,10 @@ class PlayState extends elke.gamestate.GameState {
 
 			if (boosting) {
 				hook.sprite.animation.play("boost");
+				depthText.textColor = 0xff96f1;
 			} else {
 				hook.sprite.animation.play("idle");
+				depthText.textColor = 0xFFFFFF;
 			}
 
 			if (!boosting) {

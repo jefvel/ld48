@@ -31,6 +31,8 @@ class BoosterThing extends Entity2D {
     var boostInfo : TextButton;
     var glowFilter : Glow;
 
+    var dots : ProgressDots;
+
     public function new(?p) {
         super(p);
         bg = new Bitmap(hxd.Res.img.boosterbg.toTile());
@@ -74,6 +76,9 @@ class BoosterThing extends Entity2D {
 
         boostInfo.x = -16;
         boostInfo.y = 64 - 16;
+        dots = new ProgressDots(maxBoosts, this);
+        dots.x = -Math.round(dots.width * 0.5);
+        dots.y = -50;
     }
 
     public function reset() {
@@ -107,6 +112,7 @@ class BoosterThing extends Entity2D {
 
             boostSounds[boosts].play(false, 0.4);
             boosts ++;
+            dots.value = boosts;
 
             if (boosts == maxBoosts) {
                 succeeded = true;
