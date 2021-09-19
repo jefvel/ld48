@@ -890,7 +890,7 @@ class PlayState extends elke.gamestate.GameState {
 		super.update(dt);
 
 		if (currentDepth > 0) {
-			depthText.text = '${Math.round(currentDepth / Const.UNITS_PER_METER)} / ${reelLength / Const.UNITS_PER_METER}m';
+			depthText.text = '${Math.round(currentDepth / Const.UNITS_PER_METER)} / ${Math.round(reelLength / Const.UNITS_PER_METER)}m';
 		} else {
 			depthText.text = "";
 		}
