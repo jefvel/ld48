@@ -26,7 +26,11 @@ class GameSaveData {
 		// Basic, Basic, Basic, Basic2, Basic2, Eel,
 	];
 
+	public var donatedFish: Array<Data.FishKind> = [];
+
 	public var unlocked:Map<Data.Items_Type, Int>;
+
+	public var talkedToMuseumLady = 0;
 
 
 	public function new() {

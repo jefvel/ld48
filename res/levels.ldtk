@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 24,
+	"nextUid": 25,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -480,6 +480,31 @@
 			"pivotX": 0,
 			"pivotY": 0,
 			"fieldDefs": []
+		},
+		{
+			"identifier": "MuseumLady",
+			"uid": 24,
+			"tags": [],
+			"width": 64,
+			"height": 64,
+			"resizableX": false,
+			"resizableY": false,
+			"keepAspectRatio": false,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#132BAD",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileId": null,
+			"tileRenderMode": "FitInside",
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
@@ -624,12 +649,12 @@
 							"fieldInstances": [
 								{
 									"__identifier": "Name",
-									"__value": "Go\nfish",
+									"__value": "Go\nFish",
 									"__type": "String",
 									"defUid": 13,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["Go\nfish"]
+										"params": ["Go\nFish"]
 									}]
 								},
 								{
@@ -656,12 +681,12 @@
 							"fieldInstances": [
 								{
 									"__identifier": "Name",
-									"__value": "Trade\nitems",
+									"__value": "Trade\nItems",
 									"__type": "String",
 									"defUid": 13,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["Trade\nitems"]
+										"params": ["Trade\nItems"]
 									}]
 								},
 								{
@@ -688,12 +713,12 @@
 							"fieldInstances": [
 								{
 									"__identifier": "Name",
-									"__value": "Look at\nboat",
+									"__value": "Look at\nBoat",
 									"__type": "String",
 									"defUid": 13,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["Look at\nboat"]
+										"params": ["Look at\nBoat"]
 									}]
 								},
 								{
@@ -720,12 +745,12 @@
 							"fieldInstances": [
 								{
 									"__identifier": "Name",
-									"__value": "Gaze\nat ocean",
+									"__value": "Gaze\nat Ocean",
 									"__type": "String",
 									"defUid": 13,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["Gaze\nat ocean"]
+										"params": ["Gaze\nat Ocean"]
 									}]
 								},
 								{
@@ -904,6 +929,81 @@
 									"realEditorValues": [{
 										"id": "V_String",
 										"params": ["TalkDog"]
+									}]
+								}
+							]
+						},
+						{
+							"__identifier": "MuseumLady",
+							"__grid": [12,20],
+							"__pivot": [0,0],
+							"__tile": null,
+							"width": 64,
+							"height": 64,
+							"defUid": 24,
+							"px": [192,320],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "Activity",
+							"__grid": [12,20],
+							"__pivot": [0,0],
+							"__tile": null,
+							"width": 80,
+							"height": 64,
+							"defUid": 12,
+							"px": [192,320],
+							"fieldInstances": [
+								{
+									"__identifier": "Name",
+									"__value": "Donate\nFish",
+									"__type": "String",
+									"defUid": 13,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["Donate\nFish"]
+									}]
+								},
+								{
+									"__identifier": "ID",
+									"__value": "DonateFish",
+									"__type": "String",
+									"defUid": 14,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["DonateFish"]
+									}]
+								}
+							]
+						},
+						{
+							"__identifier": "Activity",
+							"__grid": [9,20],
+							"__pivot": [0,0],
+							"__tile": null,
+							"width": 48,
+							"height": 64,
+							"defUid": 12,
+							"px": [144,320],
+							"fieldInstances": [
+								{
+									"__identifier": "Name",
+									"__value": "Enter\nMuseum",
+									"__type": "String",
+									"defUid": 13,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["Enter\nMuseum"]
+									}]
+								},
+								{
+									"__identifier": "ID",
+									"__value": "EnterMuseum",
+									"__type": "String",
+									"defUid": 14,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["EnterMuseum"]
 									}]
 								}
 							]

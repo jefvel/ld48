@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.MuseumLady;
 import h2d.RenderContext;
 import h2d.Bitmap;
 import entities.TownDog;
@@ -60,6 +61,7 @@ class TownState extends GameState {
 
     var fisher: TownCharacter;
     var dog:TownDog;
+    var museumLady: MuseumLady;
     var fishMonger: Sprite;
     var level: levels.Levels.Levels_Level;
 
@@ -287,6 +289,13 @@ class TownState extends GameState {
                 busy = false;
             });
         }
+
+        if (currentActivity == "DonateFish") {
+            busy = true;
+            museumLady.talkTo(() -> {
+                busy = false;
+            });
+        }
     }
 
     var selling = false;
@@ -348,6 +357,12 @@ class TownState extends GameState {
             spr.x = s.pixelX;
             spr.y = s.pixelY;
             spr.animation.play();
+        }
+        
+        for (s in level.l_Entities.all_MuseumLady) {
+            museumLady = new MuseumLady(entities);
+            museumLady.x = s.pixelX;
+            museumLady.y = s.pixelY;
         }
     }
 

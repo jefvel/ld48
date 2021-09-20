@@ -85,7 +85,7 @@ class BoosterThing extends Entity2D {
         dots.y = -50;
 
         boostDepthText = new Text(hxd.Res.fonts.picory.toFont(), dots);
-        boostDepthText.x = 43;
+        boostDepthText.x = 44;
         boostDepthText.y = 3;
         boostDepthText.dropShadow = {
             dx: 1,
@@ -94,7 +94,6 @@ class BoosterThing extends Entity2D {
             alpha: 0.5,
         };
 
-        // boostDepthText.text = "100m";
     }
 
     public function reset() {
