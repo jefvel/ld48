@@ -1,12 +1,10 @@
 package gamestates;
 
 import entities.WeightBar;
-import graphics.BoatTransition;
 import entities.CatchingQueue;
 import entities.Sunrays;
 import h2d.filter.Outline;
 import h2d.Particles;
-import h2d.filter.Shader;
 import entities.Mine;
 import hxd.snd.Channel;
 import elke.graphics.Transition;
@@ -17,7 +15,6 @@ import entities.DepthMeter;
 import entities.Timer;
 import entities.BoosterThing;
 import entities.PopText;
-import entities.Shop;
 import entities.ArrowQueue;
 import entities.Rope;
 import hxd.Key;
@@ -99,12 +96,14 @@ class PlayState extends elke.gamestate.GameState {
 	public var maxCatchTime = 10.0;
 	public var catchTime = 10.0;
 
+	var maxBoostDepth = 250.;
+
 	public var reelLength = 450;
 
 	var strengths = [2, 3.0, 6.0, 12.0, 18.0, 70.0];
 	var lengths = [800, 1200, 2500, 6000, 10000, 13100];
 	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.5];
-	var boostLengths = [250, 500, 1000, 4000, 8000];
+	var boostLengths = [250., 600, 1000, 4000, 8000];
 
 	var goldMultiplier = 1.0;
 	var multipliers = [1.0, 1.2, 1.5, 1.9, 2.3, 3];
@@ -139,6 +138,9 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var boostMultiplier = 3.0;
 	public var boostTime = 0.0;
+	public var boostDepth = 0.0;
+	public var boosting = false;
+
 	var initialBoostTime = 0.0;
 
 	public var started = false;
@@ -223,10 +225,10 @@ class PlayState extends elke.gamestate.GameState {
 
 
 		boat = new Bitmap(hxd.Res.img.boat.toTile(), world);
-		boat.tile.dx = -32;
+		boat.tile.dx = -50;
 		boat.tile.dy = -18;
 		boatBg = new Bitmap(hxd.Res.img.boatback.toTile(), backgroundLayer);
-		boatBg.tile.dx = -32;
+		boatBg.tile.dx = -50;
 		boatBg.tile.dy = -18;
 
 		rope = new Rope(world);
@@ -355,6 +357,7 @@ class PlayState extends elke.gamestate.GameState {
 			case Biggo: Fish4;
 			case Snekris: Fish5;
 			case Cthulhu: Boss;
+			case Bone: Fish5;
 		}
 
 		Newgrounds.instance.unlockMedal(medal);
@@ -415,6 +418,7 @@ class PlayState extends elke.gamestate.GameState {
 		goldMultiplier = multipliers[unlocked.get(MoneyMultiplier)];
 		catchRadius = catchRadiuses[unlocked.get(Magnet)];
 		mineProtection = protections[unlocked.get(Protection)];
+		maxBoostDepth = boostLengths[unlocked.get(Speed)];
 
 		if (unlocked.get(Magnet) > 0) {
 			hook.aura.visible = true;
@@ -424,6 +428,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		boosterThing.reset();
 		boosterThing.fadeIn();
+		boosterThing.maxBoostDepth = maxBoostDepth;
 
 		spawnFish();
 
@@ -469,6 +474,10 @@ class PlayState extends elke.gamestate.GameState {
 		fisher.throwLine();
 
 		boostTime = maxBoostTime * (boosterThing.boosts / boosterThing.maxBoosts);
+		boostDepth = maxBoostDepth * (boosterThing.boosts / boosterThing.maxBoosts);
+		boostDepth = Math.min(boostDepth, reelLength - 1.0);
+		boosting = true;
+
 		initialBoostTime = boostTime;
 
 		timeuntilReel = totalTimeUntilReel;
@@ -947,7 +956,7 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		fishList.bag.visible = currentPhase == Catching;
-		fishList.maxWidth = timer.getBounds().width - 8;
+		fishList.maxWidth = 248; //timer.getBounds().width - 8;
 		fishList.x = timer.x + 8;
 		fishList.y = timer.y + 32;
 
@@ -982,12 +991,8 @@ class PlayState extends elke.gamestate.GameState {
 			weightBar.total = maxWeight;
 			weightBar.current = caughtWeight;
 
-			var boosting = false;
-
-			if (boostTime > 0) {
-				boosting = true;
-			} else {
-				boostTime = 0.0;
+			if (currentDepth > boostDepth) {
+				boosting = false;
 			}
 
 			if (boosting) {
@@ -1009,7 +1014,7 @@ class PlayState extends elke.gamestate.GameState {
             		timer.color.set(0.3, 0.6, 0.2);
         		}
 			} else {
-				timer.value = (boostTime / maxBoostTime);
+				timer.value = (currentDepth / boostDepth);
 				
 				timer.color.set(0.39, 0.2, 0.9);
 			}

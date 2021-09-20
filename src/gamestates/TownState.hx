@@ -1,5 +1,7 @@
 package gamestates;
 
+import h2d.RenderContext;
+import h2d.Bitmap;
 import entities.TownDog;
 import entities.TextPrompt;
 import h2d.Text;
@@ -25,6 +27,28 @@ import h2d.Object;
 import entities.TextButton;
 import elke.gamestate.GameState;
 
+class Cloud extends Bitmap {
+    var vx: Float;
+    var d = Math.random() * 0.05 + 0.85;
+	public var centerX = 0.0;
+    var tx = 0.0;
+    public function new(p, wind: Float) {
+        super(hxd.Res.img.cloud1.toTile(), p);
+        vx = Math.random() * wind;
+        tx = Math.random() * 1000;
+        y = Math.random() * 240;
+    }
+
+    public function update(dt) {
+        tx += vx;
+    }
+
+    override  function sync(ctx:RenderContext) {
+        super.sync(ctx);
+        x = Math.round(tx + -centerX * d);
+    }
+}
+
 class TownState extends GameState {
     var container: Object;
     var world: Object;
@@ -40,6 +64,8 @@ class TownState extends GameState {
     var level: levels.Levels.Levels_Level;
 
     var parallax1: Object;
+    var parallax2: Object;
+    var clouds: Array<Cloud>;
 
     var ui : Object;
     var activityButton1: TextButton;
@@ -84,6 +110,15 @@ class TownState extends GameState {
         parallax1 = new Object(world);
 
         parallax1.addChild(sky);
+        
+        parallax2 = new Object(world);
+
+        clouds = [];
+        var wind = (Math.random() - 0.5) * 0.1;
+        for (x in 0...10) {
+            var cloud = new Cloud(parallax2, wind);
+            clouds.push(cloud);
+        }
 
         //var backestground = level.l_Background2.render();
         var background = level.l_Background.render();
@@ -327,7 +362,6 @@ class TownState extends GameState {
 
     override function update(dt:Float) {
         super.update(dt);
-
         coinDisplay.coins = data.gold;
 
         var newScale = world.scaleX - (world.scaleX - worldZoom) * 0.33;
@@ -347,7 +381,13 @@ class TownState extends GameState {
         var newTargetY = (game.s2d.height * 0.5 - (fisher.y - 64) * world.scaleX);
         world.y = (newTargetY);
 
-        parallax1.x = Math.round(-world.x / world.scaleX * 0.9);
+        for (c in clouds) {
+            c.centerX = world.x / world.scaleX;
+            c.update(dt);
+        }
+
+        parallax1.x = Math.round(-world.x / world.scaleX * 0.98);
+        // parallax2.x = Math.round(-world.x / world.scaleX * 0.9);
 
         var setActivity = false;
         for (a in level.l_Entities.all_Activity) {

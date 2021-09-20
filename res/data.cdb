@@ -221,6 +221,27 @@
 						"y": 1
 					},
 					"Score": 8000
+				},
+				{
+					"ID": "Bone",
+					"Name": "Bone for dog",
+					"CatchType": 0,
+					"TimeGain": 0,
+					"Armor": 0,
+					"Weight": 0,
+					"SellPrice": 0,
+					"Score": 0,
+					"Amount": 1,
+					"FromDepth": 8000,
+					"ToDepth": 8000,
+					"OriginX": 0,
+					"OriginY": 0,
+					"Icon": {
+						"file": "img/fishIcons.png",
+						"size": 32,
+						"x": 0,
+						"y": 2
+					}
 				}
 			],
 			"separators": [],

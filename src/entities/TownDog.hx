@@ -1,5 +1,6 @@
 package entities;
 
+import elke.T;
 import h2d.Bitmap;
 import h2d.ScaleGrid;
 import elke.Game;
@@ -26,9 +27,13 @@ class TownDog extends Entity2D {
 
 	var talkingTo = false;
 	var timeout = 0.;
+	var tIn = 0.0;
 
 	override function update(dt:Float) {
 		super.update(dt);
+		tIn -= dt / 0.3;
+		tIn = Math.max(0, tIn);
+		bubble.rotation = T.bounceIn(tIn) * -0.1;
 		if (!talkingTo) {
 			timeout -= dt;
 			if (timeout < 0) {
@@ -41,6 +46,7 @@ class TownDog extends Entity2D {
 		Game.instance.sound.playWobble(hxd.Res.sound.bark);
 		bubble.alpha = 1.0;
 		talkingTo = true;
+		tIn = 1.0;
 		sprite.animation.play("bark", false, false, 0, (s) -> {
 			sprite.animation.play("idle");
 			onFinish();

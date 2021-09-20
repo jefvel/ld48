@@ -55,6 +55,7 @@ class Fish extends Entity2D {
             case Snekris: hxd.Res.img.fish.Snaktris_tilesheet.toSprite2D(this);
             case Biggo: hxd.Res.img.fish4_tilesheet.toSprite2D(this);
             case Cthulhu: hxd.Res.img.crumbo_tilesheet.toSprite2D(this);
+            case Bone: hxd.Res.img.crumbo_tilesheet.toSprite2D(this);
         }
 
         sprite.originX = data.OriginX;
@@ -68,6 +69,7 @@ class Fish extends Entity2D {
             case Biggo: fishPatterns.Biggo;
             case Cthulhu: fishPatterns.Cthulhu;
             case Snekris: fishPatterns.Snekris;
+            case Bone: fishPatterns.Snekris;
         }
 
         x = Math.round(Math.random() * Const.SEA_WIDTH);

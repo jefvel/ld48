@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.Text;
 import h2d.filter.Outline;
 import h2d.filter.Glow;
 import elke.graphics.Sprite;
@@ -32,6 +33,9 @@ class BoosterThing extends Entity2D {
     var glowFilter : Glow;
 
     var dots : ProgressDots;
+
+    public var maxBoostDepth = 0.0;
+    var boostDepthText : Text;
 
     public function new(?p) {
         super(p);
@@ -79,6 +83,18 @@ class BoosterThing extends Entity2D {
         dots = new ProgressDots(maxBoosts, this);
         dots.x = -Math.round(dots.width * 0.5);
         dots.y = -50;
+
+        boostDepthText = new Text(hxd.Res.fonts.picory.toFont(), dots);
+        boostDepthText.x = 43;
+        boostDepthText.y = 3;
+        boostDepthText.dropShadow = {
+            dx: 1,
+            dy: 1,
+            color: 0x000000,
+            alpha: 0.5,
+        };
+
+        // boostDepthText.text = "100m";
     }
 
     public function reset() {
@@ -188,5 +204,7 @@ class BoosterThing extends Entity2D {
 
             inArea = false;
         }
+
+        boostDepthText.text = '${Math.round(boosts / maxBoosts * maxBoostDepth / Const.UNITS_PER_METER)} / ${Math.round(maxBoostDepth / Const.UNITS_PER_METER)}  m';
     }
 }
