@@ -1,5 +1,6 @@
 package gamestates;
 
+import elke.Game;
 import hxd.Key;
 import h2d.filter.Displacement;
 import h2d.filter.Shader;
@@ -351,6 +352,21 @@ class RoundResult extends Entity2D {
 
 		canLeave = true;
 
+		var data = GameSaveData.getCurrent();
+		if (data.personalHighscore < totalScore) {
+			var hiscoreText = new Text(hxd.Res.fonts.picory.toFont(), totalScoreText);
+			hiscoreText.text = 'New personal best (previous best: ${data.personalHighscore})';
+			hiscoreText.y = totalScoreText.textHeight;
+
+			data.personalHighscore = totalScore;
+			totalScoreText.setScale(1.1);
+			Game.instance.sound.playSfx(hxd.Res.sound.hiscore, 0.4);
+		} else {
+			var hiscoreText = new Text(hxd.Res.fonts.picory.toFont(), totalScoreText);
+			hiscoreText.text = 'Personal best: ${data.personalHighscore}';
+			hiscoreText.y = totalScoreText.textHeight;
+		}
+
 		if (totalScore >= 20000) {
 			Newgrounds.instance.unlockMedal(Score20K);
 		}
@@ -377,6 +393,8 @@ class RoundResult extends Entity2D {
 
 	override function update(dt:Float) {
 		super.update(dt);
+
+		totalScoreText.setScale(totalScoreText.scaleX + (1 - totalScoreText.scaleX) * 0.1);
 
 		if (alpha < 1) {
 			alpha += (1. - bg.alpha) * 0.2;
@@ -476,7 +494,7 @@ class RoundResult extends Entity2D {
 		totalBg.y = s.height - totalBg.height;
 
 		totalScoreText.x = 32;
-		totalScoreText.y = s.height - totalScoreText.textHeight * totalScoreText.scaleY - 28;
+		totalScoreText.y = s.height - totalBg.height + Math.round((totalBg.height - totalScoreText.getBounds().height * totalScoreText.scaleY) * 0.5);
 
 		var padding = Math.round((totalBg.height - 32) * 0.5);
 		var tWidth = retryButton.width + returnButton.width + 16;

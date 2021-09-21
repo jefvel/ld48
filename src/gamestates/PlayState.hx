@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.Seaweeds;
 import entities.WeightBar;
 import entities.CatchingQueue;
 import entities.Sunrays;
@@ -62,6 +63,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var rope:Rope;
 
+	var seaweeds: Seaweeds;
+
 	var hook:Hook;
 	var boatBg: Bitmap;
 	public var boat:Bitmap;
@@ -100,10 +103,10 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var reelLength = 450;
 
-	var strengths = [2, 3.0, 6.0, 12.0, 18.0, 70.0];
+	var strengths = [2, 3.0, 6.0, 12.0, 25.0, 70.0];
 	var lengths = [800, 1200, 2500, 6000, 10000, 13100];
-	var speeds = [2.0, 2.5, 3.1, 5.0, 9.0, 15.5];
-	var boostLengths = [250., 600, 1000, 4000, 8000];
+	var speeds = [2.0, 2.2, 2.9, 3.4, 3.8, 4.2];
+	var boostLengths = [250., 600, 1000, 4000, 5500, 7000];
 
 	var goldMultiplier = 1.0;
 	var multipliers = [1.0, 1.2, 1.5, 1.9, 2.3, 3];
@@ -189,10 +192,13 @@ class PlayState extends elke.gamestate.GameState {
 		world = new Object(container);
 		backgroundLayer = new Object(world);
 
+
 		var skyBg = project.all_levels.Sky.l_Background.render();
 		skyBg.y = -256;
 		skyBg.x = -128;
 		// backgroundLayer.addChild(skyBg);
+
+		seaweeds = new Seaweeds(backgroundLayer);
 
 		var particles = new Particles(world);
 		particles.load(haxe.Json.parse(hxd.Res.particles.bubble.entry.getText()), hxd.Res.particles.bubble.entry.path);

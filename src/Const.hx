@@ -12,6 +12,7 @@ class Const {
 	public static inline final TICK_RATE = 60;
     public static inline final SEA_WIDTH = 400;
     public static inline final SCREEN_HEIGHT = 310;
+    public static inline final SCREEN_WIDTH = 1280 >> 1;
 
     public static inline final UNITS_PER_METER = 8;
 

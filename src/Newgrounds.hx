@@ -104,6 +104,13 @@ class Newgrounds {
 		unlockedMedals[medal] = true;
 	}
 
+	function submitHighscore(totalScore: Int) {
+		#if js
+		if (NG.core.loggedIn) {
+		}
+		#end
+	}
+
 	function showMedalToast(m: Data.Medals) {
 		var t = new MedalPopup(m, container);
 	}

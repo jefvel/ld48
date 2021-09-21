@@ -102,6 +102,8 @@ class TownState extends GameState {
         super.onEnter();
         data = GameSaveData.getCurrent();
 
+        data.save();
+
         container = new Object(game.s2d);
         var project = new levels.Levels();
         level = project.all_levels.Level_0;
@@ -251,7 +253,7 @@ class TownState extends GameState {
         if (currentActivity == "TradeItems") {
             busy = true;
             world.filter = new Blur(3);
-            worldZoom = 2.0;
+            worldZoom = 1.0;
             shop.onClose = closeShop;
             shop.show();
         }
@@ -358,7 +360,7 @@ class TownState extends GameState {
             spr.y = s.pixelY;
             spr.animation.play();
         }
-        
+
         for (s in level.l_Entities.all_MuseumLady) {
             museumLady = new MuseumLady(entities);
             museumLady.x = s.pixelX;

@@ -1,3 +1,6 @@
+import hxd.Save;
+import elke.Game;
+
 class GameSaveData {
 	public var currentRound = 1;
 
@@ -43,6 +46,14 @@ class GameSaveData {
 		unlocked.set(Protection, 0);
 	}
 
+	public function save() {
+		Save.save(current, "save", true);
+	}
+
+	public static function load() {
+		current = Save.load(new GameSaveData(), "save", true);
+	}
+
 	public function addGold(amount) {
 		gold += amount;
 		totalGold += amount;
@@ -61,7 +72,7 @@ class GameSaveData {
 
 	public static function getCurrent() {
 		if (current == null) {
-			current = new GameSaveData();
+			load();
 		}
 
 		return current;

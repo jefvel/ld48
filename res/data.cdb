@@ -131,7 +131,7 @@
 					"Weight": 0.7,
 					"SellPrice": 40,
 					"Amount": 35,
-					"FromDepth": 2400,
+					"FromDepth": 2320,
 					"ToDepth": 8000,
 					"OriginX": 29,
 					"OriginY": 14,
@@ -143,7 +143,7 @@
 						"x": 2,
 						"y": 0
 					},
-					"Score": 1500,
+					"Score": 2000,
 					"CanDonate": true
 				},
 				{
@@ -165,7 +165,7 @@
 						"x": 3,
 						"y": 0
 					},
-					"Score": 2000,
+					"Score": 3000,
 					"CanDonate": true
 				},
 				{
@@ -177,7 +177,7 @@
 					"Weight": 2,
 					"SellPrice": 200,
 					"Amount": 20,
-					"FromDepth": 4200,
+					"FromDepth": 5900,
 					"ToDepth": 8000,
 					"OriginX": 29,
 					"OriginY": 8,
@@ -187,7 +187,7 @@
 						"x": 2,
 						"y": 1
 					},
-					"Score": 3000,
+					"Score": 4500,
 					"CanDonate": true
 				},
 				{
@@ -209,7 +209,7 @@
 						"x": 4,
 						"y": 0
 					},
-					"Score": 5000,
+					"Score": 5500,
 					"CanDonate": true
 				},
 				{
@@ -231,7 +231,7 @@
 						"x": 0,
 						"y": 1
 					},
-					"Score": 8000,
+					"Score": 10000,
 					"CanDonate": false
 				},
 				{

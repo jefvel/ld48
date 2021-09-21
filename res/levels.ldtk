@@ -713,12 +713,12 @@
 							"fieldInstances": [
 								{
 									"__identifier": "Name",
-									"__value": "Look at\nBoat",
+									"__value": "Look\nat Boat",
 									"__type": "String",
 									"defUid": 13,
 									"realEditorValues": [{
 										"id": "V_String",
-										"params": ["Look at\nBoat"]
+										"params": ["Look\nat Boat"]
 									}]
 								},
 								{
