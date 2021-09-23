@@ -70,13 +70,14 @@ class Newgrounds {
 
 	public function unlockMedal(medal: Data.MedalsKind) {
 		var unlockedMedals = GameSaveData.getCurrent().unlockedMedals;
-		if (unlockedMedals[medal]) {
-			return;
-		}
-
 		var m = Data.medals.get(medal);
 		if (m == null) {
 			return;
+		}
+
+		var showMedalPopup = true;
+		if (unlockedMedals[medal]) {
+			showMedalPopup = false;
 		}
 
 		#if js
@@ -87,26 +88,33 @@ class Newgrounds {
 					var ngMedal = NG.core.medals.get(m.NewgroundsID);
 					if (ngMedal != null) {
 						if (unlockNgMedal(ngMedal)) {
-							showMedalToast(m);
+							if (showMedalPopup) {
+								showMedalToast(m);
+							}
 						}
 					}
 				});
 			} else {
 				if (unlockNgMedal(ngMedal)) {
-					showMedalToast(m);
+					if (showMedalPopup) {
+						showMedalToast(m);
+					}
 				}
 			}
 		}
 		#else
-		showMedalToast(m);
+		if (showMedalPopup) {
+			showMedalToast(m);
+		}
 		#end
 
 		unlockedMedals[medal] = true;
 	}
 
-	function submitHighscore(totalScore: Int) {
+	public function submitHighscore(scoreboardID: Int, totalScore: Int) {
 		#if js
 		if (NG.core.loggedIn) {
+			NG.core.calls.scoreBoard.postScore(scoreboardID, totalScore);
 		}
 		#end
 	}

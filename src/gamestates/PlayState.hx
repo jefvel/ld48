@@ -1,5 +1,6 @@
 package gamestates;
 
+import elke.graphics.Sprite;
 import entities.Seaweeds;
 import entities.WeightBar;
 import entities.CatchingQueue;
@@ -104,7 +105,7 @@ class PlayState extends elke.gamestate.GameState {
 	public var reelLength = 450;
 
 	var strengths = [2, 3.0, 6.0, 12.0, 25.0, 70.0];
-	var lengths = [800, 1200, 2500, 6000, 10000, 13100];
+	var lengths = [800, 1200, 2500, 6000, 10000, 12800];
 	var speeds = [2.0, 2.2, 2.9, 3.4, 3.8, 4.2];
 	var boostLengths = [250., 600, 1000, 4000, 5500, 7000];
 
@@ -173,6 +174,8 @@ class PlayState extends elke.gamestate.GameState {
 	var bonusKillsText : Text;
 
 	var weightBar : WeightBar;
+
+	var speedLines: Sprite;
 
 	public function new(mode: GameMode) {
 		this.gameMode = mode;
@@ -256,6 +259,11 @@ class PlayState extends elke.gamestate.GameState {
 		fisher.x = Const.SEA_WIDTH >> 1;
 
 		foregroundLayer = new Object(world);
+
+		speedLines = hxd.Res.img.speedlines_tilesheet.toSprite2D(container);
+		speedLines.alpha = 0.5;
+		speedLines.animation.play();
+		speedLines.visible = false;
 
 		boosterThing = new BoosterThing(container);
 		boosterThing.onFail = launchHook;
@@ -453,7 +461,12 @@ class PlayState extends elke.gamestate.GameState {
 	var mineEnd = 12500.0;
 
 	public function spawnFish() {
+		var caughtBone = GameSaveData.getCurrent().caughtBone;
 		for (f in Data.fish.all) {
+			if (f.ID == Bone && caughtBone)  {
+				continue;
+			}
+
 			var amount = Math.round(f.Amount * (0.6 + Math.random() * 0.4));
 			amount = Std.int(Math.max(1, amount));
 
@@ -588,6 +601,7 @@ class PlayState extends elke.gamestate.GameState {
 			gameData.bestMaxCombo = maxCombo;
 		}
 
+		/*
 		if (gameData.currentRound > totalRounds) {
 			if (gameData.gold < currentDebt) {
 				loseGame();
@@ -597,6 +611,7 @@ class PlayState extends elke.gamestate.GameState {
 
 			return;
 		}
+		*/
 
 		arrows.reset();
 
@@ -676,7 +691,9 @@ class PlayState extends elke.gamestate.GameState {
 
 		if (currentPhase == Shopping && !repeat) {
 			//shop.directionPressed(dir);
-			roundResult.directionPressed(dir);
+			if (roundResult != null) {
+				roundResult.directionPressed(dir);
+			}
 		}
 	}
 
@@ -919,7 +936,7 @@ class PlayState extends elke.gamestate.GameState {
 
 		world.x += ((-Const.SEA_WIDTH * 0.5 + game.s2d.width * 0.5) - world.x) * 0.2;
 
-		bg.ratio = (currentDepth / 13000.0);
+		bg.ratio = (currentDepth / 12800.0);
 
 		waves.tile.dx = Math.sin(time * 0.5) * 32;
 		waves.tile.dy = Math.cos(time * 0.6) * 4;
@@ -1000,6 +1017,8 @@ class PlayState extends elke.gamestate.GameState {
 			if (currentDepth > boostDepth) {
 				boosting = false;
 			}
+
+			speedLines.visible = boosting;
 
 			if (boosting) {
 				hook.sprite.animation.play("boost");
@@ -1124,13 +1143,6 @@ class PlayState extends elke.gamestate.GameState {
 							p.x = fish.x;
 							p.y = fish.y;
 						}
-					} else {
-						var g = 50;
-						var p = new PopText('*GUNSHOTS* +${g}', world);
-						giveGold(g);
-						p.text.textColor = 0xf3bd00;
-						p.x = hook.x;
-						p.y = hook.y;
 					}
 				}
 			}

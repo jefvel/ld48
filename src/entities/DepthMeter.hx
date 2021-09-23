@@ -7,7 +7,7 @@ class DepthMeter extends Object {
     var bar: Bitmap;
     var indicator: Bitmap;
 
-    public var maxDepth = 13000.0;
+    public var maxDepth = 12800.0;
     public var depth(default, set) = 0.0;
 
     public function new(?p) {

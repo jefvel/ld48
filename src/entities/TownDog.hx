@@ -11,18 +11,37 @@ import elke.entity.Entity2D;
 class TownDog extends Entity2D {
 	var sprite:Sprite;
 	var bubble : ScaleGrid;
+	var idleAnim = "idle";
+	var hasBone = false;
 	public function new(?p) {
 		super(p);
 		sprite = hxd.Res.img.dog_tilesheet.toSprite2D(this);
-		sprite.animation.play("idle");
+		sprite.animation.play(idleAnim);
+		sprite.originX = 32;
+		sprite.x = 32;
 		bubble = new ScaleGrid(hxd.Res.img.speechbubble.toTile(), 3, 3, 3, 6, this);
-		var boneBm = new Bitmap(hxd.Res.img.bone.toTile(), bubble);
+		var boneBm = hxd.Res.img.bone_tilesheet.toSprite2D(bubble);
+		boneBm.animation.play();
 		boneBm.x = boneBm.y = 3;
-		bubble.width = 3 * 2 + boneBm.tile.width;
-		bubble.height = 3 + boneBm.tile.height + 6;
+		bubble.width = 3 * 2 + 32;
+		bubble.height = 3 + 32 + 6;
 		bubble.x = 32;
 		bubble.y = - 32;
 		bubble.alpha = 0;
+	}
+
+	var jumpTime = 0.;
+
+	public function jumpAround() {
+		jumpTime = 0.9;
+	}
+
+	public var fisherX = 0.;
+
+	public function giveBone() {
+		idleAnim = "idlebone";
+		hasBone = true;
+		sprite.animation.play(idleAnim);
 	}
 
 	var talkingTo = false;
@@ -31,6 +50,14 @@ class TownDog extends Entity2D {
 
 	override function update(dt:Float) {
 		super.update(dt);
+		
+		if (jumpTime > 0) {
+			jumpTime -= dt;
+			sprite.y = Math.sin(jumpTime * 34.4) > 0 ? -4 : 0;
+		} else {
+			sprite.y = 0;
+		}
+
 		tIn -= dt / 0.3;
 		tIn = Math.max(0, tIn);
 		bubble.rotation = T.bounceIn(tIn) * -0.1;
@@ -40,7 +67,35 @@ class TownDog extends Entity2D {
 				bubble.alpha *= 0.92;
 			}
 		}
+
+		if (hasBone) {
+			var dx = fisherX - (x + 32);
+			if (Math.abs(dx) > 64) {
+				var speed = 4.4;
+				if (dx < 0) {
+					vx = -speed;
+					sprite.scaleX = -1;
+				} else {
+					vx = speed;
+					sprite.scaleX = 1;
+				}
+			} else {
+				vx *= 0.92;
+			}
+
+			x += vx;
+
+			if (Math.abs(vx) > 0.3) {
+				sprite.animation.play("run");
+			} else {
+				sprite.animation.play(idleAnim);
+			}
+		}
 	}
+
+	var vx = 0.;
+
+
 
 	public function talkTo(onFinish: Void -> Void) {
 		Game.instance.sound.playWobble(hxd.Res.sound.bark);
@@ -48,7 +103,7 @@ class TownDog extends Entity2D {
 		talkingTo = true;
 		tIn = 1.0;
 		sprite.animation.play("bark", false, false, 0, (s) -> {
-			sprite.animation.play("idle");
+			sprite.animation.play(idleAnim);
 			onFinish();
 			talkingTo = false;
 			timeout = 0.6;

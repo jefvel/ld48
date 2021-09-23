@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.RenderContext;
 import h2d.filter.Bloom;
 import h2d.Text;
 import h2d.Bitmap;
@@ -57,13 +58,8 @@ class MedalPopup extends Entity2D {
 	var offsetX = -6.;
 	var spacing = 8;
 	var f : h2d.filter.Bloom;
-
-	override function update(dt:Float) {
-		super.update(dt);
-		f.power *= 0.9;
-		f.amount *= 0.88;
-		f.radius *= 0.94;
-
+	override function sync(ctx:RenderContext) {
+		super.sync(ctx);
 		var s = getScene();
 		if (s == null) {
 			return;
@@ -71,7 +67,14 @@ class MedalPopup extends Entity2D {
 
 		var b = getBounds();
 		y = s.height - b.height - spacing;
-		//y = spacing;
+		x = Math.round(s.width - b.width - spacing + offsetX);
+	}
+
+	override function update(dt:Float) {
+		super.update(dt);
+		f.power *= 0.9;
+		f.amount *= 0.88;
+		f.radius *= 0.94;
 
 		if (parent != null) {
 			parent.addChild(this);
@@ -87,7 +90,6 @@ class MedalPopup extends Entity2D {
 		}
 
 		offsetX *= 0.9;
-		x = Math.round(s.width - b.width - spacing + offsetX);
 		if (fadingIn) {
 			alpha += (1 - alpha) * 0.2;
 			timeLeft -= dt;

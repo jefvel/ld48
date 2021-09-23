@@ -1,5 +1,8 @@
 package gamestates;
 
+import elke.process.Timeout;
+import entities.ArcingItem;
+import entities.Merchant;
 import entities.MuseumLady;
 import h2d.RenderContext;
 import h2d.Bitmap;
@@ -56,11 +59,13 @@ class TownState extends GameState {
 
     var entities: Object;
     var characters : Object;
+    var backgroundCharacters: Object;
     var aboveNpcsLayer : Object;
     var playerLayer : Object;
 
     var fisher: TownCharacter;
     var dog:TownDog;
+    var merchant: Merchant;
     var museumLady: MuseumLady;
     var fishMonger: Sprite;
     var level: levels.Levels.Levels_Level;
@@ -102,8 +107,6 @@ class TownState extends GameState {
         super.onEnter();
         data = GameSaveData.getCurrent();
 
-        data.save();
-
         container = new Object(game.s2d);
         var project = new levels.Levels();
         level = project.all_levels.Level_0;
@@ -130,11 +133,14 @@ class TownState extends GameState {
         var above = level.l_Above.render();
 
         //world.addChild(backestground);
+        world.addChild(level.l_BackerGround.render());
+        backgroundCharacters = new Object(world);
         world.addChild(background);
 
         entities = new Object(world);
 
         characters = new Object(world);
+
         aboveNpcsLayer = new Object(world);
         aboveNpcsLayer.addChild(level.l_AboveNpcs.render());
 
@@ -175,6 +181,17 @@ class TownState extends GameState {
         lastSoldFishPrice.y = 18;
         lastSoldFishPrice.alpha = 0;
         lastSoldFishPrice.textAlign = Center;
+
+
+        // Dog stuff
+        for (f in data.ownedFish) {
+            if (f == Bone) {
+                data.caughtBone = true;
+                data.ownedFish.remove(f);
+            }
+        }
+
+        data.save();
     }
 
     function initSounds() {
@@ -271,11 +288,11 @@ class TownState extends GameState {
                 busy = false;
             });
         }
-        
-        if (currentActivity == "LookBoat") {
+
+        if (currentActivity == "OrderFood") {
             busy = true;
             var prompts = [
-                "It's a sweet boat, looks like a viking ship",
+                "The chef is too tall to notice you. Ordering food is impossible"
             ];
 
             var text = prompts[Std.int(Math.random() * prompts.length)];
@@ -284,12 +301,53 @@ class TownState extends GameState {
                 busy = false;
             });
         }
+        
+        if (currentActivity == "LookBoat") {
+            busy = true;
+            var prompts = [
+                "A sweet boat, looks like a viking ship",
+            ];
+
+            var text = prompts[Std.int(Math.random() * prompts.length)];
+
+            var p = new TextPrompt(text, container, () -> {
+                merchant.lookedAtBoat(() -> {
+                    busy = false;
+                });
+            });
+        }
 
         if (currentActivity == "TalkDog") {
             busy = true;
-            dog.talkTo(() -> {
-                busy = false;
-            });
+            if (!data.caughtBone) {
+                dog.talkTo(() -> {
+                    busy = false;
+                });
+            }
+
+            if (data.caughtBone && !data.dogHasBone) {
+                var s = new ArcingItem(characters, fisher.x, fisher.y - 74, dog.x + 32, dog.y + 32);
+                game.sound.playSfx(hxd.Res.sound.bonegive);
+
+                s.onFinish = () -> {
+                    busy = false;
+                    data.dogHasBone = true;
+                    dog.giveBone();
+                    s.remove();
+
+                    dog.jumpAround();
+
+                    game.sound.playSfx(hxd.Res.sound.happydog, 0.9);
+
+                    new Timeout(1.3, () -> {
+                        Newgrounds.instance.unlockMedal(Dog);
+                    });
+                }
+
+                var bone = hxd.Res.img.bone_tilesheet.toSprite2D(s);
+                bone.x = -16;
+                bone.y = -16;
+            }
         }
 
         if (currentActivity == "DonateFish") {
@@ -328,11 +386,41 @@ class TownState extends GameState {
     var targetX = -2000.;
 
     function spawnCharacters() {
+        for (m in level.l_Entities.all_Chef) {
+            var c = hxd.Res.img.chef_tilesheet.toSprite2D(backgroundCharacters);
+            c.x = m.pixelX;
+            c.y = m.pixelY;
+            c.animation.play("idle");
+        }
+
+        var chairSitters = [
+            hxd.Res.img.chairsitter1_tilesheet,
+            hxd.Res.img.chairsitter2_tilesheet,
+        ];
+
+        for (c in level.l_Entities.all_ChairRight) {
+
+            if (Math.random() > 0.7) {
+                continue;
+            }
+
+            var char = chairSitters[Std.int(Math.random() * chairSitters.length)];
+            if (char == null) {
+                break;
+            }
+
+            chairSitters.remove(char);
+            var sp = char.toSprite2D(characters);
+            sp.animation.play("idle");
+            sp.x = c.pixelX;
+            sp.y = c.pixelY;
+
+        }
+
         for (m in level.l_Entities.all_Merchant) {
-            var s = hxd.Res.img.merchant_tilesheet.toSprite2D(characters);
-            s.x = m.pixelX;
-            s.y = m.pixelY;
-            s.animation.play();
+            merchant = new Merchant(characters);
+            merchant.x = m.pixelX;
+            merchant.y = m.pixelY;
         }
 
         for (m in level.l_Entities.all_FishMonger) {
@@ -344,14 +432,20 @@ class TownState extends GameState {
             fishMonger.animation.play("idle");
         }
 
+        var fisherX = 934 + 32;
+
         for (m in level.l_Entities.all_Dog) {
             dog = new TownDog(characters);
             dog.x = m.pixelX;
             dog.y = m.pixelY;
+            if (data.dogHasBone) {
+                dog.giveBone();
+                dog.x = fisherX;
+            }
         }
 
         fisher = new TownCharacter(playerLayer);
-        fisher.setX(934 + 32);
+        fisher.setX(fisherX);
         fisher.y = 384;
 
         for (s in level.l_Entities.all_Shop_Sign) {
@@ -403,11 +497,17 @@ class TownState extends GameState {
             c.update(dt);
         }
 
+        dog.fisherX = fisher.x;
+
         parallax1.x = Math.round(-world.x / world.scaleX * 0.98);
         // parallax2.x = Math.round(-world.x / world.scaleX * 0.9);
 
         var setActivity = false;
         for (a in level.l_Entities.all_Activity) {
+            if (a.f_ID == "TalkDog" && data.dogHasBone) {
+                continue;
+            }
+
             if (a.pixelX < fisher.x && a.pixelX + a.width > fisher.x) {
                 setActivity = true;
 

@@ -94,6 +94,10 @@ class FishInventory extends Entity2D {
 		var spacing = 8;
 		var fishPerRow = Math.floor((w - padding - 16) / spacing);
 		for (f in data.ownedFish) {
+			if(!Data.fish.get(f).CanDonate) {
+				continue;
+			}
+
 			var t = tileMap.get(f);
 			fishes.add(fx * spacing, fy * spacing * 2 + 4, t);
 			fx ++;

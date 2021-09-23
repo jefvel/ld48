@@ -124,7 +124,11 @@ class MainMenuState extends GameState {
             launched = true;
             hxd.Res.sound.reelin.play(false, 0.4);
             new BoatTransition(() -> {
-                game.states.setState(new PlayState(Normal));
+                if (GameSaveData.getCurrent().currentRound == 0) {
+                    game.states.setState(new PlayState(Normal));
+                } else {
+                    game.states.setState(new TownState());
+                }
             }, game.s2d);
         }
 

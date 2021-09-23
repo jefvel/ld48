@@ -19,7 +19,7 @@ class Hook extends Entity2D {
 	var sinkSpeed = 2.0;
 	var boostMultiplier = 7.0;
 	var state:PlayState;
-	var moveSpeed = 0.5;
+	var moveSpeed = 1.;
 
     var maxAx = 0.8;
 
@@ -127,8 +127,8 @@ class Hook extends Entity2D {
                 ay = 0.7;
             }
 
-            ax *= 0.9;
-            ay *= 0.9;
+            ax *= 0.4;
+            ay *= 0.4;
 
             ax = Math.min(Math.max(ax, -maxAx), maxAx);
             ay = Math.min(Math.max(ay, -maxAx), maxAx);

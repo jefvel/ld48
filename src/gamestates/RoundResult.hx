@@ -355,16 +355,28 @@ class RoundResult extends Entity2D {
 		var data = GameSaveData.getCurrent();
 		if (data.personalHighscore < totalScore) {
 			var hiscoreText = new Text(hxd.Res.fonts.picory.toFont(), totalScoreText);
-			hiscoreText.text = 'New personal best (previous best: ${data.personalHighscore})';
+			hiscoreText.text = 'New personal best (previous: ${data.personalHighscore})';
 			hiscoreText.y = totalScoreText.textHeight;
 
 			data.personalHighscore = totalScore;
-			totalScoreText.setScale(1.1);
+			totalScoreText.setScale(1.2);
+			hiscoreText.dropShadow = {
+				dx: 1,
+				dy: 1,
+				color: 0x000000,
+				alpha: 0.4,
+			};
 			Game.instance.sound.playSfx(hxd.Res.sound.hiscore, 0.4);
 		} else {
 			var hiscoreText = new Text(hxd.Res.fonts.picory.toFont(), totalScoreText);
 			hiscoreText.text = 'Personal best: ${data.personalHighscore}';
 			hiscoreText.y = totalScoreText.textHeight;
+			hiscoreText.dropShadow = {
+				dx: 1,
+				dy: 1,
+				color: 0x000000,
+				alpha: 0.4,
+			};
 		}
 
 		if (totalScore >= 20000) {
@@ -378,6 +390,12 @@ class RoundResult extends Entity2D {
 		if (totalScore >= 80000) {
 			Newgrounds.instance.unlockMedal(Score80K);
 		}
+
+		if (totalScore >= 100000) {
+			Newgrounds.instance.unlockMedal(Score100K);
+		}
+
+		Newgrounds.instance.submitHighscore(Data.scoreboards.get(HighScore).NewgroundsID, totalScore);
 	}
 
 	var timePerReveal = 0.85;
@@ -494,7 +512,7 @@ class RoundResult extends Entity2D {
 		totalBg.y = s.height - totalBg.height;
 
 		totalScoreText.x = 32;
-		totalScoreText.y = s.height - totalBg.height + Math.round((totalBg.height - totalScoreText.getBounds().height * totalScoreText.scaleY) * 0.5);
+		totalScoreText.y = s.height - totalBg.height + Math.round((totalBg.height - totalScoreText.getBounds().height * totalScoreText.scaleY) * 0.5) + 1;
 
 		var padding = Math.round((totalBg.height - 32) * 0.5);
 		var tWidth = retryButton.width + returnButton.width + 16;

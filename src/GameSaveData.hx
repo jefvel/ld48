@@ -35,6 +35,9 @@ class GameSaveData {
 
 	public var talkedToMuseumLady = 0;
 
+	// Dog stuff
+	public var caughtBone = false;
+	public var dogHasBone = false;
 
 	public function new() {
 		unlocked = new Map<Data.Items_Type, Int>();
@@ -57,6 +60,8 @@ class GameSaveData {
 	public function addGold(amount) {
 		gold += amount;
 		totalGold += amount;
+
+		Newgrounds.instance.submitHighscore(Data.scoreboards.get(MostFishSold).NewgroundsID, totalGold * 100);
 	}
 
 	public function addSoldFish(f: Data.Fish) {

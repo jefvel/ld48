@@ -16,7 +16,7 @@ class SpeechBubble extends Entity2D {
 	public var content: Object;
 	public function new(?p) {
 		super(p);
-		bubble = new ScaleGrid(hxd.Res.img.speechbubble.toTile(), 3, 3, 3, 6, this);
+		bubble = new ScaleGrid(hxd.Res.img.speechbubble.toTile(), 4, 3, 3, 6, this);
 		content = new Object(this);
 		content.x = paddingX;
 	}

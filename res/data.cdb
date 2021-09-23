@@ -85,7 +85,7 @@
 					"Name": "Normal Fish",
 					"Weight": 0.2,
 					"SellPrice": 5,
-					"Amount": 60,
+					"Amount": 55,
 					"FromDepth": 240,
 					"ToDepth": 2000,
 					"Armor": 0,
@@ -151,7 +151,7 @@
 					"Name": "Jellyfish",
 					"Armor": 0,
 					"Weight": 1,
-					"SellPrice": 90,
+					"SellPrice": 70,
 					"Amount": 35,
 					"FromDepth": 4000,
 					"ToDepth": 9000,
@@ -171,11 +171,11 @@
 				{
 					"ID": "Snekris",
 					"Name": "Snekris",
-					"CatchType": 1,
+					"CatchType": 2,
 					"TimeGain": 1.5,
 					"Armor": 0,
 					"Weight": 2,
-					"SellPrice": 200,
+					"SellPrice": 90,
 					"Amount": 20,
 					"FromDepth": 5900,
 					"ToDepth": 8000,
@@ -219,8 +219,8 @@
 					"Weight": 30,
 					"SellPrice": 9000,
 					"Amount": 1,
-					"FromDepth": 13000,
-					"ToDepth": 13000,
+					"FromDepth": 12700,
+					"ToDepth": 12700,
 					"OriginX": 64,
 					"OriginY": 64,
 					"CatchType": 3,
@@ -246,8 +246,8 @@
 					"Amount": 1,
 					"FromDepth": 8000,
 					"ToDepth": 8000,
-					"OriginX": 0,
-					"OriginY": 0,
+					"OriginX": 16,
+					"OriginY": 16,
 					"Icon": {
 						"file": "img/fishIcons.png",
 						"size": 32,
@@ -792,6 +792,18 @@
 					}
 				},
 				{
+					"ID": "Score100K",
+					"Name": "100K",
+					"Description": "Get a score of more than 100k",
+					"NewgroundsID": 65406,
+					"Icon": {
+						"file": "img/medals/medals.png",
+						"size": 50,
+						"x": 0,
+						"y": 3
+					}
+				},
+				{
 					"ID": "Townsman",
 					"Name": "Townsman",
 					"Description": "Explore the town",
@@ -826,6 +838,41 @@
 						"x": 4,
 						"y": 2
 					}
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "scoreboards",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "ID",
+					"kind": null,
+					"scope": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Description",
+					"kind": null
+				},
+				{
+					"typeStr": "3",
+					"name": "NewgroundsID",
+					"kind": null
+				}
+			],
+			"lines": [
+				{
+					"ID": "HighScore",
+					"Description": "Highest Score Starting Lake",
+					"NewgroundsID": 10564
+				},
+				{
+					"ID": "MostFishSold",
+					"Description": "Most Money Earned",
+					"NewgroundsID": 10566
 				}
 			],
 			"separators": [],
