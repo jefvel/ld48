@@ -262,8 +262,8 @@
 			"identifier": "Activity",
 			"uid": 12,
 			"tags": [],
-			"width": 64,
-			"height": 64,
+			"width": 32,
+			"height": 32,
 			"resizableX": true,
 			"resizableY": true,
 			"keepAspectRatio": false,
@@ -719,7 +719,7 @@
 							"__grid": [59,20],
 							"__pivot": [0,0],
 							"__tile": null,
-							"width": 64,
+							"width": 48,
 							"height": 64,
 							"defUid": 12,
 							"px": [944,320],
@@ -980,13 +980,13 @@
 						},
 						{
 							"__identifier": "Activity",
-							"__grid": [22,20],
+							"__grid": [22,22],
 							"__pivot": [0,0],
 							"__tile": null,
 							"width": 80,
-							"height": 64,
+							"height": 32,
 							"defUid": 12,
-							"px": [352,320],
+							"px": [352,352],
 							"fieldInstances": [
 								{
 									"__identifier": "Name",
@@ -1149,6 +1149,38 @@
 							"defUid": 27,
 							"px": [288,160],
 							"fieldInstances": []
+						},
+						{
+							"__identifier": "Activity",
+							"__grid": [22,20],
+							"__pivot": [0,0],
+							"__tile": null,
+							"width": 32,
+							"height": 64,
+							"defUid": 12,
+							"px": [352,320],
+							"fieldInstances": [
+								{
+									"__identifier": "Name",
+									"__value": "Enter\nDoghouse",
+									"__type": "String",
+									"defUid": 13,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["Enter\nDoghouse"]
+									}]
+								},
+								{
+									"__identifier": "ID",
+									"__value": "EnterDoghouse",
+									"__type": "String",
+									"defUid": 14,
+									"realEditorValues": [{
+										"id": "V_String",
+										"params": ["EnterDoghouse"]
+									}]
+								}
+							]
 						}
 					]
 				},

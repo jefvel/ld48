@@ -326,7 +326,7 @@ class TownState extends GameState {
             }
 
             if (data.caughtBone && !data.dogHasBone) {
-                var s = new ArcingItem(characters, fisher.x, fisher.y - 74, dog.x + 32, dog.y + 32);
+                var s = new ArcingItem(characters, fisher.x, fisher.y - 74, dog.x + 46, dog.y + 37);
                 game.sound.playSfx(hxd.Res.sound.bonegive);
 
                 s.onFinish = () -> {
@@ -505,6 +505,10 @@ class TownState extends GameState {
         var setActivity = false;
         for (a in level.l_Entities.all_Activity) {
             if (a.f_ID == "TalkDog" && data.dogHasBone) {
+                continue;
+            }
+
+            if (a.f_ID == "EnterDoghouse" && !data.dogHasBone) {
                 continue;
             }
 
