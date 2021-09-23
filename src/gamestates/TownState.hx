@@ -379,7 +379,7 @@ class TownState extends GameState {
 
                 if (donatedFish != null) {
                     var t = fishInventory.tileMap[donatedFish.ID];
-                    var arc = new ArcingItem(playerLayer, fisher.x, fisher.y - 32, museumLady.x + 72, museumLady.y + 32);
+                    var arc = new ArcingItem(playerLayer, fisher.x, fisher.y - 72, museumLady.x + 32, museumLady.y + 32);
                     var bm = new Bitmap(t, arc);
                     bm.x = bm.y = - 16;
                     arc.onFinish = () -> {
