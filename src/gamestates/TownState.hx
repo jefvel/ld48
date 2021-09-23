@@ -1,5 +1,6 @@
 package gamestates;
 
+import format.hl.Data.HLConstant;
 import elke.process.Timeout;
 import entities.ArcingItem;
 import entities.Merchant;
@@ -352,6 +353,44 @@ class TownState extends GameState {
 
         if (currentActivity == "DonateFish") {
             busy = true;
+            if (data.talkedToMuseumLady > 3) {
+                var donatedFish: Data.Fish = null;
+                for (f in data.ownedFish) {
+                    var d = Data.fish.get(f);
+                    if (!d.CanDonate) {
+                        continue;
+                    }
+
+                    var alreadyDonated = false;
+                    for (f2 in data.donatedFish) {
+                        if (f2 == f) {
+                            alreadyDonated = true;
+                            break;
+                        }
+                    }
+
+                    if (!alreadyDonated) {
+                        data.ownedFish.remove(f);
+                        data.donatedFish.push(f);
+                        donatedFish = d;
+                        break;
+                    }
+                }
+
+                if (donatedFish != null) {
+                    var t = fishInventory.tileMap[donatedFish.ID];
+                    var arc = new ArcingItem(playerLayer, fisher.x, fisher.y - 32, museumLady.x + 72, museumLady.y + 32);
+                    var bm = new Bitmap(t, arc);
+                    bm.x = bm.y = - 16;
+                    arc.onFinish = () -> {
+                        busy = false;
+                        arc.remove();
+                    }
+
+                    return;
+                }
+            }
+
             museumLady.talkTo(() -> {
                 busy = false;
             });

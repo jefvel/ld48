@@ -17,7 +17,7 @@ class FishInventory extends Entity2D {
 	var tile: Tile;
 	public var active = false;
 
-	var tileMap : Map<Data.FishKind, Tile>;
+	public var tileMap : Map<Data.FishKind, Tile>;
 	var title : Text;
 
 	var emptyText: Text;
