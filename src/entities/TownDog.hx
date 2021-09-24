@@ -33,7 +33,7 @@ class TownDog extends Entity2D {
 	var jumpTime = 0.;
 
 	public function jumpAround() {
-		jumpTime = 0.9;
+		jumpTime = 1.2;
 	}
 
 	public var fisherX = 0.;

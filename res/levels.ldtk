@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 28,
+	"nextUid": 29,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -270,7 +270,7 @@
 			"fillOpacity": 1,
 			"lineOpacity": 1,
 			"hollow": false,
-			"color": "#94D9B3",
+			"color": "#B22531",
 			"renderMode": "Rectangle",
 			"showName": true,
 			"tilesetId": null,
@@ -562,7 +562,32 @@
 			"fillOpacity": 1,
 			"lineOpacity": 1,
 			"hollow": false,
-			"color": "#94D9B3",
+			"color": "#F89031",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileId": null,
+			"tileRenderMode": "FitInside",
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": []
+		},
+		{
+			"identifier": "ChairLeft",
+			"uid": 28,
+			"tags": [],
+			"width": 64,
+			"height": 64,
+			"resizableX": false,
+			"resizableY": false,
+			"keepAspectRatio": false,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#EF7D32",
 			"renderMode": "Rectangle",
 			"showName": true,
 			"tilesetId": null,
@@ -1181,6 +1206,28 @@
 									}]
 								}
 							]
+						},
+						{
+							"__identifier": "ChairLeft",
+							"__grid": [32,20],
+							"__pivot": [0,0],
+							"__tile": null,
+							"width": 64,
+							"height": 64,
+							"defUid": 28,
+							"px": [512,320],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "ChairRight",
+							"__grid": [63,20],
+							"__pivot": [0,0],
+							"__tile": null,
+							"width": 64,
+							"height": 64,
+							"defUid": 27,
+							"px": [1008,320],
+							"fieldInstances": []
 						}
 					]
 				},
@@ -2461,6 +2508,8 @@
 						{ "px": [896,352], "src": [336,224], "f": 0, "t": 917, "d": [1816] },
 						{ "px": [912,352], "src": [352,224], "f": 0, "t": 918, "d": [1817] },
 						{ "px": [928,352], "src": [368,224], "f": 0, "t": 919, "d": [1818] },
+						{ "px": [1008,352], "src": [624,256], "f": 0, "t": 1063, "d": [1823] },
+						{ "px": [1024,352], "src": [640,256], "f": 0, "t": 1064, "d": [1824] },
 						{ "px": [80,368], "src": [16,672], "f": 0, "t": 2689, "d": [1845] },
 						{ "px": [96,368], "src": [32,672], "f": 0, "t": 2690, "d": [1846] },
 						{ "px": [112,368], "src": [48,672], "f": 0, "t": 2691, "d": [1847] },
@@ -2523,7 +2572,8 @@
 						{ "px": [928,368], "src": [160,128], "f": 0, "t": 522, "d": [1898] },
 						{ "px": [928,368], "src": [368,240], "f": 0, "t": 983, "d": [1898] },
 						{ "px": [976,368], "src": [160,128], "f": 0, "t": 522, "d": [1901] },
-						{ "px": [1024,368], "src": [160,128], "f": 0, "t": 522, "d": [1904] }
+						{ "px": [1008,368], "src": [624,272], "f": 0, "t": 1127, "d": [1903] },
+						{ "px": [1024,368], "src": [640,272], "f": 0, "t": 1128, "d": [1904] }
 					],
 					"entityInstances": []
 				},

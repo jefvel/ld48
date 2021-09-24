@@ -338,7 +338,7 @@ class TownState extends GameState {
 
                     dog.jumpAround();
 
-                    game.sound.playSfx(hxd.Res.sound.happydog, 0.9);
+                    game.sound.playSfx(hxd.Res.sound.happydog, 0.34);
 
                     new Timeout(1.3, () -> {
                         Newgrounds.instance.unlockMedal(Dog);
@@ -378,13 +378,48 @@ class TownState extends GameState {
                 }
 
                 if (donatedFish != null) {
+                    museumLady.startLooking();
+                    game.sound.playSfx(hxd.Res.sound.donatefish, 0.6);
                     var t = fishInventory.tileMap[donatedFish.ID];
                     var arc = new ArcingItem(playerLayer, fisher.x, fisher.y - 72, museumLady.x + 32, museumLady.y + 32);
                     var bm = new Bitmap(t, arc);
                     bm.x = bm.y = - 16;
                     arc.onFinish = () -> {
-                        busy = false;
                         arc.remove();
+                        museumLady.gotFish(donatedFish, () -> {
+                            busy = false;
+
+                            var hasAllFish = true;
+                            for (ff in Data.fish.all) {
+                                if (!ff.CanDonate) {
+                                    continue;
+                                }
+
+                                var hasFish = false;
+                                for (f in data.donatedFish) {
+                                    if (f == ff.ID) {
+                                        hasFish = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!hasFish) {
+                                    hasAllFish = false;
+                                    break;
+                                }
+                            }
+
+                            if (hasAllFish) {
+                                busy = true;
+                                museumLady.onMuseumFull(() -> {
+                                    busy = false;
+                                });
+
+                                data.hasDonatedAllFish = true;
+
+                                Newgrounds.instance.unlockMedal(Scholar);
+                            }
+                        });
                     }
 
                     return;
@@ -437,6 +472,10 @@ class TownState extends GameState {
             hxd.Res.img.chairsitter2_tilesheet,
         ];
 
+        var chairSittersLeft = [
+            hxd.Res.img.chairsitterleft_tilesheet,
+        ];
+
         for (c in level.l_Entities.all_ChairRight) {
 
             if (Math.random() > 0.7) {
@@ -444,6 +483,25 @@ class TownState extends GameState {
             }
 
             var char = chairSitters[Std.int(Math.random() * chairSitters.length)];
+            if (char == null) {
+                break;
+            }
+
+            chairSitters.remove(char);
+            var sp = char.toSprite2D(characters);
+            sp.animation.play("idle");
+            sp.x = c.pixelX;
+            sp.y = c.pixelY;
+
+        }
+
+        for (c in level.l_Entities.all_ChairLeft) {
+
+            if (Math.random() > 0.7) {
+                continue;
+            }
+
+            var char = chairSittersLeft[Std.int(Math.random() * chairSittersLeft.length)];
             if (char == null) {
                 break;
             }
@@ -473,6 +531,19 @@ class TownState extends GameState {
 
         var fisherX = 934 + 32;
 
+        for (s in level.l_Entities.all_Shop_Sign) {
+            var spr = hxd.Res.img.shopsignanimated_tilesheet.toSprite2D(entities);
+            spr.x = s.pixelX;
+            spr.y = s.pixelY;
+            spr.animation.play();
+        }
+
+        for (s in level.l_Entities.all_MuseumLady) {
+            museumLady = new MuseumLady(characters);
+            museumLady.x = s.pixelX;
+            museumLady.y = s.pixelY;
+        }
+
         for (m in level.l_Entities.all_Dog) {
             dog = new TownDog(characters);
             dog.x = m.pixelX;
@@ -487,18 +558,6 @@ class TownState extends GameState {
         fisher.setX(fisherX);
         fisher.y = 384;
 
-        for (s in level.l_Entities.all_Shop_Sign) {
-            var spr = hxd.Res.img.shopsignanimated_tilesheet.toSprite2D(entities);
-            spr.x = s.pixelX;
-            spr.y = s.pixelY;
-            spr.animation.play();
-        }
-
-        for (s in level.l_Entities.all_MuseumLady) {
-            museumLady = new MuseumLady(entities);
-            museumLady.x = s.pixelX;
-            museumLady.y = s.pixelY;
-        }
     }
 
     override function onRender(e:Engine) {

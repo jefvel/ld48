@@ -38,6 +38,8 @@ class GameSaveData {
 	// Dog stuff
 	public var caughtBone = false;
 	public var dogHasBone = false;
+	
+	public var hasDonatedAllFish = false;
 
 	public function new() {
 		unlocked = new Map<Data.Items_Type, Int>();
@@ -49,12 +51,18 @@ class GameSaveData {
 		unlocked.set(Protection, 0);
 	}
 
+	#if debug
+	static inline final hash = false;
+	#else
+	static inline final hash = true;
+	#end
+
 	public function save() {
-		Save.save(current, "save", true);
+		Save.save(current, "save", hash);
 	}
 
 	public static function load() {
-		current = Save.load(new GameSaveData(), "save", true);
+		current = Save.load(new GameSaveData(), "save", hash);
 	}
 
 	public function addGold(amount) {

@@ -1,0 +1,34 @@
+{ "frames": [
+   {
+    "filename": "chairsitterleft 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 56, "h": 54 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 8, "y": 10, "w": 56, "h": 54 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 5000
+   },
+   {
+    "filename": "chairsitterleft 1.aseprite",
+    "frame": { "x": 57, "y": 0, "w": 49, "h": 54 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 15, "y": 10, "w": 49, "h": 54 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 600
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3-beta6-x64",
+  "image": "chairsitterleft.png",
+  "format": "RGBA8888",
+  "size": { "w": 106, "h": 54 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "idle", "from": 0, "to": 1, "direction": "forward", "color": "#000000ff" }
+  ],
+  "slices": [
+  ]
+ }
+}
