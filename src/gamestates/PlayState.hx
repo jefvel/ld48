@@ -552,12 +552,13 @@ class PlayState extends elke.gamestate.GameState {
 		caughtFishCount = caughtFish.length;
 
 		for (f in caughtFish) {
-			arrows.addArrow(f, f.pattern);
+			arrows.addFish(f);
 		}
 
 		if (!arrows.isFinished()) {
 			fightingMusic = hxd.Res.sound.fightingmusic.play(true, 0.6);
-		}
+			arrows.startGames();
+		} 
 	}
 
 	function stopFightMusic() {
@@ -855,23 +856,9 @@ class PlayState extends elke.gamestate.GameState {
 		f.by = -7.0 - Math.random() * 2;
 		f.bx = (f.pileX - f.x) * 0.1;
 		f.inPile = true;
-
-		/*
-		var t = new PopText('+${calcGold(f.data.SellPrice)}', container);
-		t.text.textColor = 0xFFFFFF;
-		t.filter = new Outline(1);
-
-		var p = f.localToGlobal();
-		t.x = Math.round(p.x + Math.random() * 20 - 10);
-		t.y = Math.round(48 + Math.random() * 5);
-		*/
 	}
 
 	var fishRotOffset = 0.0;
-
-	function calcGold(price:Int) {
-		return Math.ceil(price * goldMultiplier);
-	}
 
 	function fadeOutAllMusic() {
 		if (waveNoise != null) {
@@ -1087,20 +1074,7 @@ class PlayState extends elke.gamestate.GameState {
 						if (boosting) {
 							f.kill();
 
-							/*
-							var g = calcGold(f.data.SellPrice);
-							g = Math.ceil(0.3 * g);
-							giveGold(g);
-							*/
-
 							boostScore += Math.ceil(f.data.Score * 0.6);
-
-							/*
-							var t = new PopText('+${g}', world);
-							t.text.textColor = 0xf3bd00;
-							t.x = hook.x;
-							t.y = hook.y;
-							*/
 
 							allFish.remove(f);
 							f.rotAway();
