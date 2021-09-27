@@ -53,7 +53,7 @@ class MuseumLady extends Entity2D {
 			active = true;
 
 			sprite.animation.play("talk");
-			var text = "My goodness, The museum is filled to the brim! Everyone loves it! Hon, what a great job you have done";
+			var text = "My goodness, The museum is filled to the brim, and everyone loves it! Hon, what a great job you have done";
 
 			bubble.speech(text, [
 				hxd.Res.sound.speech.museumlady.s1,
@@ -69,6 +69,44 @@ class MuseumLady extends Entity2D {
 			], () -> {
 				finishedTalking = true;
 				sprite.animation.play("stand");
+			});
+		});
+	}
+
+	public function collectedDonation() {
+		sprite.animation.play("happy", true, true);
+		new Timeout(0.6, () -> {
+			var b = new SpeechBubble(this);
+			var bubb = b;
+			b.x = 32;
+			b.y = -4;
+
+			sprite.animation.play("talk");
+			var texts = [
+				"Thank you for your help hon!",
+				"The museum really is getting popular!",
+				"Use the money for good hon!",
+			];
+
+			var text = texts[Std.int(Math.random() * texts.length)];
+
+			bubb.speech(text, [
+				hxd.Res.sound.speech.museumlady.s1,
+				hxd.Res.sound.speech.museumlady.s2,
+				hxd.Res.sound.speech.museumlady.s3,
+				hxd.Res.sound.speech.museumlady.s4,
+				hxd.Res.sound.speech.museumlady.s5,
+				hxd.Res.sound.speech.museumlady.s6,
+				hxd.Res.sound.speech.museumlady.s7,
+				hxd.Res.sound.speech.museumlady.s8,
+				hxd.Res.sound.speech.museumlady.s9,
+				hxd.Res.sound.speech.museumlady.s10,
+			], () -> {
+				sprite.animation.play("stand");
+				new Timeout(1.2, () -> {
+					bubb.close();
+					sprite.animation.play("idle");
+				});
 			});
 		});
 	}
@@ -149,6 +187,7 @@ class MuseumLady extends Entity2D {
 			var unfinishedPrompts = [
 				"The museum gladly accepts donations of different species of fish",
 				"We are trying our best to find more objects to place in the museum",
+				"I hope that one day the museum will be full of amazing things!"
 			];
 
 			var finishedPrompts = [

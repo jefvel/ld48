@@ -23,8 +23,8 @@ class Fish extends Entity2D {
     static public var fishPatterns = {
         Basic: [Up, Left, Down, Right],
         Basic2: [Left, Right, Left, Right, Left, Right],
-        Eel: [Up, Down, Up, Down, Up, Down, Left, Right],
-        Jelly: [Left, Left, Right, Right, Up, Up, Down, Down],
+        Eel: [Left, Left, Right, Right, Up, Up, Down, Down],
+        Jelly: [Up, Down, Up, Down, Up, Down, Left, Right],
         Biggo: [Left, Right, Up, Down, Left, Right, Up, Down, Left, Right, Left, Right],
         Cthulhu: [Up, Left, Down, Right, Up, Left, Down, Right, Up, Left, Right, Left, Up, Left, Right, Left, Down, Right, Up, Left],
         Snekris: [Up, Up, Up, Up, Up],
@@ -151,7 +151,7 @@ class Fish extends Entity2D {
                 vRot *= 0.4;
                 if(!splatted) {
                     hxd.Res.sound.splat.play(false, 0.3);
-                    state.boat.rotation = x * 0.006;
+                    state.boat.rotation = x * 0.01;
                     splatted = true;
                 }
             }

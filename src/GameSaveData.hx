@@ -7,6 +7,8 @@ class GameSaveData {
 	public var totalGold = 0;
 	public var gold = 0;
 
+	public var museumGold = 0;
+
 	public var missed = 0;
 	public var caught = 0;
 

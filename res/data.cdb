@@ -20,7 +20,7 @@
 					"kind": null
 				},
 				{
-					"typeStr": "5:Arrows,Avoid,Tetris,Boss",
+					"typeStr": "5:Arrows,Avoid,Tetris,Boss,Timed",
 					"name": "CatchType"
 				},
 				{
@@ -135,7 +135,7 @@
 					"ToDepth": 8000,
 					"OriginX": 29,
 					"OriginY": 14,
-					"CatchType": 0,
+					"CatchType": 4,
 					"TimeGain": 0.5,
 					"Icon": {
 						"file": "img/fishIcons.png",
@@ -214,7 +214,7 @@
 				},
 				{
 					"ID": "Cthulhu",
-					"Name": "He's The Lord",
+					"Name": "Water Monster",
 					"Armor": 0,
 					"Weight": 30,
 					"SellPrice": 9000,
@@ -236,7 +236,7 @@
 				},
 				{
 					"ID": "Bone",
-					"Name": "Bone for dog",
+					"Name": "Bone for Dog",
 					"CatchType": 0,
 					"TimeGain": 0,
 					"Armor": 0,

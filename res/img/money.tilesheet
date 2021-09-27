@@ -1,0 +1,33 @@
+{ "frames": [
+   {
+    "filename": "money 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 31, "h": 31 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 1, "w": 31, "h": 31 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 961
+   },
+   {
+    "filename": "money 1.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 31, "h": 31 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 31, "h": 31 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 961
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3-beta6-x64",
+  "image": "money.png",
+  "format": "RGBA8888",
+  "size": { "w": 31, "h": 31 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "slices": [
+  ]
+ }
+}

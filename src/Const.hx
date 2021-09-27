@@ -8,6 +8,7 @@ class Const {
     // Pixels per unit, in 3d space
     public static inline final PIXEL_SIZE_WORLD = 32;
     public static inline final PPU = 1.0 / PIXEL_SIZE_WORLD;
+    public static inline final MAX_MUSEUM_GOLD = 1500;
 
 	public static inline final TICK_RATE = 60;
     public static inline final SEA_WIDTH = 400;

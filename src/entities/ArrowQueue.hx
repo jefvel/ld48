@@ -93,7 +93,7 @@ class ArrowQueue extends Entity2D {
 	override function update(dt:Float) {
 		super.update(dt);
 
-		x = getScene().width >> 1;
+		x = (getScene().width >> 1) - 16;
         y = 78;
 
 		if (nextGame != null) {
@@ -224,6 +224,7 @@ class ArrowQueue extends Entity2D {
 
 	function getFishGame(f: Fish): CatchingGame {
 		switch (f.data.CatchType) {
+			case Timed: return new TimedGame(f, state, arrowStuff);
 			case Arrows: return new ArrowGame(f, state, arrowStuff);
 			case Tetris: return new TetrisGame(f, state, arrowStuff);
 			default: return new ArrowGame(f, state, arrowStuff);

@@ -1,5 +1,6 @@
 package gamestates;
 
+import format.mp3.Data.MP3;
 import format.hl.Data.HLConstant;
 import elke.process.Timeout;
 import entities.ArcingItem;
@@ -63,6 +64,7 @@ class TownState extends GameState {
     var backgroundCharacters: Object;
     var aboveNpcsLayer : Object;
     var playerLayer : Object;
+    var topLayer : Object;
 
     var fisher: TownCharacter;
     var dog:TownDog;
@@ -150,6 +152,7 @@ class TownState extends GameState {
         world.addChild(foreground);
 
         world.addChild(above);
+        topLayer = new Object(world);
 
         world.x = -2000;
 
@@ -191,6 +194,8 @@ class TownState extends GameState {
                 data.ownedFish.remove(f);
             }
         }
+
+        addMuseumGold();
 
         data.save();
     }
@@ -560,6 +565,38 @@ class TownState extends GameState {
 
     }
 
+    var museumGoldStack : Sprite = null;
+    var collectedMuseumGold = false;
+
+    function addMuseumGold() {
+        var goldIncRatio = 3.;
+
+        for (fId in data.donatedFish) {
+            var f = Data.fish.get(fId);
+            data.museumGold += Math.floor(f.SellPrice * goldIncRatio);
+        }
+
+        data.museumGold = Std.int(Math.min(Const.MAX_MUSEUM_GOLD, data.museumGold));
+        if (data.museumGold > 0) {
+            museumGoldStack = hxd.Res.img.money_tilesheet.toSprite2D(topLayer);
+            museumGoldStack.x = 253;
+            museumGoldStack.y = 350;
+            museumGoldStack.animation.play();
+
+            var t = new Text(hxd.Res.fonts.futilepro_medium_12.toFont(), museumGoldStack);
+            t.textAlign = Center;
+            t.x = 16;
+            t.y = 55;
+            t.text = '${data.museumGold} / ${Const.MAX_MUSEUM_GOLD}$$';
+            t.dropShadow = {
+                dx: 1,
+                dy: 1,
+                color: 0x222,
+                alpha: 0.6,
+            }
+        }
+    }
+
     override function onRender(e:Engine) {
         super.onRender(e);
         var s = game.s2d;
@@ -779,6 +816,32 @@ class TownState extends GameState {
             fishMonger.animation.play("accept", false, true, 0, (s) -> {
                 fishMonger.animation.play("idle");
             });
+        }
+
+        if (museumGoldStack != null) {
+            if (!collectedMuseumGold) {
+                if (Math.abs(museumGoldStack.x + 16 - fisher.x) < 16) {
+                    collectedMuseumGold = true;
+                    game.sound.playWobble(hxd.Res.sound.swoosh);
+                    museumLady.collectedDonation();
+                }
+            } else {
+                var p = coinDisplay.localToGlobal();
+                p.y -= 13;
+                var p1 = museumGoldStack.localToGlobal();
+                var dx = (p.x - p1.x) * 0.2;
+                var dy = (p.y - p1.y) * 0.14;
+
+                museumGoldStack.x += dx;
+                museumGoldStack.y += dy; 
+                if (p.distanceSq(p1) < 1) {
+                    museumGoldStack.remove();
+                    data.addGold(data.museumGold);
+                    data.museumGold = 0;
+                    game.sound.playWobble(hxd.Res.sound.town.coinfinish, 0.3);
+                    museumGoldStack = null;
+                }
+            }
         }
     }
 

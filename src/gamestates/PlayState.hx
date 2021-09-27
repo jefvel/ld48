@@ -157,6 +157,7 @@ class PlayState extends elke.gamestate.GameState {
 
 	public var boosterThing:BoosterThing;
 	public var timer:Timer;
+	public var pauseTimer = false;
 
 	var depthIndicator: DepthMeter;
 
@@ -673,19 +674,6 @@ class PlayState extends elke.gamestate.GameState {
 		if (currentPhase == Catching && !repeat) {
 			if (!arrows.isFinished()) {
 				if (arrows.onDirPress(dir)) {
-					fisher.punch();
-					shake();
-					var splatter = hxd.Res.img.splatters_tilesheet.toSprite2D(world);
-					splatter.x = hook.x + Math.random() * 4 + 5;
-					splatter.y = hook.y + 10 + Math.random() * 4 - 2;
-					splatter.originX = splatter.originY = 32;
-
-					var animations = ["hit1", "hit2", "hit3", "hit4", "hit5",];
-
-					var rr = 0.4;
-					fishRotOffset = -rr - Math.random() * Math.PI * rr * 2;
-
-					splatter.animation.play(animations[Std.int(Math.random() * animations.length)], false, false, 0, (s) -> splatter.remove());
 				}
 			}
 		}
@@ -696,6 +684,22 @@ class PlayState extends elke.gamestate.GameState {
 				roundResult.directionPressed(dir);
 			}
 		}
+	}
+
+	public function doPunch() {
+		fisher.punch();
+		shake();
+		var splatter = hxd.Res.img.splatters_tilesheet.toSprite2D(world);
+		splatter.x = hook.x + Math.random() * 4 + 5;
+		splatter.y = hook.y + 10 + Math.random() * 4 - 2;
+		splatter.originX = splatter.originY = 32;
+
+		var animations = ["hit1", "hit2", "hit3", "hit4", "hit5",];
+
+		var rr = 0.4;
+		fishRotOffset = -rr - Math.random() * Math.PI * rr * 2;
+
+		splatter.animation.play(animations[Std.int(Math.random() * animations.length)], false, false, 0, (s) -> splatter.remove());
 	}
 
 	function splatter() {
@@ -1185,8 +1189,14 @@ class PlayState extends elke.gamestate.GameState {
 		}
 
 		if (currentPhase == Catching) {
-			if (!arrows.isFinished()) {
+			if (!arrows.isFinished() && !pauseTimer) {
 				punchTime -= dt;
+			}
+
+			if (pauseTimer) {
+				timer.color.set(0.5, 0.5, 0.5);
+			} else {
+				timer.color.set(0.79, 0.5, 0.3);
 			}
 
 			if (punchTime <= 0) {
@@ -1199,7 +1209,6 @@ class PlayState extends elke.gamestate.GameState {
 			arrows.bonusKills = Std.int(bonusKills);
 
 			timer.value = (punchTime / maxPunchTime);
-			timer.color.set(0.79, 0.5, 0.3);
 
 			comboBombo *= 0.9;
 

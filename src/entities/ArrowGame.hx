@@ -11,37 +11,6 @@ import gamestates.PlayState.Direction;
 import h2d.Tile;
 import elke.entity.Entity2D;
 
-class Arrow extends Bitmap {
-	static var upTile:Tile;
-	static var downTile:Tile;
-	static var leftTile:Tile;
-	static var rightTile:Tile;
-
-	public var dir:Direction;
-
-	public function new(d:Direction, ?p) {
-		if (upTile == null) {
-			var bm = hxd.Res.img.arrows.toTile();
-			var tw = 32;
-
-			rightTile = bm.sub(0, 0, tw, tw);
-			downTile = bm.sub(tw, 0, tw, tw);
-			leftTile = bm.sub(0, tw, tw, tw);
-			upTile = bm.sub(tw, tw, tw, tw);
-		}
-
-		var t = switch (d) {
-			case Up: upTile;
-			case Left: leftTile;
-			case Right: rightTile;
-			case Down: downTile;
-		}
-
-		super(t, p);
-		dir = d;
-	}
-}
-
 class ArrowGame extends CatchingGame {
 	public var arrows:Array<Arrow>;
 
@@ -91,6 +60,8 @@ class ArrowGame extends CatchingGame {
 	override function onDirectionPress(d:Direction) {
 		if (d == arrows[0].dir) {
 			popArrow();
+
+			playState.doPunch();
 
             var s = punchSounds[Std.int(Math.random() * punchSounds.length)];
 			s.play(false, 0.5);
