@@ -178,9 +178,21 @@ class PlayState extends elke.gamestate.GameState {
 
 	var speedLines: Sprite;
 
+	static var punchSounds: Array<hxd.res.Sound>;
+
 	public function new(mode: GameMode) {
 		this.gameMode = mode;
 		noise = new Perlin();
+		if (punchSounds == null) {
+			punchSounds = [
+				hxd.Res.sound.punch1,
+				hxd.Res.sound.punch2,
+				hxd.Res.sound.punch3,
+				hxd.Res.sound.punch4,
+				hxd.Res.sound.punch5,
+				hxd.Res.sound.punch6,
+			];
+		}
 	}
 
 	override function onEnter() {
@@ -303,11 +315,13 @@ class PlayState extends elke.gamestate.GameState {
 		depthText.x = game.s2d.width - 18;
 
 		depthText.dropShadow = {
-			color: 0xFFFFFF,
+			color: 0x333333,
 			dx: 1,
 			dy: 1,
-			alpha: 0.3,
+			alpha: 0.4,
 		}
+
+		depthText.textColor = 0xFFFFFF;
 
 		reset();
 
@@ -688,6 +702,10 @@ class PlayState extends elke.gamestate.GameState {
 
 	public function doPunch() {
 		fisher.punch();
+
+		var s = punchSounds[Std.int(Math.random() * punchSounds.length)];
+		s.play(false, 0.5);
+
 		shake();
 		var splatter = hxd.Res.img.splatters_tilesheet.toSprite2D(world);
 		splatter.x = hook.x + Math.random() * 4 + 5;
@@ -1013,10 +1031,8 @@ class PlayState extends elke.gamestate.GameState {
 
 			if (boosting) {
 				hook.sprite.animation.play("boost");
-				depthText.textColor = 0xff96f1;
 			} else {
 				hook.sprite.animation.play("idle");
-				depthText.textColor = 0xFFFFFF;
 			}
 
 			if (!boosting) {

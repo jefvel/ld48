@@ -18,22 +18,9 @@ class ArrowGame extends CatchingGame {
 
 	static var arrowW = 32;
 
-	static var punchSounds: Array<hxd.res.Sound>;
-
 	public function new(fish:Fish, state, ?p) {
 		super(fish, state, p);
 		arrows = [];
-
-		if (punchSounds == null) {
-			punchSounds = [
-				hxd.Res.sound.punch1,
-				hxd.Res.sound.punch2,
-				hxd.Res.sound.punch3,
-				hxd.Res.sound.punch4,
-				hxd.Res.sound.punch5,
-				hxd.Res.sound.punch6,
-			];
-		}
 
 		var tx = 0;
 		var dirs = fish.pattern;
@@ -62,9 +49,6 @@ class ArrowGame extends CatchingGame {
 			popArrow();
 
 			playState.doPunch();
-
-            var s = punchSounds[Std.int(Math.random() * punchSounds.length)];
-			s.play(false, 0.5);
 
 			if (arrows.length == 0) {
 				onSuccess();

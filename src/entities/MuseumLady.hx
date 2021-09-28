@@ -44,44 +44,14 @@ class MuseumLady extends Entity2D {
 	public function onMuseumFull(onFinish: Void -> Void) {
 		sprite.animation.play("happy", true, true);
 		new Timeout(0.6, () -> {
-			var b = new SpeechBubble(this);
-			bubble = b;
-			finishedTalking = false;
-			this.onFinishTalk = onFinish;
-			b.x = 32;
-			b.y = -4;
-			active = true;
-
-			sprite.animation.play("talk");
 			var text = "My goodness, The museum is filled to the brim, and everyone loves it! Hon, what a great job you have done";
-
-			bubble.speech(text, [
-				hxd.Res.sound.speech.museumlady.s1,
-				hxd.Res.sound.speech.museumlady.s2,
-				hxd.Res.sound.speech.museumlady.s3,
-				hxd.Res.sound.speech.museumlady.s4,
-				hxd.Res.sound.speech.museumlady.s5,
-				hxd.Res.sound.speech.museumlady.s6,
-				hxd.Res.sound.speech.museumlady.s7,
-				hxd.Res.sound.speech.museumlady.s8,
-				hxd.Res.sound.speech.museumlady.s9,
-				hxd.Res.sound.speech.museumlady.s10,
-			], () -> {
-				finishedTalking = true;
-				sprite.animation.play("stand");
-			});
+			talk(text, onFinish);
 		});
 	}
 
 	public function collectedDonation() {
 		sprite.animation.play("happy", true, true);
 		new Timeout(0.6, () -> {
-			var b = new SpeechBubble(this);
-			var bubb = b;
-			b.x = 32;
-			b.y = -4;
-
-			sprite.animation.play("talk");
 			var texts = [
 				"Thank you for your help hon!",
 				"The museum really is getting popular!",
@@ -89,40 +59,60 @@ class MuseumLady extends Entity2D {
 			];
 
 			var text = texts[Std.int(Math.random() * texts.length)];
-
-			bubb.speech(text, [
-				hxd.Res.sound.speech.museumlady.s1,
-				hxd.Res.sound.speech.museumlady.s2,
-				hxd.Res.sound.speech.museumlady.s3,
-				hxd.Res.sound.speech.museumlady.s4,
-				hxd.Res.sound.speech.museumlady.s5,
-				hxd.Res.sound.speech.museumlady.s6,
-				hxd.Res.sound.speech.museumlady.s7,
-				hxd.Res.sound.speech.museumlady.s8,
-				hxd.Res.sound.speech.museumlady.s9,
-				hxd.Res.sound.speech.museumlady.s10,
-			], () -> {
-				sprite.animation.play("stand");
+			talk(text, () -> {
 				new Timeout(1.2, () -> {
-					bubb.close();
+					bubble.close();
 					sprite.animation.play("idle");
 				});
-			});
+			}, true);
+		});
+	}
+
+	public function talk(text: String, onFinish: Void -> Void = null, automaticClose = false) {
+		if (bubble != null) {
+			bubble.remove();
+			bubble = null;
+		}
+
+		var b = new SpeechBubble(this);
+		bubble = b;
+		b.x = 32;
+		b.y = -4;
+
+		if (!automaticClose) {
+			active = true;
+			finishedTalking = false;
+			onFinishTalk = onFinish;
+		}
+
+		sprite.animation.play("talk");
+
+		bubble.speech(text, [
+			hxd.Res.sound.speech.museumlady.s1,
+			hxd.Res.sound.speech.museumlady.s2,
+			hxd.Res.sound.speech.museumlady.s3,
+			hxd.Res.sound.speech.museumlady.s4,
+			hxd.Res.sound.speech.museumlady.s5,
+			hxd.Res.sound.speech.museumlady.s6,
+			hxd.Res.sound.speech.museumlady.s7,
+			hxd.Res.sound.speech.museumlady.s8,
+			hxd.Res.sound.speech.museumlady.s9,
+			hxd.Res.sound.speech.museumlady.s10,
+		], () -> {
+			sprite.animation.play("stand");
+			if (!automaticClose) {
+				finishedTalking = true;
+			} else {
+				if (onFinish != null) {
+					onFinish();
+				}
+			}
 		});
 	}
 
 	public function gotFish(fish: Data.Fish, onFinish: Void -> Void) {
 		sprite.animation.play("happy");
 		new Timeout(0.6, () -> {
-			var b = new SpeechBubble(this);
-			bubble = b;
-			finishedTalking = false;
-			this.onFinishTalk = onFinish;
-			b.x = 32;
-			b.y = -4;
-			active = true;
-
-			sprite.animation.play("talk");
 			var text = switch (fish.ID) {
 				case Basic: "A small one, and very cute. The kids will really like it!";
 				case Basic2: "What a round little fella! Thank you!";
@@ -135,46 +125,25 @@ class MuseumLady extends Entity2D {
 				default: "Thank you so much! This will be a great addition to the collection!";
 			}
 
-			bubble.speech(text, [
-				hxd.Res.sound.speech.museumlady.s1,
-				hxd.Res.sound.speech.museumlady.s2,
-				hxd.Res.sound.speech.museumlady.s3,
-				hxd.Res.sound.speech.museumlady.s4,
-				hxd.Res.sound.speech.museumlady.s5,
-				hxd.Res.sound.speech.museumlady.s6,
-				hxd.Res.sound.speech.museumlady.s7,
-				hxd.Res.sound.speech.museumlady.s8,
-				hxd.Res.sound.speech.museumlady.s9,
-				hxd.Res.sound.speech.museumlady.s10,
-			], () -> {
-				finishedTalking = true;
-				sprite.animation.play("stand");
-			});
+			talk(text, onFinish);
 		});
 	}
 
 	public function talkTo(onFinish : Void -> Void) {
-		var b = new SpeechBubble(this);
-		bubble = b;
-		finishedTalking = false;
-		this.onFinishTalk = onFinish;
-		b.x = 32;
-		b.y = -4;
-		active = true;
-		/*
-		var t = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), b.content);
-		t.textColor = 0x111111;
-		*/
 		var text = "";
 		var d = GameSaveData.getCurrent();
 		if (d.talkedToMuseumLady == 0) {
 			text = "Good day hon!";
-		} else if (d.talkedToMuseumLady == 1) {
-			text = "The Museum needs more things to look at";
-		} else if (d.talkedToMuseumLady == 2) {
-			text = "If you bring me fish, the townspeople will gladly pay for museum tickets";
-		} else if (d.talkedToMuseumLady == 3) {
-			text = "You will of course get a fair cut!";
+			talk(text, () -> {
+				text = "The Museum needs more things to look at";
+				talk(text, () -> {
+					text = "If you bring me fish, the townspeople will gladly pay for museum tickets";
+					talk(text, () -> {
+						text = "You will of course get a fair cut!";
+						talk(text, onFinish);
+					});
+				});
+			});
 		} else {
 			var prompts = [
 				"Have a blessed day!",
@@ -185,7 +154,7 @@ class MuseumLady extends Entity2D {
 			];
 
 			var unfinishedPrompts = [
-				"The museum gladly accepts donations of different species of fish",
+				"The museum gladly accepts donations of different fish species",
 				"We are trying our best to find more objects to place in the museum",
 				"I hope that one day the museum will be full of amazing things!"
 			];
@@ -203,26 +172,9 @@ class MuseumLady extends Entity2D {
 			}
 
 			text = prompts[Std.int(Math.random() * prompts.length)];
+			talk(text, onFinish);
 		}
 
-		sprite.animation.play("talk");
-
 		d.talkedToMuseumLady ++; 
-		bubble.speech(text, [
-			hxd.Res.sound.speech.museumlady.s1,
-			hxd.Res.sound.speech.museumlady.s2,
-			hxd.Res.sound.speech.museumlady.s3,
-			hxd.Res.sound.speech.museumlady.s4,
-			hxd.Res.sound.speech.museumlady.s5,
-			hxd.Res.sound.speech.museumlady.s6,
-			hxd.Res.sound.speech.museumlady.s7,
-			hxd.Res.sound.speech.museumlady.s8,
-			hxd.Res.sound.speech.museumlady.s9,
-			hxd.Res.sound.speech.museumlady.s10,
-		], () -> {
-			finishedTalking = true;
-			sprite.animation.play("stand");
-		});
-
 	}
 }

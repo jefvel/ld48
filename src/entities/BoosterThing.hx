@@ -101,6 +101,7 @@ class BoosterThing extends Entity2D {
         activated = false;
         failed = false;
         succeeded = false;
+        dots.value = 0;
         v = 0.1;
     }
 

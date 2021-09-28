@@ -195,9 +195,9 @@ class TownState extends GameState {
             }
         }
 
-        addMuseumGold();
-
         data.save();
+
+        addMuseumGold();
     }
 
     function initSounds() {
@@ -358,7 +358,7 @@ class TownState extends GameState {
 
         if (currentActivity == "DonateFish") {
             busy = true;
-            if (data.talkedToMuseumLady > 3) {
+            if (data.talkedToMuseumLady > 0) {
                 var donatedFish: Data.Fish = null;
                 for (f in data.ownedFish) {
                     var d = Data.fish.get(f);
@@ -748,7 +748,7 @@ class TownState extends GameState {
         var ty = fishMonger.y + 90;
         for (f in soldFishList) {
             var dx = (tx - f.x) * 0.28;
-            var dy = (ty - f.y) * 0.15;
+            var dy = (ty - f.y) * 0.21;
             f.x += dx;
             f.y += dy;
             f.rotation = -dx * 0.04;
@@ -829,12 +829,12 @@ class TownState extends GameState {
                 var p = coinDisplay.localToGlobal();
                 p.y -= 13;
                 var p1 = museumGoldStack.localToGlobal();
-                var dx = (p.x - p1.x) * 0.2;
-                var dy = (p.y - p1.y) * 0.14;
+                var dx = (p.x - p1.x) * 0.43;
+                var dy = (p.y - p1.y) * 0.36;
 
                 museumGoldStack.x += dx;
                 museumGoldStack.y += dy; 
-                if (p.distanceSq(p1) < 1) {
+                if (p.distanceSq(p1) < 4) {
                     museumGoldStack.remove();
                     data.addGold(data.museumGold);
                     data.museumGold = 0;

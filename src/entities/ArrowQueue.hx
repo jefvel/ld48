@@ -140,6 +140,10 @@ class ArrowQueue extends Entity2D {
 
 	function gameFailed() {
 		var currentFish = fishList[0];
+		if (currentFish == null) {
+			return;
+		}
+
 		onMiss(currentFish);
 		fishList.remove(currentFish);
 
