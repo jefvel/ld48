@@ -24,6 +24,7 @@ class TimedGame extends CatchingGame {
 		arrow.visible = false;
 
 		waitIcon = hxd.Res.img.wait_tilesheet.toSprite2D(this);
+		waitIcon.animation.stop();
 	}
 
 	override function update(dt:Float) {
@@ -64,6 +65,7 @@ class TimedGame extends CatchingGame {
 
 	override function onActivate() {
 		super.onActivate();
+		waitIcon.animation.play();
 		playState.pauseTimer = true;
 	}
 

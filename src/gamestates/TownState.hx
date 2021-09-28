@@ -102,6 +102,8 @@ class TownState extends GameState {
 	var returnMoneyToBag = false;
     var finishedSelling = false;
 
+    var donationNotification:Sprite;
+
     public function new() {
         name = "town";
     }
@@ -158,6 +160,11 @@ class TownState extends GameState {
 
         spawnCharacters();
 
+        donationNotification = hxd.Res.img.fishalert_tilesheet.toSprite2D(characters);
+        donationNotification.animation.play();
+        donationNotification.x = museumLady.x + 16;
+        donationNotification.y = museumLady.y - 40;
+
         ui = new Object(container);
 
         activityButton1 = new TextButton(hxd.Res.img.endroundarrows.toTile().sub(32, 32, 32, 32), "Go\nfish", null, onActivityEnd, ui);
@@ -198,6 +205,7 @@ class TownState extends GameState {
         data.save();
 
         addMuseumGold();
+        refreshDonationNotification();
     }
 
     function initSounds() {
@@ -359,30 +367,14 @@ class TownState extends GameState {
         if (currentActivity == "DonateFish") {
             busy = true;
             if (data.talkedToMuseumLady > 0) {
-                var donatedFish: Data.Fish = null;
-                for (f in data.ownedFish) {
-                    var d = Data.fish.get(f);
-                    if (!d.CanDonate) {
-                        continue;
-                    }
-
-                    var alreadyDonated = false;
-                    for (f2 in data.donatedFish) {
-                        if (f2 == f) {
-                            alreadyDonated = true;
-                            break;
-                        }
-                    }
-
-                    if (!alreadyDonated) {
-                        data.ownedFish.remove(f);
-                        data.donatedFish.push(f);
-                        donatedFish = d;
-                        break;
-                    }
-                }
+                var donatedFish = getAvailableDonation();
 
                 if (donatedFish != null) {
+                    data.ownedFish.remove(donatedFish.ID);
+                    data.donatedFish.push(donatedFish.ID);
+
+                    refreshDonationNotification();
+
                     museumLady.startLooking();
                     game.sound.playSfx(hxd.Res.sound.donatefish, 0.6);
                     var t = fishInventory.tileMap[donatedFish.ID];
@@ -435,6 +427,36 @@ class TownState extends GameState {
                 busy = false;
             });
         }
+    }
+
+    function refreshDonationNotification() {
+        var notificationVisible = getAvailableDonation() != null;
+        donationNotification.visible = notificationVisible;
+    }
+
+    function getAvailableDonation() {
+        var donatedFish: Data.Fish = null;
+        for (f in data.ownedFish) {
+            var d = Data.fish.get(f);
+            if (!d.CanDonate) {
+                continue;
+            }
+
+            var alreadyDonated = false;
+            for (f2 in data.donatedFish) {
+                if (f2 == f) {
+                    alreadyDonated = true;
+                    break;
+                }
+            }
+
+            if (!alreadyDonated) {
+                donatedFish = d;
+                break;
+            }
+        }
+
+        return donatedFish;
     }
 
     var selling = false;

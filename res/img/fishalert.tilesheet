@@ -1,0 +1,51 @@
+{ "frames": [
+   {
+    "filename": "fishalert 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 10, "h": 28 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 11, "y": 2, "w": 10, "h": 28 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 400
+   },
+   {
+    "filename": "fishalert 1.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 10, "h": 28 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 11, "y": 3, "w": 10, "h": 28 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 400
+   },
+   {
+    "filename": "fishalert 2.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 10, "h": 28 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 11, "y": 2, "w": 10, "h": 28 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 400
+   },
+   {
+    "filename": "fishalert 3.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 10, "h": 28 },
+    "rotated": false,
+    "trimmed": true,
+    "spriteSourceSize": { "x": 11, "y": 1, "w": 10, "h": 28 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 400
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3-beta6-x64",
+  "image": "fishalert.png",
+  "format": "RGBA8888",
+  "size": { "w": 10, "h": 28 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "slices": [
+  ]
+ }
+}
