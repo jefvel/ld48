@@ -700,6 +700,14 @@ class PlayState extends elke.gamestate.GameState {
 		}
 	}
 
+	public function waitPunch() {
+		fisher.waitPunch();
+	}
+
+	public function resetPunch() {
+		fisher.resetPunch();
+	}
+
 	public function doPunch() {
 		fisher.punch();
 

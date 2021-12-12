@@ -30,6 +30,7 @@ class Shop extends Entity2D {
 
     public function new(data: GameSaveData, ?p) {
         super(p);
+
         data = GameSaveData.getCurrent();
         bg = new Bitmap(Tile.fromColor(0xf3e181, 1,1, 0.2), this);
         container = new Object(this);

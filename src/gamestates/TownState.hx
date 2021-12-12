@@ -1,5 +1,6 @@
 package gamestates;
 
+import h2d.filter.Outline;
 import format.mp3.Data.MP3;
 import format.hl.Data.HLConstant;
 import elke.process.Timeout;
@@ -180,12 +181,15 @@ class TownState extends GameState {
         fishInventory = new FishInventory(data, container);
 
         moneyGottenText = new Text(hxd.Res.fonts.equipmentpro_medium_12.toFont(), container);
+        /*
         moneyGottenText.dropShadow = {
             dx: 1,
             dy: 1,
             color: 0x111111,
             alpha: 0.4,
         }
+        */
+        moneyGottenText.filter = new Outline(1, 0x111111);
         moneyGottenText.textAlign = Center;
 
         lastSoldFishPrice = new Text(hxd.Res.fonts.picory.toFont(), moneyGottenText);

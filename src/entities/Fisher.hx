@@ -90,9 +90,17 @@ class Fisher extends Entity2D {
         head.visible = sprite.animation.currentFrame == 0;
     }
 
+    public function waitPunch() {
+        // sprite.animation.play("waitpunch", true);
+    }
+
+    public function resetPunch() {
+        sprite.animation.play("idle");
+    }
+
     public function punch() {
         sprite.animation.play("punch", false, true, 0, (s) -> {
-            sprite.animation.play("idle");
+            resetPunch();
         });
     }
 }

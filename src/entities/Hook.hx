@@ -171,7 +171,7 @@ class Hook extends Entity2D {
                 var dx = x + centerX - f.x;
                 var dy = y + centerY - f.y;
 
-                if (Math.abs(dx) > 0.001 || Math.abs(dy) > 0.001) {
+                if (Math.abs(dx) > 0.423 || Math.abs(dy) > 0.423) {
 				    f.rot = Math.atan2(dy, dx);
                     f.rotation = f.rot;
                 }

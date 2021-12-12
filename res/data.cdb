@@ -20,7 +20,7 @@
 					"kind": null
 				},
 				{
-					"typeStr": "5:Arrows,Avoid,Tetris,Boss,Timed",
+					"typeStr": "5:Arrows,Avoid,Tetris,Boss,Timed,Balance",
 					"name": "CatchType"
 				},
 				{
@@ -171,7 +171,7 @@
 				{
 					"ID": "Snekris",
 					"Name": "Snekris",
-					"CatchType": 2,
+					"CatchType": 5,
 					"TimeGain": 1.5,
 					"Armor": 0,
 					"Weight": 2,
@@ -294,8 +294,18 @@
 					"name": "Type"
 				},
 				{
+					"typeStr": "6:itemCategories",
+					"name": "ItemType",
+					"kind": null
+				},
+				{
 					"typeStr": "3",
 					"name": "UpgradeIndex",
+					"kind": null
+				},
+				{
+					"typeStr": "2",
+					"name": "Disabled",
 					"kind": null
 				}
 			],
@@ -312,7 +322,9 @@
 						"y": 0
 					},
 					"Type": 0,
-					"UpgradeIndex": 1
+					"UpgradeIndex": 1,
+					"Disabled": false,
+					"ItemType": "Line"
 				},
 				{
 					"ID": "Reel2",
@@ -326,7 +338,9 @@
 						"y": 0
 					},
 					"Type": 0,
-					"UpgradeIndex": 2
+					"UpgradeIndex": 2,
+					"Disabled": false,
+					"ItemType": "Line"
 				},
 				{
 					"ID": "Reel3",
@@ -340,7 +354,9 @@
 						"y": 0
 					},
 					"Type": 0,
-					"UpgradeIndex": 3
+					"UpgradeIndex": 3,
+					"Disabled": false,
+					"ItemType": "Line"
 				},
 				{
 					"ID": "Reel4",
@@ -354,7 +370,9 @@
 						"y": 0
 					},
 					"Type": 0,
-					"UpgradeIndex": 4
+					"UpgradeIndex": 4,
+					"Disabled": false,
+					"ItemType": "Line"
 				},
 				{
 					"ID": "Reel5",
@@ -368,7 +386,9 @@
 						"y": 0
 					},
 					"Type": 0,
-					"UpgradeIndex": 5
+					"UpgradeIndex": 5,
+					"Disabled": false,
+					"ItemType": "Line"
 				},
 				{
 					"ID": "Pole1",
@@ -382,7 +402,9 @@
 						"size": 32,
 						"x": 0,
 						"y": 1
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Pole"
 				},
 				{
 					"ID": "Pole2",
@@ -396,7 +418,9 @@
 						"size": 32,
 						"x": 1,
 						"y": 1
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Pole"
 				},
 				{
 					"ID": "Pole3",
@@ -410,7 +434,9 @@
 						"size": 32,
 						"x": 2,
 						"y": 1
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Pole"
 				},
 				{
 					"ID": "Pole4",
@@ -424,7 +450,9 @@
 						"size": 32,
 						"x": 3,
 						"y": 1
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Pole"
 				},
 				{
 					"ID": "Pole5",
@@ -438,7 +466,9 @@
 						"size": 32,
 						"x": 4,
 						"y": 1
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Pole"
 				},
 				{
 					"ID": "Weight1",
@@ -452,7 +482,9 @@
 						"size": 32,
 						"x": 0,
 						"y": 2
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Weight"
 				},
 				{
 					"ID": "Weight2",
@@ -466,7 +498,9 @@
 						"size": 32,
 						"x": 1,
 						"y": 2
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Weight"
 				},
 				{
 					"ID": "Weight3",
@@ -480,7 +514,9 @@
 						"size": 32,
 						"x": 2,
 						"y": 2
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Weight"
 				},
 				{
 					"ID": "Weight4",
@@ -494,7 +530,9 @@
 						"size": 32,
 						"x": 3,
 						"y": 2
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Weight"
 				},
 				{
 					"ID": "Weight5",
@@ -508,7 +546,9 @@
 						"size": 32,
 						"x": 4,
 						"y": 2
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Weight"
 				},
 				{
 					"ID": "Hook1",
@@ -522,7 +562,9 @@
 						"size": 32,
 						"x": 0,
 						"y": 3
-					}
+					},
+					"Disabled": true,
+					"ItemType": "Hook"
 				},
 				{
 					"ID": "Hook2",
@@ -536,7 +578,9 @@
 						"size": 32,
 						"x": 1,
 						"y": 3
-					}
+					},
+					"Disabled": true,
+					"ItemType": "Hook"
 				},
 				{
 					"ID": "Hook3",
@@ -550,7 +594,9 @@
 						"size": 32,
 						"x": 2,
 						"y": 3
-					}
+					},
+					"Disabled": true,
+					"ItemType": "Hook"
 				},
 				{
 					"ID": "Hook4",
@@ -564,7 +610,9 @@
 						"size": 32,
 						"x": 3,
 						"y": 3
-					}
+					},
+					"Disabled": true,
+					"ItemType": "Hook"
 				},
 				{
 					"ID": "Hook5",
@@ -578,7 +626,9 @@
 						"size": 32,
 						"x": 4,
 						"y": 3
-					}
+					},
+					"Disabled": true,
+					"ItemType": "Hook"
 				},
 				{
 					"ID": "Magnet1",
@@ -592,7 +642,9 @@
 						"size": 32,
 						"x": 0,
 						"y": 4
-					}
+					},
+					"Disabled": true,
+					"ItemType": "Magnet"
 				},
 				{
 					"ID": "HookGun",
@@ -606,7 +658,9 @@
 						"size": 32,
 						"x": 0,
 						"y": 5
-					}
+					},
+					"Disabled": false,
+					"ItemType": "Gun"
 				}
 			],
 			"props": {},
@@ -616,6 +670,61 @@
 				"Hook1",
 				"Magnet1"
 			]
+		},
+		{
+			"name": "itemCategories",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "ID",
+					"kind": null,
+					"scope": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Name",
+					"kind": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Description",
+					"kind": null
+				}
+			],
+			"lines": [
+				{
+					"ID": "Line",
+					"Name": "Fishing Line",
+					"Description": "The longer the line, the further down you can go"
+				},
+				{
+					"ID": "Pole",
+					"Name": "Pole",
+					"Description": "Determines how much total weight you can pull in"
+				},
+				{
+					"ID": "Weight",
+					"Name": "Weight",
+					"Description": "Makes the hook sink faster"
+				},
+				{
+					"ID": "Hook",
+					"Name": "Hook",
+					"Description": "Hook"
+				},
+				{
+					"ID": "Magnet",
+					"Name": "Fish Magnet",
+					"Description": "Increases catch radius"
+				},
+				{
+					"ID": "Gun",
+					"Name": "Fishing Gun",
+					"Description": "Shoots nearby fish and objects"
+				}
+			],
+			"separators": [],
+			"props": {}
 		},
 		{
 			"name": "medals",

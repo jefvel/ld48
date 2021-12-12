@@ -4,7 +4,7 @@ import elke.Game;
 import elke.graphics.Sprite;
 import gamestates.PlayState.Direction;
 
-class TimedGame extends CatchingGame {
+class BalanceGame extends CatchingGame {
 	var directions: Array<Direction> = [Up, Down, Left, Right];
 	var direction : Direction;
 	var arrow: Arrow;

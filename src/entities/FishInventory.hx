@@ -1,5 +1,6 @@
 package entities;
 
+import h2d.filter.Outline;
 import h2d.Text;
 import h2d.Tile;
 import h2d.TileGroup;
@@ -50,6 +51,7 @@ class FishInventory extends Entity2D {
 		title.y = -14;
 		title.x = 2;
 		title.text = "Your Fish Inventory";
+		title.filter = new Outline(1, 0x111111);
 
 		emptyText = new Text(title.font, this);
 		emptyText.text = "-- Empty --";

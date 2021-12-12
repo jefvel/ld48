@@ -117,7 +117,7 @@ class MuseumLady extends Entity2D {
 				case Basic: "A small one, and very cute. The kids will really like it!";
 				case Basic2: "What a round little fella! Thank you!";
 				case Eel: "An eel! This one has to be handled with care!";
-				case Jelly: "Slimy! My mom used to make jelly jelly out of these back when I was young";
+				case Jelly: "Slimy! My mom used to make jelly jelly out of these when I was a kid";
 				case Snekris: "What a long one! It looks just like Robert! He will surely enjoy looking at it";
 				case Biggo: "Oh my lord, this is a huge fish! What a frightening creature";
 				case Cthulhu: ".... If this is what I think it is... then the whole town has your gratitude.";

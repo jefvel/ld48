@@ -86,6 +86,10 @@ class ItemList extends Entity2D {
 
         var unlocked = data.unlocked;
         for (i in Data.items.all) {
+            if (i.Disabled) {
+                continue;
+            }
+
             var upgradeIndex = 0;
             if (unlocked.exists(i.Type)) {
                 upgradeIndex = unlocked.get(i.Type);
