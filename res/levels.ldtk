@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.9.3",
-	"nextUid": 29,
+	"nextUid": 30,
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -588,6 +588,31 @@
 			"lineOpacity": 1,
 			"hollow": false,
 			"color": "#EF7D32",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileId": null,
+			"tileRenderMode": "FitInside",
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": []
+		},
+		{
+			"identifier": "Water",
+			"uid": 29,
+			"tags": [],
+			"width": 16,
+			"height": 16,
+			"resizableX": true,
+			"resizableY": true,
+			"keepAspectRatio": false,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#2F6DF1",
 			"renderMode": "Rectangle",
 			"showName": true,
 			"tilesetId": null,
@@ -1227,6 +1252,17 @@
 							"height": 64,
 							"defUid": 27,
 							"px": [1008,320],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "Water",
+							"__grid": [53,26],
+							"__pivot": [0,0],
+							"__tile": null,
+							"width": 432,
+							"height": 112,
+							"defUid": 29,
+							"px": [848,416],
 							"fieldInstances": []
 						}
 					]

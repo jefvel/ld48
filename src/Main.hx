@@ -20,7 +20,7 @@ class Main {
 			onInit: () -> {},
 			tickRate: Const.TICK_RATE,
 			pixelSize: Const.PIXEL_SIZE,
-			backgroundColor: 0x5cb9db,
+			backgroundColor: 0x5cacb3,
 		});
 	}
 }

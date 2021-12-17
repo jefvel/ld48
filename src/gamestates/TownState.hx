@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.TownWaves;
 import h2d.filter.Outline;
 import format.mp3.Data.MP3;
 import format.hl.Data.HLConstant;
@@ -109,6 +110,8 @@ class TownState extends GameState {
         name = "town";
     }
 
+    var waves: TownWaves;
+
     override function onEnter() {
         super.onEnter();
         data = GameSaveData.getCurrent();
@@ -158,6 +161,10 @@ class TownState extends GameState {
         topLayer = new Object(world);
 
         world.x = -2000;
+
+        for (wave in level.l_Entities.all_Water) {
+            waves = new TownWaves(wave, world);
+        }
 
         spawnCharacters();
 

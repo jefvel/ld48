@@ -209,10 +209,17 @@ class PlayState extends elke.gamestate.GameState {
 		backgroundLayer = new Object(world);
 
 
+		/*
 		var skyBg = project.all_levels.Sky.l_Background.render();
 		skyBg.y = -256;
 		skyBg.x = -128;
 		// backgroundLayer.addChild(skyBg);
+		*/
+
+		var skyBg = new Bitmap(hxd.Res.img.skybg.toTile(), backgroundLayer);
+		skyBg.scale(2);
+		skyBg.y = -256;
+		skyBg.x = -128;
 
 		seaweeds = new Seaweeds(backgroundLayer);
 
