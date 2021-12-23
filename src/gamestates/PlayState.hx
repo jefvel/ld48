@@ -194,6 +194,7 @@ class PlayState extends elke.gamestate.GameState {
 			];
 		}
 	}
+	var bubbleParticles: Particles;
 
 	override function onEnter() {
 		super.onEnter();
@@ -208,14 +209,6 @@ class PlayState extends elke.gamestate.GameState {
 		world = new Object(container);
 		backgroundLayer = new Object(world);
 
-
-		/*
-		var skyBg = project.all_levels.Sky.l_Background.render();
-		skyBg.y = -256;
-		skyBg.x = -128;
-		// backgroundLayer.addChild(skyBg);
-		*/
-
 		var skyBg = new Bitmap(hxd.Res.img.skybg.toTile(), backgroundLayer);
 		skyBg.scale(2);
 		skyBg.y = -256;
@@ -225,7 +218,9 @@ class PlayState extends elke.gamestate.GameState {
 
 		var particles = new Particles(world);
 		particles.load(haxe.Json.parse(hxd.Res.particles.bubble.entry.getText()), hxd.Res.particles.bubble.entry.path);
-		particles.y = 300;
+		bubbleParticles = particles;
+		var g = bubbleParticles.getGroups().next();
+		g.isRelative = false;
 
 		rays = new Sunrays(backgroundLayer, foregroundLayer);
 
@@ -949,6 +944,10 @@ class PlayState extends elke.gamestate.GameState {
 
 	override function update(dt:Float) {
 		super.update(dt);
+
+		bubbleParticles.x = hook.x;
+		bubbleParticles.y = hook.y;
+		bubbleParticles.visible = currentPhase == Sinking;
 
 		if (currentDepth > 0) {
 			depthText.text = '${Math.round(currentDepth / Const.UNITS_PER_METER)} / ${Math.round(reelLength / Const.UNITS_PER_METER)}m';
