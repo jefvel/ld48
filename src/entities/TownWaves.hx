@@ -32,6 +32,6 @@ class TownWaves extends Entity2D {
 		time += dt;
 		b.y = Math.round(Math.sin(time * 0.5) * 4);
 		waves.x = Math.sin(time * 0.8) * 32. - 32;
-		clip.x = -waves.x;
+		clip.x = -waves.x + 1;
 	}
 }

@@ -73,17 +73,17 @@
    }
  ],
  "meta": {
-  "app": "http://www.aseprite.org/",
-  "version": "1.3-beta6-x64",
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.30",
   "image": "museumlady.png",
   "format": "RGBA8888",
   "size": { "w": 140, "h": 189 },
   "scale": "1",
   "frameTags": [
-   { "name": "idle", "from": 0, "to": 1, "direction": "forward", "color": "#000000ff" },
-   { "name": "talk", "from": 2, "to": 3, "direction": "forward", "color": "#000000ff" },
-   { "name": "stand", "from": 4, "to": 5, "direction": "forward", "color": "#000000ff" },
-   { "name": "happy", "from": 6, "to": 7, "direction": "forward", "color": "#000000ff" }
+   { "name": "idle", "from": 0, "to": 1, "direction": "forward" },
+   { "name": "talk", "from": 2, "to": 3, "direction": "forward" },
+   { "name": "stand", "from": 4, "to": 5, "direction": "forward" },
+   { "name": "happy", "from": 6, "to": 7, "direction": "forward" }
   ],
   "slices": [
   ]

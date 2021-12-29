@@ -102,14 +102,8 @@ class PlayState extends elke.gamestate.GameState {
 
 	var maxBoostDepth = 250.;
 
-	public var reelLength = 450;
+	public var reelLength = 450.;
 
-	var strengths = [2, 3.0, 6.0, 12.0, 25.0, 70.0];
-	var lengths = [800, 1200, 2500, 6000, 10000, 12800];
-	var speeds = [2.0, 2.2, 2.9, 3.4, 3.8, 4.2];
-	var boostLengths = [250., 600, 1000, 4000, 5500, 7000];
-
-	var goldMultiplier = 1.0;
 	var multipliers = [1.0, 1.2, 1.5, 1.9, 2.3, 3];
 
 	public var catchRadius = 50.0;
@@ -443,13 +437,13 @@ class PlayState extends elke.gamestate.GameState {
 		arrows.reset();
 
 		var unlocked = gameData.unlocked;
-		maxWeight = strengths[unlocked.get(Strength)];
-		reelLength = lengths[unlocked.get(Line)];
-		sinkSpeed = speeds[unlocked.get(Speed)];
-		goldMultiplier = multipliers[unlocked.get(MoneyMultiplier)];
+		maxWeight = Data.itemCategories.get(Pole).Values[unlocked.get(Strength)].Value;
+		reelLength = Data.itemCategories.get(Line).Values[unlocked.get(Line)].Value;
+		sinkSpeed = Data.itemCategories.get(Weight).Values[unlocked.get(Speed)].Value;
+		maxBoostDepth = Data.itemCategories.get(Weight).Values[unlocked.get(Speed)].SecondaryValue;
+
 		catchRadius = catchRadiuses[unlocked.get(Magnet)];
 		mineProtection = protections[unlocked.get(Protection)];
-		maxBoostDepth = boostLengths[unlocked.get(Speed)];
 
 		if (unlocked.get(Magnet) > 0) {
 			hook.aura.visible = true;
@@ -605,7 +599,6 @@ class PlayState extends elke.gamestate.GameState {
 		gameData.currentRound++;
 
 		for (f in killedFish) {
-			// giveGold(Math.ceil(f.data.SellPrice * goldMultiplier));
 			gameData.ownedFish.push(f.data.ID);
 		}
 

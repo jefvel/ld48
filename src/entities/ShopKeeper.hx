@@ -12,7 +12,7 @@ class ShopKeeper extends Entity2D {
 
 	public function new(?p) {
 		super(p);
-		sprite = hxd.Res.img.shopkeeper_tilesheet.toSprite2D(this);
+		sprite = hxd.Res.img.shopkeeper_tilesheet.toSprite2D();
 		sprite.animation.play("idle");
 		sprite.x = -16;
 		bubble = new ScaleGrid(hxd.Res.img.speechbubble.toTile(), 4, 3, 3, 6, this);
@@ -21,6 +21,7 @@ class ShopKeeper extends Entity2D {
 		sayText.x = 5;
 		sayText.y = 2;
 		sayText.maxWidth = 140;
+		bubble.alpha = 0;
 	}
 
 	var minTime = 0.0;

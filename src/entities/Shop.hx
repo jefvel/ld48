@@ -25,6 +25,11 @@ class Shop extends Entity2D {
 
     var buttons: ShopButtons;
 
+    var descriptionPadding = 8;
+    var categoryDescription : Text;
+    var descriptionBg: ScaleGrid;
+    var levels:UpgradeLevels;
+
     public var onClose : Void -> Void;
     public var onWin : Void -> Void;
 
@@ -35,8 +40,8 @@ class Shop extends Entity2D {
         bg = new Bitmap(Tile.fromColor(0xf3e181, 1,1, 0.2), this);
         container = new Object(this);
         sign = new Bitmap(hxd.Res.img.shopsign.toTile(), container);
-        sign.x = 30;
-        sign.y = 38;
+        sign.x = 15;
+        sign.y = 19;
 
         keeper = new ShopKeeper(sign);
         keeper.x = 4;
@@ -44,12 +49,23 @@ class Shop extends Entity2D {
 
         alpha = 0;
         itemList = new ItemList(data, container);
-        itemList.y = sign.y;
-        itemList.x = sign.x + sign.tile.width + 32;
+        itemList.y = sign.y + sign.tile.height;
+        itemList.x = sign.x; // + sign.tile.width + 32;
+
+        descriptionBg = new ScaleGrid(hxd.Res.img.descriptionbg.toTile(), 4, 6, 4, 4, container);
+        descriptionBg.x = itemList.x;
+        descriptionBg.y = itemList.y + 140 - 3;
+        descriptionBg.width = 140;
+        descriptionBg.height = 100;
+
+        container.addChild(itemList);
+
+        categoryDescription = new Text(hxd.Res.fonts.picory.toFont(), container);
+        categoryDescription.maxWidth = 140 - descriptionPadding * 2;
+        categoryDescription.x = itemList.x + descriptionPadding;
+        categoryDescription.y = itemList.y + 140 + descriptionPadding;
 
         buttons = new ShopButtons(container);
-        buttons.y = itemList.y + 4;
-        buttons.x = itemList.x + 248;
 
         cursor = new ScaleGrid(hxd.Res.img.frame.toTile(), 4, 4, 4, 4, this);
 
@@ -61,6 +77,10 @@ class Shop extends Entity2D {
         }
 
         this.data = data;
+
+        levels = new UpgradeLevels(data, container);
+        levels.y = categoryDescription.y + 40;
+        levels.x = 311;
     }
 
     public var showing = false;
@@ -73,6 +93,10 @@ class Shop extends Entity2D {
         itemListSelected = true;
         itemList.selectedIndex = 0;
         container.addChild(buttons);
+
+        var s = getScene();
+        buttons.x = s.width - 128; //itemList.x + 248;
+        buttons.y = s.height - 48;//itemList.y + 4;
     }
 
     public function close() {
@@ -83,7 +107,7 @@ class Shop extends Entity2D {
     public function directionPressed(d: Direction) {
         Game.instance.sound.playWobble(hxd.Res.sound.cursor, 0.5);
         keeper.resetSay();
-        if (d == Left || d == Right) {
+        if (d == Up || d == Down) {
             itemListSelected = !itemListSelected;
             if (!itemListSelected) {
                 buttons.selectedIndex = itemList.selectedIndex;
@@ -94,17 +118,17 @@ class Shop extends Entity2D {
         }
 
         if (itemListSelected) {
-            if (d == Up) {
+            if (d == Left) {
                 itemList.selectPrevious();
             }
-            if (d == Down) {
+            if (d == Right) {
                 itemList.selectNext();
             }
         } else {
-            if (d == Up) {
+            if (d == Left) {
                 buttons.selectPrevious();
             }
-            if (d == Down) {
+            if (d == Right) {
                 buttons.selectNext();
             }
         }
@@ -119,6 +143,10 @@ class Shop extends Entity2D {
         keeper.resetSay();
         if (itemListSelected) {
             var item = itemList.getSelectedItem();
+            if (item != null && item.maxed) {
+                return;
+            }
+
             if (item != null) {
                 if (item.info.Price <= data.gold) {
                     purchaseItem(item.info);
@@ -192,7 +220,6 @@ class Shop extends Entity2D {
         var s = getScene();
         bg.tile.setSize(s.width, s.height);
 
-
         if (showing) {
             visible = true;
             container.x *= 0.8;
@@ -210,5 +237,15 @@ class Shop extends Entity2D {
                 buttons.remove();
             }
         }
+
+        var selected = itemList.getSelectedItem();
+        if (selected != null) {
+            categoryDescription.text = selected.info.ItemType.Description;
+        } else {
+            categoryDescription.text = "";
+        }
+
+        descriptionBg.height = 3 + descriptionPadding * 2 + categoryDescription.textHeight; 
+
     }
 }

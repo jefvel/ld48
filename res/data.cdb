@@ -648,7 +648,7 @@
 				},
 				{
 					"ID": "HookGun",
-					"Name": "Hook Gun",
+					"Name": "Smiff Weston X1",
 					"Description": "This attaches to your hook, and will protect it against sea mines",
 					"Price": 3000,
 					"Type": 5,
@@ -675,6 +675,12 @@
 			"name": "itemCategories",
 			"columns": [
 				{
+					"typeStr": "14",
+					"name": "Icon",
+					"opt": true,
+					"kind": null
+				},
+				{
 					"typeStr": "0",
 					"name": "ID",
 					"kind": null,
@@ -689,42 +695,173 @@
 					"typeStr": "1",
 					"name": "Description",
 					"kind": null
+				},
+				{
+					"typeStr": "8",
+					"name": "Values",
+					"kind": null
+				},
+				{
+					"typeStr": "2",
+					"name": "ShowLevel",
+					"kind": null
 				}
 			],
 			"lines": [
 				{
 					"ID": "Line",
 					"Name": "Fishing Line",
-					"Description": "The longer the line, the further down you can go"
+					"Description": "The longer the line, the further down you can go",
+					"ShowLevel": true,
+					"Icon": {
+						"file": "img/itemicons.png",
+						"size": 16,
+						"x": 0,
+						"y": 0
+					},
+					"Values": [
+						{
+							"Value": 800
+						},
+						{
+							"Value": 1200
+						},
+						{
+							"Value": 2500
+						},
+						{
+							"Value": 6000
+						},
+						{
+							"Value": 10000
+						},
+						{
+							"Value": 12800
+						}
+					]
 				},
 				{
 					"ID": "Pole",
 					"Name": "Pole",
-					"Description": "Determines how much total weight you can pull in"
+					"Description": "Determines how much total weight you can pull in",
+					"ShowLevel": true,
+					"Icon": {
+						"file": "img/itemicons.png",
+						"size": 16,
+						"x": 1,
+						"y": 0
+					},
+					"Values": [
+						{
+							"Value": 2
+						},
+						{
+							"Value": 3
+						},
+						{
+							"Value": 6
+						},
+						{
+							"Value": 12
+						},
+						{
+							"Value": 25
+						},
+						{
+							"Value": 70
+						}
+					]
 				},
 				{
 					"ID": "Weight",
 					"Name": "Weight",
-					"Description": "Makes the hook sink faster"
+					"Description": "Makes the boost go deeper, and hook sink slightly faster",
+					"ShowLevel": true,
+					"Icon": {
+						"file": "img/itemicons.png",
+						"size": 16,
+						"x": 2,
+						"y": 0
+					},
+					"Values": [
+						{
+							"Value": 2,
+							"SecondaryValue": 250
+						},
+						{
+							"Value": 2.2,
+							"SecondaryValue": 600
+						},
+						{
+							"Value": 2.9,
+							"SecondaryValue": 1000
+						},
+						{
+							"Value": 3.4,
+							"SecondaryValue": 4000
+						},
+						{
+							"Value": 3.8,
+							"SecondaryValue": 5500
+						},
+						{
+							"Value": 4.2,
+							"SecondaryValue": 7000
+						}
+					]
 				},
 				{
 					"ID": "Hook",
 					"Name": "Hook",
-					"Description": "Hook"
+					"Description": "Hook",
+					"ShowLevel": false,
+					"Values": []
 				},
 				{
 					"ID": "Magnet",
 					"Name": "Fish Magnet",
-					"Description": "Increases catch radius"
+					"Description": "Increases catch radius",
+					"ShowLevel": false,
+					"Values": []
 				},
 				{
 					"ID": "Gun",
 					"Name": "Fishing Gun",
-					"Description": "Shoots nearby fish and objects"
+					"Description": "Shoots nearby objects",
+					"ShowLevel": false,
+					"Values": []
+				},
+				{
+					"ID": "TownUpgrade",
+					"Name": "Town Improvement",
+					"Description": "Something that makes the town a better place for everyone",
+					"ShowLevel": false,
+					"Values": []
 				}
 			],
 			"separators": [],
 			"props": {}
+		},
+		{
+			"name": "itemCategories@Values",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "4",
+					"name": "Value",
+					"kind": null
+				},
+				{
+					"typeStr": "4",
+					"name": "SecondaryValue",
+					"opt": true,
+					"kind": null
+				}
+			]
 		},
 		{
 			"name": "medals",
