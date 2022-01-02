@@ -146,6 +146,11 @@ class TownState extends GameState {
         backgroundCharacters = new Object(world);
         world.addChild(background);
 
+        if (data.unlockedOneTimePurchases.get(Chairs)) {
+            world.addChild(level.l_Chairs.render());
+        }
+
+
         entities = new Object(world);
 
         characters = new Object(world);
@@ -505,51 +510,57 @@ class TownState extends GameState {
             c.animation.play("idle");
         }
 
-        var chairSitters = [
-            hxd.Res.img.chairsitter1_tilesheet,
-            hxd.Res.img.chairsitter2_tilesheet,
-        ];
+        function spawnChairSitters() {
+            var chairSitters = [
+                hxd.Res.img.chairsitter1_tilesheet,
+                hxd.Res.img.chairsitter2_tilesheet,
+            ];
 
-        var chairSittersLeft = [
-            hxd.Res.img.chairsitterleft_tilesheet,
-        ];
+            var chairSittersLeft = [
+                hxd.Res.img.chairsitterleft_tilesheet,
+            ];
 
-        for (c in level.l_Entities.all_ChairRight) {
+            for (c in level.l_Entities.all_ChairRight) {
 
-            if (Math.random() > 0.7) {
-                continue;
+                if (Math.random() > 0.7) {
+                    continue;
+                }
+
+                var char = chairSitters[Std.int(Math.random() * chairSitters.length)];
+                if (char == null) {
+                    break;
+                }
+
+                chairSitters.remove(char);
+                var sp = char.toSprite2D(characters);
+                sp.animation.play("idle");
+                sp.x = c.pixelX;
+                sp.y = c.pixelY;
+
             }
 
-            var char = chairSitters[Std.int(Math.random() * chairSitters.length)];
-            if (char == null) {
-                break;
+            for (c in level.l_Entities.all_ChairLeft) {
+
+                if (Math.random() > 0.7) {
+                    continue;
+                }
+
+                var char = chairSittersLeft[Std.int(Math.random() * chairSittersLeft.length)];
+                if (char == null) {
+                    break;
+                }
+
+                chairSitters.remove(char);
+                var sp = char.toSprite2D(characters);
+                sp.animation.play("idle");
+                sp.x = c.pixelX;
+                sp.y = c.pixelY;
+
             }
-
-            chairSitters.remove(char);
-            var sp = char.toSprite2D(characters);
-            sp.animation.play("idle");
-            sp.x = c.pixelX;
-            sp.y = c.pixelY;
-
         }
 
-        for (c in level.l_Entities.all_ChairLeft) {
-
-            if (Math.random() > 0.7) {
-                continue;
-            }
-
-            var char = chairSittersLeft[Std.int(Math.random() * chairSittersLeft.length)];
-            if (char == null) {
-                break;
-            }
-
-            chairSitters.remove(char);
-            var sp = char.toSprite2D(characters);
-            sp.animation.play("idle");
-            sp.x = c.pixelX;
-            sp.y = c.pixelY;
-
+        if (data.unlockedOneTimePurchases.get(Chairs)) {
+            spawnChairSitters();
         }
 
         for (m in level.l_Entities.all_Merchant) {

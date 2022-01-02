@@ -138,7 +138,6 @@ class Shop extends Entity2D {
         onClose();
     }
 
-
     public function usePressed() {
         keeper.resetSay();
         if (itemListSelected) {
@@ -176,7 +175,12 @@ class Shop extends Entity2D {
         ];
 
         data.gold -= item.Price;
-        data.unlocked[item.Type] ++;
+        if (!item.OneTimePurchase) {
+            data.unlocked[item.Type] ++;
+        } else {
+            data.unlockedOneTimePurchases[item.ID] = true;
+        }
+
         itemList.refreshItems();
         keeper.say(msgs[Std.int(Math.random() * msgs.length)], 2.0);
         Game.instance.sound.playWobble(hxd.Res.sound.purchase, 0.6);

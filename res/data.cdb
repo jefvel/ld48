@@ -290,7 +290,7 @@
 					"kind": null
 				},
 				{
-					"typeStr": "5:Line,Strength,MoneyMultiplier,Speed,Magnet,Protection",
+					"typeStr": "5:Line,Strength,MoneyMultiplier,Speed,Magnet,Protection,Misc",
 					"name": "Type"
 				},
 				{
@@ -306,6 +306,11 @@
 				{
 					"typeStr": "2",
 					"name": "Disabled",
+					"kind": null
+				},
+				{
+					"typeStr": "2",
+					"name": "OneTimePurchase",
 					"kind": null
 				}
 			],
@@ -324,7 +329,8 @@
 					"Type": 0,
 					"UpgradeIndex": 1,
 					"Disabled": false,
-					"ItemType": "Line"
+					"ItemType": "Line",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Reel2",
@@ -340,7 +346,8 @@
 					"Type": 0,
 					"UpgradeIndex": 2,
 					"Disabled": false,
-					"ItemType": "Line"
+					"ItemType": "Line",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Reel3",
@@ -356,13 +363,14 @@
 					"Type": 0,
 					"UpgradeIndex": 3,
 					"Disabled": false,
-					"ItemType": "Line"
+					"ItemType": "Line",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Reel4",
 					"Name": "Scientist Line",
 					"Description": "This is used by the scientists to find weird things in the deep oceans",
-					"Price": 640,
+					"Price": 740,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -372,13 +380,14 @@
 					"Type": 0,
 					"UpgradeIndex": 4,
 					"Disabled": false,
-					"ItemType": "Line"
+					"ItemType": "Line",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Reel5",
 					"Name": "Line of Kings",
 					"Description": "This line was found in Atlantis. It's pretty good and can reach any sea floor.",
-					"Price": 950,
+					"Price": 1200,
 					"Icon": {
 						"file": "img/items.png",
 						"size": 32,
@@ -388,7 +397,8 @@
 					"Type": 0,
 					"UpgradeIndex": 5,
 					"Disabled": false,
-					"ItemType": "Line"
+					"ItemType": "Line",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Pole1",
@@ -404,7 +414,8 @@
 						"y": 1
 					},
 					"Disabled": false,
-					"ItemType": "Pole"
+					"ItemType": "Pole",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Pole2",
@@ -420,7 +431,8 @@
 						"y": 1
 					},
 					"Disabled": false,
-					"ItemType": "Pole"
+					"ItemType": "Pole",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Pole3",
@@ -436,7 +448,8 @@
 						"y": 1
 					},
 					"Disabled": false,
-					"ItemType": "Pole"
+					"ItemType": "Pole",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Pole4",
@@ -452,7 +465,8 @@
 						"y": 1
 					},
 					"Disabled": false,
-					"ItemType": "Pole"
+					"ItemType": "Pole",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Pole5",
@@ -468,7 +482,8 @@
 						"y": 1
 					},
 					"Disabled": false,
-					"ItemType": "Pole"
+					"ItemType": "Pole",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Weight1",
@@ -484,7 +499,8 @@
 						"y": 2
 					},
 					"Disabled": false,
-					"ItemType": "Weight"
+					"ItemType": "Weight",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Weight2",
@@ -500,7 +516,8 @@
 						"y": 2
 					},
 					"Disabled": false,
-					"ItemType": "Weight"
+					"ItemType": "Weight",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Weight3",
@@ -516,7 +533,8 @@
 						"y": 2
 					},
 					"Disabled": false,
-					"ItemType": "Weight"
+					"ItemType": "Weight",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Weight4",
@@ -532,7 +550,8 @@
 						"y": 2
 					},
 					"Disabled": false,
-					"ItemType": "Weight"
+					"ItemType": "Weight",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Weight5",
@@ -548,7 +567,8 @@
 						"y": 2
 					},
 					"Disabled": false,
-					"ItemType": "Weight"
+					"ItemType": "Weight",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Hook1",
@@ -564,7 +584,8 @@
 						"y": 3
 					},
 					"Disabled": true,
-					"ItemType": "Hook"
+					"ItemType": "Hook",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Hook2",
@@ -580,7 +601,8 @@
 						"y": 3
 					},
 					"Disabled": true,
-					"ItemType": "Hook"
+					"ItemType": "Hook",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Hook3",
@@ -596,7 +618,8 @@
 						"y": 3
 					},
 					"Disabled": true,
-					"ItemType": "Hook"
+					"ItemType": "Hook",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Hook4",
@@ -612,7 +635,8 @@
 						"y": 3
 					},
 					"Disabled": true,
-					"ItemType": "Hook"
+					"ItemType": "Hook",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Hook5",
@@ -628,7 +652,8 @@
 						"y": 3
 					},
 					"Disabled": true,
-					"ItemType": "Hook"
+					"ItemType": "Hook",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "Magnet1",
@@ -644,7 +669,8 @@
 						"y": 4
 					},
 					"Disabled": true,
-					"ItemType": "Magnet"
+					"ItemType": "Magnet",
+					"OneTimePurchase": false
 				},
 				{
 					"ID": "HookGun",
@@ -660,7 +686,25 @@
 						"y": 5
 					},
 					"Disabled": false,
-					"ItemType": "Gun"
+					"ItemType": "Gun",
+					"OneTimePurchase": false
+				},
+				{
+					"ID": "Chairs",
+					"Name": "Chairs",
+					"Description": "Some chairs for the townspeople",
+					"Price": 600,
+					"Type": 6,
+					"ItemType": "TownUpgrade",
+					"UpgradeIndex": 1,
+					"Disabled": false,
+					"Icon": {
+						"file": "img/items.png",
+						"size": 32,
+						"x": 0,
+						"y": 6
+					},
+					"OneTimePurchase": true
 				}
 			],
 			"props": {},
@@ -668,7 +712,8 @@
 				"Pole1",
 				"Weight1",
 				"Hook1",
-				"Magnet1"
+				"Magnet1",
+				"Chairs"
 			]
 		},
 		{
@@ -833,7 +878,7 @@
 				},
 				{
 					"ID": "TownUpgrade",
-					"Name": "Town Improvement",
+					"Name": "Town  Upgrade",
 					"Description": "Something that makes the town a better place for everyone",
 					"ShowLevel": false,
 					"Values": []

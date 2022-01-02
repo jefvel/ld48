@@ -172,6 +172,11 @@ class ItemList extends Entity2D {
             }
 
             var maxed =  i.ItemType.Values.length - 1 == i.UpgradeIndex && upgradeIndex == i.UpgradeIndex; 
+            var purchasedOneTimePurchase = i.OneTimePurchase && data.unlockedOneTimePurchases.exists(i.ID);
+            if (purchasedOneTimePurchase) {
+                continue;
+            }
+
             if (i.UpgradeIndex == upgradeIndex + 1 || maxed) {
                 var item = new Item(i, container);
                 item.maxed = maxed;

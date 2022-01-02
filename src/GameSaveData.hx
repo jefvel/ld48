@@ -34,6 +34,7 @@ class GameSaveData {
 	public var donatedFish: Array<Data.FishKind> = [];
 
 	public var unlocked:Map<Data.Items_Type, Int>;
+	public var unlockedOneTimePurchases:Map<Data.ItemsKind, Bool>;
 
 	public var talkedToMuseumLady = 0;
 
@@ -45,6 +46,8 @@ class GameSaveData {
 
 	public function new() {
 		unlocked = new Map<Data.Items_Type, Int>();
+		unlockedOneTimePurchases = new Map();
+
 		unlocked.set(Line, 0);
 		unlocked.set(Strength, 0);
 		unlocked.set(MoneyMultiplier, 0);
@@ -65,6 +68,13 @@ class GameSaveData {
 
 	public static function load() {
 		current = Save.load(new GameSaveData(), "save", hash);
+		current.init();
+	}
+
+	public function init() {
+		if (unlockedOneTimePurchases == null) {
+			unlockedOneTimePurchases = new Map();
+		}
 	}
 
 	public function addGold(amount) {
