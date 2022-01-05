@@ -33,6 +33,8 @@ class Shop extends Entity2D {
     public var onClose : Void -> Void;
     public var onWin : Void -> Void;
 
+    public var onPurchase: Data.Items -> Void;
+
     public function new(data: GameSaveData, ?p) {
         super(p);
 
@@ -179,6 +181,9 @@ class Shop extends Entity2D {
             data.unlocked[item.Type] ++;
         } else {
             data.unlockedOneTimePurchases[item.ID] = true;
+            if (onPurchase != null) {
+                onPurchase(item);
+            }
         }
 
         itemList.refreshItems();

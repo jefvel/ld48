@@ -1,5 +1,6 @@
 package gamestates;
 
+import elke.T;
 import entities.TownWaves;
 import h2d.filter.Outline;
 import format.mp3.Data.MP3;
@@ -66,6 +67,7 @@ class TownState extends GameState {
     var backgroundCharacters: Object;
     var aboveNpcsLayer : Object;
     var playerLayer : Object;
+    var unlockablesLayer: Object;
     var topLayer : Object;
 
     var fisher: TownCharacter;
@@ -146,10 +148,7 @@ class TownState extends GameState {
         backgroundCharacters = new Object(world);
         world.addChild(background);
 
-        if (data.unlockedOneTimePurchases.get(Chairs)) {
-            world.addChild(level.l_Chairs.render());
-        }
-
+        unlockablesLayer = new Object(world);
 
         entities = new Object(world);
 
@@ -188,6 +187,7 @@ class TownState extends GameState {
         soldFishList = [];
 
         shop = new Shop(data, container);
+        shop.onPurchase = onPurchaseItem;
         coinDisplay = new CoinDisplay(container);
         coinDisplay.coins = data.gold;
         fishInventory = new FishInventory(data, container);
@@ -502,6 +502,32 @@ class TownState extends GameState {
 
     var targetX = -2000.;
 
+    function onPurchaseItem(item: Data.Items) {
+        if (item.ID == Chairs) {
+            spawnChairs();
+        }
+    }
+
+    var fadingObjects: Array<{
+        o: Object,
+        t: Float
+    }> = [];
+
+    function spawnObject(o: Object, immediate = true) {
+        unlockablesLayer.addChild(o);
+        if (!immediate) {
+            o.alpha = 0;
+            fadingObjects.push({
+                o: o,
+                t: 0.
+            });
+        }
+    }
+
+    function spawnChairs() {
+        spawnObject(level.l_Chairs.render(), false);
+    }
+
     function spawnCharacters() {
         for (m in level.l_Entities.all_Chef) {
             var c = hxd.Res.img.chef_tilesheet.toSprite2D(backgroundCharacters);
@@ -560,6 +586,7 @@ class TownState extends GameState {
         }
 
         if (data.unlockedOneTimePurchases.get(Chairs)) {
+            spawnChairs();
             spawnChairSitters();
         }
 
@@ -652,6 +679,20 @@ class TownState extends GameState {
 
     override function update(dt:Float) {
         super.update(dt);
+        for (t in fadingObjects) {
+            t.t += dt;
+            if (t.t > 1) {
+                t.t = 1;
+                fadingObjects.remove(t);
+            }
+
+            var time = T.smootherstep(0, 1, t.t / 0.1);
+            var bt = Math.min(1, t.t / 0.3);
+            var b = T.bounceOut(bt);
+            t.o.alpha = time;
+            t.o.y = -8 + b * 8;
+        }
+
         coinDisplay.coins = data.gold;
 
         var newScale = world.scaleX - (world.scaleX - worldZoom) * 0.33;

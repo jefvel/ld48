@@ -277,7 +277,10 @@
 				{
 					"typeStr": "1",
 					"name": "Name",
-					"kind": null
+					"kind": null,
+					"editor": {
+						"categories": null
+					}
 				},
 				{
 					"typeStr": "1",
@@ -1167,7 +1170,9 @@
 				}
 			],
 			"separators": [],
-			"props": {}
+			"props": {
+				"hasGroup": true
+			}
 		}
 	],
 	"customTypes": [],
