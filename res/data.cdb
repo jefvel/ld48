@@ -711,12 +711,22 @@
 				}
 			],
 			"props": {},
-			"separatorIds": [
-				"Pole1",
-				"Weight1",
-				"Hook1",
-				"Magnet1",
-				"Chairs"
+			"separators": [
+				{
+					"id": "Pole1"
+				},
+				{
+					"id": "Weight1"
+				},
+				{
+					"id": "Hook1"
+				},
+				{
+					"id": "Magnet1"
+				},
+				{
+					"id": "Chairs"
+				}
 			]
 		},
 		{
@@ -1161,12 +1171,14 @@
 				{
 					"ID": "HighScore",
 					"Description": "Highest Score Starting Lake",
-					"NewgroundsID": 10564
+					"NewgroundsID": 10564,
+					"group": 0
 				},
 				{
 					"ID": "MostFishSold",
 					"Description": "Most Money Earned",
-					"NewgroundsID": 10566
+					"NewgroundsID": 10566,
+					"group": 0
 				}
 			],
 			"separators": [],
